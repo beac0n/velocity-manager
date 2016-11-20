@@ -4,7 +4,7 @@ import WeekDaysDropDown from './weekDaysDropDown'
 
 const PositiveNumberInput = ({title}) => (
     <FormGroup>
-        <Input onChange={() => {console.log('CHANGE!')}} type="number" placeholder={title}/>
+        <Input onChange={() => {console.log('CHANGE!')}} type="number" value="100" placeholder={title}/>
     </FormGroup>)
 const App = ({isStartSprintDropDownOpen, isEndSprintDropDownOpen, toggle}) => (
     <Container>

@@ -1,1 +1,0 @@
-export const TOGGLE_DROPDOWN = 'TOGGLE_DROPDOWN'
