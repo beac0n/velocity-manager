@@ -1,13 +1,18 @@
 import React from 'react';
 import {connect} from 'react-redux'
 import {FormGroup, Input} from 'reactstrap';
-import * as actions from './actions'
+import {actions} from '../redux'
 
-const PositiveNumberInput = ({title}) => (
+const PositiveNumberInput = ({changeSprintDuration, sprintDuration, title}) => (
     <FormGroup>
-        <Input onChange={() => {console.log('CHANGE!')}} type="number" value="100" placeholder={title}/>
+        <Input
+            onChange={(event) => {changeSprintDuration(event.target.value)}}
+            type="number"
+            placeholder={title}
+            value={sprintDuration}
+        />
     </FormGroup>)
 
-const mapStateToProps = (state) => ({openDropDowns: state.openDropDowns})
-const mapActionsToProps = {toggle: actions.toggleDropDown}
+const mapStateToProps = (state) => ({sprintDuration: state.sprintDuration})
+const mapActionsToProps = {changeSprintDuration: actions.changeSprintDuration}
 export default connect(mapStateToProps, mapActionsToProps)(PositiveNumberInput)

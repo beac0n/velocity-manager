@@ -1,11 +1,8 @@
 import React from 'react';
-import {Container, Row, Col, Jumbotron, Table, FormGroup, Input} from 'reactstrap';
+import {Container, Row, Col, Jumbotron, Table} from 'reactstrap';
 import WeekDaysDropDown from './weekDaysDropDown'
+import PositiveNumberInput from './positiveNumberInput'
 
-const PositiveNumberInput = ({title}) => (
-    <FormGroup>
-        <Input onChange={() => {console.log('CHANGE!')}} type="number" value="100" placeholder={title}/>
-    </FormGroup>)
 const App = ({isStartSprintDropDownOpen, isEndSprintDropDownOpen, toggle}) => (
     <Container>
         <Jumbotron>

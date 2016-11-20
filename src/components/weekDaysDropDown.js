@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux'
 import {Dropdown, DropdownToggle, DropdownMenu, DropdownItem} from 'reactstrap';
 import useSheet from 'react-jss'
-import {actions} from './redux'
+import {actions} from '../redux'
 
 const style = {
     button: {width: '100%'},
