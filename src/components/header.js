@@ -1,6 +1,7 @@
 import React from 'react';
 import {Row, Col, Jumbotron} from 'reactstrap'
-import WeekDaysDropDown from './weekDaysDropDown.connected'
+import WeekDaysDropDownSprintStart from './weekDaysDropDown/weekDaysDropDown.sprintStart.connected'
+import WeekDaysDropDownSprintEnd from './weekDaysDropDown/weekDaysDropDown.sprintEnd.connected'
 import PositiveNumberInput from './positiveNumberInput.connected'
 
 const Header = () => (
@@ -12,9 +13,9 @@ const Header = () => (
         </p>
 
         <Row>
-            <Col xs="4"><WeekDaysDropDown title={'Sprintbeginn'} /></Col>
+            <Col xs="4"><WeekDaysDropDownSprintStart title={'Sprintbeginn'} /></Col>
             <Col xs="4"><PositiveNumberInput title={'Sprintdauer (Wochen)'} /></Col>
-            <Col xs="4"><WeekDaysDropDown title={'Sprintende'} /></Col>
+            <Col xs="4"><WeekDaysDropDownSprintEnd title={'Sprintende'} /></Col>
         </Row>
     </Jumbotron>)
 

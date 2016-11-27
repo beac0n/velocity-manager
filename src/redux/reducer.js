@@ -1,26 +1,38 @@
 import {combineReducers} from 'redux'
 import {actionTypes} from './actions'
 
-const toggleDropDown = (state, dropDownName) => {
-    const newDropDownElement = {[dropDownName]: !Boolean(state.openDropDowns[dropDownName])}
-    const newOpenDropDowns = Object.assign({}, state.openDropDowns, newDropDownElement)
-    const newState = {openDropDowns: newOpenDropDowns}
-
-    return Object.assign({}, state, newState)
-}
-
-const changeSprintDuration = (state, value) => {
-    const minimumSprintDuration = 1
-    const sprintDuration = value < minimumSprintDuration ? minimumSprintDuration : value
-    return Object.assign({}, state, {sprintDuration})
-}
-
 const UI = (state = {openDropDowns: {}}, action) => {
     switch (action.type) {
-        case actionTypes.TOGGLE_DROP_DOWN:
-            return toggleDropDown(state, action.dropDownName)
-        case actionTypes.CHANGE_SPRINT_DURATION:
-            return changeSprintDuration(state, action.value)
+        case actionTypes.TOGGLE_DROP_DOWN: {
+            const newDropDownElement = {[action.dropDownName]: !Boolean(state.openDropDowns[action.dropDownName])}
+            const newOpenDropDowns = Object.assign({}, state.openDropDowns, newDropDownElement)
+            const newState = {openDropDowns: newOpenDropDowns}
+
+            return Object.assign({}, state, newState)
+        }
+        default:
+            return state
+    }
+}
+
+const defaultDataState = {
+    sprintDuration: 0,
+    sprintStart: 'Bitte auswählen',
+    sprintEnd: 'Bitte auswählen',
+}
+
+const data = (state = defaultDataState, action) => {
+    switch (action.type) {
+        case actionTypes.CHANGE_SPRINT_DURATION: {
+            const minimumSprintDuration = 1
+            const newSprintDuration = action.sprintDuration < minimumSprintDuration
+                ? minimumSprintDuration
+                : action.sprintDuration
+            return Object.assign({}, state, {sprintDuration: newSprintDuration})
+        }
+        case actionTypes.CHANGE_SPRINT_BOUNDARY: {
+            return Object.assign({}, state, {[action.sprintBoundary]: action.sprintDay})
+        }
         default:
             return state
     }
@@ -28,14 +40,18 @@ const UI = (state = {openDropDowns: {}}, action) => {
 
 const stateNames = {
     UI: 'UI',
+    data: 'data'
 }
 
 export default combineReducers({
     [stateNames.UI]: UI,
+    [stateNames.data]: data,
 })
 
-const useState = (stateName) => (selector) => (state) => selector.call({}, state[stateName])
+const getOpenDropDowns = (state) => state[stateNames.UI].openDropDowns
+
 export const selectors = {
-    getSprintDuration: useState(stateNames.UI)((state) => state.sprintDuration),
-    getOpenDropDowns: useState(stateNames.UI)((state) => state.openDropDowns),
+    getSprintDuration: (state) => state[stateNames.data].sprintDuration,
+    getSprintBoundary: (state, boundary) => state[stateNames.data][boundary],
+    isDropDownOpen: (state, boundary) => state[stateNames.UI].openDropDowns[boundary],
 }

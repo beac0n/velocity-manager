@@ -6,11 +6,11 @@ import {selectors} from '../redux/reducer'
 
 const PositiveNumberInput = ({changeSprintDuration, sprintDuration, title}) => (
     <FormGroup>
+        {title}:
         <Input
             onChange={(event) => {changeSprintDuration(event.target.value)}}
             type="number"
-            placeholder={title}
-            value={sprintDuration || 0}
+            value={sprintDuration}
         />
     </FormGroup>)
 
