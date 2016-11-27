@@ -34,8 +34,8 @@ export default combineReducers({
     [stateNames.UI]: UI,
 })
 
+const useState = (stateName) => (selector) => (state) => selector.call({}, state[stateName])
 export const selectors = {
-    [stateNames.UI]: {
-
-    },
+    getSprintDuration: useState(stateNames.UI)((state) => state.sprintDuration),
+    getOpenDropDowns: useState(stateNames.UI)((state) => state.openDropDowns),
 }

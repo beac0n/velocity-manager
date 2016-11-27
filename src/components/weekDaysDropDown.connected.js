@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {Dropdown, DropdownToggle, DropdownMenu, DropdownItem} from 'reactstrap';
 import useSheet from 'react-jss'
 import {actions} from '../redux/actions'
+import {selectors} from '../redux/reducer'
 
 const style = {
     button: {width: '100%'},
@@ -22,7 +23,7 @@ const WeekDaysDropDown = ({sheet, toggle, openDropDowns, title}) => (
 )
 
 const mapStateToProps = (state) => ({
-    openDropDowns: state.UI.openDropDowns,
+    openDropDowns: selectors.getOpenDropDowns(state),
 })
 const mapActionsToProps = {
     toggle: actions.toggleDropDown,
