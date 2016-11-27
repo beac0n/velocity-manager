@@ -1,9 +1,11 @@
-import React from 'react';
+import React from 'react'
+import {connect} from 'react-redux'
+import {selectors} from '../redux/reducer'
 import {Row, Col, FormGroup, Input, Jumbotron} from 'reactstrap'
 import WeekDaysDropDownSprintStart from './weekDaysDropDown/weekDaysDropDown.sprintStart.connected'
 import PositiveNumberInput from './positiveNumberInput.connected'
 
-const Header = () => (
+const Header = ({sprintEnd}) => (
     <Jumbotron>
         <h1 className="display-3">Velocity Manager</h1>
         <p className="lead">
@@ -17,10 +19,13 @@ const Header = () => (
             <Col xs="4">
                 <FormGroup>
                     Sprintende:
-                    <Input disabled={true} value={0} />
+                    <Input disabled={true} value={sprintEnd} />
                 </FormGroup>
             </Col>
         </Row>
     </Jumbotron>)
 
-export default Header
+const mapStateToProps = (state) => ({
+    sprintEnd: selectors.getSprintEnd(state),
+})
+export default connect(mapStateToProps)(Header)

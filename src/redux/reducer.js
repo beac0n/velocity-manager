@@ -17,6 +17,7 @@ const UI = (state = {openDropDowns: {}}, action) => {
 
 const defaultDataState = {
     sprintDuration: 0,
+    weekDays: ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag'],
 }
 
 const data = (state = defaultDataState, action) => {
@@ -28,8 +29,8 @@ const data = (state = defaultDataState, action) => {
                 : action.sprintDuration
             return Object.assign({}, state, {sprintDuration: newSprintDuration})
         }
-        case actionTypes.CHANGE_SPRINT_BOUNDARY: {
-            return Object.assign({}, state, {[action.sprintBoundary]: action.sprintDay})
+        case actionTypes.CHANGE_SPRINT_START: {
+            return Object.assign({}, state, {sprintStart: action.sprintDay})
         }
         default:
             return state
@@ -46,8 +47,25 @@ export default combineReducers({
     [stateNames.data]: data,
 })
 
+const getSprintStart = (state) => state[stateNames.data].sprintStart
+const getWeekDays = (state) => state[stateNames.data].weekDays
+const getSprintDuration = (state) => state[stateNames.data].sprintDuration
+
 export const selectors = {
-    getSprintDuration: (state) => state[stateNames.data].sprintDuration,
-    getSprintBoundary: (state, boundary) => state[stateNames.data][boundary],
+    getSprintEnd: (state) => {
+        const sprintStart = getSprintStart(state)
+        if(!sprintStart) {
+            return 'nope'
+        }
+
+        const weekDays = getWeekDays(state)
+        const indexOfSprintStart = weekDays.indexOf(sprintStart)
+        const sprintDuration = getSprintDuration(state)
+        const indexOfSprintEnd = (indexOfSprintStart + sprintDuration) % 5
+        return weekDays[indexOfSprintEnd]
+    },
     isDropDownOpen: (state, boundary) => state[stateNames.UI].openDropDowns[boundary],
+    getSprintDuration,
+    getWeekDays,
+    getSprintStart,
 }

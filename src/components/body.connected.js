@@ -3,10 +3,12 @@ import {connect} from 'react-redux'
 import {Table} from 'reactstrap'
 import {selectors} from '../redux/reducer'
 
-const Body = ({sprintWeeks, sprintStart, sprintEnd}) => {
-    if(!sprintStart || !sprintEnd) {
+const Body = ({sprintDays, weekDays, sprintStart}) => {
+    if(!sprintStart) {
         return null
     }
+
+    const sprintStartIndex = weekDays.indexOf(sprintStart)
 
     return (
         <Table>
@@ -14,12 +16,7 @@ const Body = ({sprintWeeks, sprintStart, sprintEnd}) => {
             <tr>
                 <th>Benutzer</th>
                 <th>{sprintStart}</th>
-                <th>Dienstag</th>
-                <th>Mittwoch</th>
-                <th>Donnerstag</th>
-                <th>Freitag</th>
-                <th>Samstag</th>
-                <th>{sprintEnd}</th>
+
             </tr>
             </thead>
             <tbody>
@@ -38,8 +35,9 @@ const Body = ({sprintWeeks, sprintStart, sprintEnd}) => {
 }
 
 const mapStateToProps = (state) => ({
-    sprintStart: selectors.getSprintBoundary(state, 'sprintStart'),
-    sprintEnd: selectors.getSprintBoundary(state, 'sprintEnd'),
+    weekDays: selectors.getWeekDays(state),
+    sprintDays: selectors.getSprintDuration(state),
+    sprintStart: selectors.getSprintStart(state, 'sprintStart'),
 })
 const mapActionsToProps = {}
 export default connect(mapStateToProps, mapActionsToProps)(Body)

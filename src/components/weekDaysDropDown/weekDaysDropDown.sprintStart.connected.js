@@ -6,11 +6,12 @@ import WeekDaysDropDown from './weekDaysDropDown'
 const sprintBoundary = 'sprintStart'
 
 const mapStateToProps = (state) => ({
+    weekDays: selectors.getWeekDays(state),
     isOpen: selectors.isDropDownOpen(state, sprintBoundary),
-    sprintBoundary: selectors.getSprintBoundary(state, sprintBoundary),
+    sprintStart: selectors.getSprintStart(state),
 })
 const mapActionsToProps = {
     toggle: () => actions.toggleDropDown(sprintBoundary),
-    saveWeekDay: (weekDay) => actions.changeSprintBoundary(sprintBoundary, weekDay),
+    saveWeekDay: (weekDay) => actions.changeSprintStart(weekDay),
 }
 export default connect(mapStateToProps, mapActionsToProps)(WeekDaysDropDown)
