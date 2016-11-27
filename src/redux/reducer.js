@@ -16,7 +16,7 @@ const UI = (state = {openDropDowns: {}}, action) => {
 }
 
 const defaultDataState = {
-    sprintDuration: 0,
+    sprintDuration: 1,
     weekDays: ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag'],
 }
 

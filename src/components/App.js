@@ -4,7 +4,7 @@ import Header from './header.connected'
 import Body from './body.connected'
 
 const App = () => (
-    <Container>
+    <Container fluid>
         <Header />
         <Body />
     </Container>)
