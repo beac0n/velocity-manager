@@ -70,8 +70,7 @@
   "scripts": {
     "start": "yarn check && OPEN_BROWSER=false node scripts/start.js",
     "build": "yarn check && node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom",
-    "test-debug": "node debug --nodejs --harmony ./node_modules/jest-cli/bin/jest.js --runInBand"
+    "test": "node scripts/test.js --env=jsdom"
   },
   "jest": {
     "collectCoverageFrom": [

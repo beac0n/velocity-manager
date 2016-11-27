@@ -49,20 +49,23 @@ export default combineReducers({
 
 const getSprintStart = (state) => state[stateNames.data].sprintStart
 const getWeekDays = (state) => state[stateNames.data].weekDays
-const getSprintDuration = (state) => state[stateNames.data].sprintDuration
+const getSprintDuration = (state) => Number(state[stateNames.data].sprintDuration)
 
 export const selectors = {
     getSprintEnd: (state) => {
         const sprintStart = getSprintStart(state)
-        if(!sprintStart) {
-            return 'nope'
+        const sprintDuration = getSprintDuration(state)
+        if(!sprintStart || !sprintDuration) {
+            return ''
         }
 
         const weekDays = getWeekDays(state)
         const indexOfSprintStart = weekDays.indexOf(sprintStart)
-        const sprintDuration = getSprintDuration(state)
         const indexOfSprintEnd = (indexOfSprintStart + sprintDuration) % 5
-        return weekDays[indexOfSprintEnd]
+
+        const realIndexOfSprintEnd = indexOfSprintEnd > 0 ? indexOfSprintEnd - 1 : 4
+
+        return weekDays[Math.ceil(realIndexOfSprintEnd)]
     },
     isDropDownOpen: (state, boundary) => state[stateNames.UI].openDropDowns[boundary],
     getSprintDuration,
