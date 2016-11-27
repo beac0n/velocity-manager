@@ -1,8 +1,5 @@
-const TOGGLE_DROPDOWN = 'TOGGLE_DROPDOWN'
-export const toggleDropDownAction = (dropDownName) => ({
-    type: TOGGLE_DROPDOWN,
-    dropDownName
-})
+import {combineReducers} from 'redux'
+import {actionTypes} from './actions'
 
 const toggleDropDown = (state, dropDownName) => {
     const newDropDownElement = {[dropDownName]: !Boolean(state.openDropDowns[dropDownName])}
@@ -12,30 +9,33 @@ const toggleDropDown = (state, dropDownName) => {
     return Object.assign({}, state, newState)
 }
 
-const CHANGE_SPRINT_DURATION = 'CHANGE_SPRINT_DURATION'
-const changeSprintDurationAction = (value) => ({
-    type: CHANGE_SPRINT_DURATION,
-    value
-})
-
 const changeSprintDuration = (state, value) => {
     const minimumSprintDuration = 1
     const sprintDuration = value < minimumSprintDuration ? minimumSprintDuration : value
     return Object.assign({}, state, {sprintDuration})
 }
 
-export const actions = {
-    toggleDropDown: toggleDropDownAction,
-    changeSprintDuration: changeSprintDurationAction,
-}
-
-export const rootReducer = (state = {openDropDowns: {}}, action) => {
+const UI = (state = {openDropDowns: {}}, action) => {
     switch (action.type) {
-        case TOGGLE_DROPDOWN:
+        case actionTypes.TOGGLE_DROP_DOWN:
             return toggleDropDown(state, action.dropDownName)
-        case CHANGE_SPRINT_DURATION:
+        case actionTypes.CHANGE_SPRINT_DURATION:
             return changeSprintDuration(state, action.value)
         default:
             return state
     }
+}
+
+const stateNames = {
+    UI: 'UI',
+}
+
+export default combineReducers({
+    [stateNames.UI]: UI,
+})
+
+export const selectors = {
+    [stateNames.UI]: {
+
+    },
 }
