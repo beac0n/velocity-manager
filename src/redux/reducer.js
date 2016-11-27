@@ -17,8 +17,6 @@ const UI = (state = {openDropDowns: {}}, action) => {
 
 const defaultDataState = {
     sprintDuration: 0,
-    sprintStart: 'Bitte auswählen',
-    sprintEnd: 'Bitte auswählen',
 }
 
 const data = (state = defaultDataState, action) => {
@@ -48,10 +46,8 @@ export default combineReducers({
     [stateNames.data]: data,
 })
 
-const getOpenDropDowns = (state) => state[stateNames.UI].openDropDowns
-
 export const selectors = {
     getSprintDuration: (state) => state[stateNames.data].sprintDuration,
-    getSprintBoundary: (state, boundary) => state[stateNames.data][boundary],
+    getSprintBoundary: (state, boundary) => state[stateNames.data][boundary] ? state[stateNames.data][boundary] : 'Bitte auswählen',
     isDropDownOpen: (state, boundary) => state[stateNames.UI].openDropDowns[boundary],
 }
