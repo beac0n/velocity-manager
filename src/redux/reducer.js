@@ -48,6 +48,6 @@ export default combineReducers({
 
 export const selectors = {
     getSprintDuration: (state) => state[stateNames.data].sprintDuration,
-    getSprintBoundary: (state, boundary) => state[stateNames.data][boundary] ? state[stateNames.data][boundary] : 'Bitte auswählen',
+    getSprintBoundary: (state, boundary) => state[stateNames.data][boundary],
     isDropDownOpen: (state, boundary) => state[stateNames.UI].openDropDowns[boundary],
 }

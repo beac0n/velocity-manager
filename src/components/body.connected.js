@@ -1,7 +1,9 @@
 import React from 'react'
+import {connect} from 'react-redux'
 import {Table} from 'reactstrap'
+import {selectors} from '../redux/reducer'
 
-const Body = () => (
+const Body = ({sprintWeeks, sprintStart, sprintEnd}) => (
     <Table>
         <thead>
         <tr>
@@ -23,10 +25,16 @@ const Body = () => (
             <td>/</td>
             <td>FULL</td>
             <td>FULL</td>
-            <td>X</td>
-            <td>X</td>
+            <td>{sprintStart}</td>
+            <td>{sprintEnd}</td>
         </tr>
         </tbody>
     </Table>)
 
-export default Body
+const mapStateToProps = (state) => ({
+    sprintStart: selectors.getSprintBoundary(state, 'sprintStart'),
+    sprintEnd: selectors.getSprintBoundary(state, 'sprintEnd'),
+})
+const mapActionsToProps = {
+}
+export default connect(mapStateToProps, mapActionsToProps)(Body)

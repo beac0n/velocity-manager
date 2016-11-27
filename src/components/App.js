@@ -1,7 +1,7 @@
 import React from 'react'
 import {Container} from 'reactstrap'
 import Header from './header'
-import Body from './body'
+import Body from './body.connected'
 
 const App = () => (
     <Container>

@@ -10,7 +10,7 @@ const WeekDaysDropDown = ({sheet, toggle, isOpen, saveWeekDay, title, sprintBoun
     <div>
         {title}:
         <Dropdown isOpen={isOpen} toggle={() => toggle(title)}>
-            <DropdownToggle caret className={sheet.classes.button}>{sprintBoundary}</DropdownToggle>
+            <DropdownToggle caret className={sheet.classes.button}>{sprintBoundary || 'Bitte auswählen'}</DropdownToggle>
             <DropdownMenu>
                 {['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag'].map((value, index) => {
                     return <DropdownItem key={index} onClick={() => saveWeekDay(value)}>{value}</DropdownItem>
