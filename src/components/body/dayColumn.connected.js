@@ -5,9 +5,10 @@ import useSheet from 'react-jss'
 import classNames from 'classnames'
 import PositiveNumberInput from '../positiveNumberInput'
 
+const allMeetingsHeight = 240
 const style = {
     wrapper: {
-        height: 240,
+        height: allMeetingsHeight,
         width: '100%',
         border: '1px solid rgba(0,0,0,.15)',
         borderRadius: '.25rem',
@@ -18,7 +19,7 @@ const style = {
     },
     placeholder: {
         width: '100%',
-        height: 240,
+        height: allMeetingsHeight,
     }
 }
 

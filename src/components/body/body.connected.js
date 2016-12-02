@@ -6,20 +6,13 @@ import {Table, Button, Input, Container} from 'reactstrap'
 import {selectors} from '../../redux/reducer'
 import DayColumn from './dayColumn.connected'
 
+const columnWidth = 110
 const style = {
-    headColumnWeekDay: {
-        minWidth: 100,
-    },
-    headColumnWeekEnd: {
-        minWidth: 55,
-    },
+    headColumnWeekDay: {minWidth: columnWidth},
+    headColumnWeekEnd: {minWidth: columnWidth/2},
 }
 
 const Body = ({sprintDaysShort, weekDaysShort, sheet}) => {
-    if (!sprintDaysShort) {
-        return null
-    }
-
     const {headColumnWeekDay, headColumnWeekEnd} = sheet.classes
 
     const headerColumns = sprintDaysShort.map((day) => {
@@ -27,12 +20,10 @@ const Body = ({sprintDaysShort, weekDaysShort, sheet}) => {
         return <th className={headColumnClass} key={shortId.generate()}>{day}</th>
     })
 
-    const dayColumns = sprintDaysShort.map((day, index) => {
-        return (
-            <td key={shortId.generate()}>
-                <DayColumn isPlaceholder={!weekDaysShort.includes(day)} id={index}/>
-            </td>)
-    })
+    const dayColumns = sprintDaysShort.map((day, index) => (
+        <td key={shortId.generate()}>
+            <DayColumn isPlaceholder={!weekDaysShort.includes(day)} id={index}/>
+        </td>))
 
     return (
         <Container fluid>
