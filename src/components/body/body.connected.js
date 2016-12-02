@@ -3,7 +3,7 @@ import shortId from 'shortid'
 import {connect} from 'react-redux'
 import {Table, Button, Input, Container} from 'reactstrap'
 import {selectors} from '../../redux/reducer'
-import DayColumn from './dayColumn'
+import DayColumn from './dayColumn.connected'
 
 const Body = ({sprintDays, getWeekDay, sprintStartIndex}) => {
     if (!getWeekDay(sprintStartIndex) || !sprintDays) {
@@ -21,7 +21,7 @@ const Body = ({sprintDays, getWeekDay, sprintStartIndex}) => {
 
     const dayColumns = []
     for (let i = sprintStartIndex; i < (sprintStartIndex + sprintDays); i++) {
-        dayColumns.push(<td key={shortId.generate()}><DayColumn /></td>)
+        dayColumns.push(<td key={shortId.generate()}><DayColumn id={i} /></td>)
         if ((i % 5) === 4) {
             dayColumns.push(<td key={shortId.generate()}/>)
         }

@@ -1,23 +1,42 @@
-import React from 'react';
-import {Input} from 'reactstrap';
+import React, {Component} from 'react'
+import {Input} from 'reactstrap'
 
-const PositiveNumberInput = ({onChange, value, maxValue, minValue, ...otherProps}) => {
-    const numberMaxValue = Number(maxValue)
-    const numberMinValue = Number(minValue)
+class PositiveNumberInput extends Component {
+    constructor(props) {
+        super(props)
 
-    const _onChange = ({target}) => {
-        let numberValue = Number(target.value)
-
-        if (numberValue > numberMaxValue) {
-            numberValue = numberMaxValue
-        } else if (numberValue < numberMinValue) {
-            numberValue = numberMinValue
-        }
-
-        onChange(numberValue)
+        this.saveValue = this.saveValue.bind(this)
+        this.state = {}
     }
 
-    return (<Input {...otherProps} onChange={_onChange} type="number" value={value} />)
+    saveValue(value) {
+        this.setState({value})
+    }
+
+    render() {
+        const {onChange, maxValue, minValue, value, ...otherProps} = this.props
+
+        const numberMaxValue = Number(maxValue)
+        const numberMinValue = Number(minValue)
+
+        const _onChange = ({target}) => {
+            let numberValue = Number(target.value)
+
+            if (numberValue > numberMaxValue) {
+                numberValue = numberMaxValue
+            } else if (numberValue < numberMinValue) {
+                numberValue = numberMinValue
+            }
+
+            if (numberValue !== this.state.value) {
+                this.saveValue(numberValue)
+                onChange(numberValue)
+            }
+        }
+
+        return (<Input {...otherProps} onChange={_onChange} type="number" value={value || this.state.value}/>)
+    }
 }
+
 
 export default PositiveNumberInput

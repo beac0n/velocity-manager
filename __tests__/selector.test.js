@@ -3,7 +3,7 @@ import {selectors} from '../src/redux/reducer'
 describe('selector', () => {
 
     const getState = ({sprintStart, sprintDuration}) => ({
-        data: {
+        header: {
             sprintStartIndex,
             sprintDuration,
             weekDayKeys: ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag'],

@@ -1,39 +1,28 @@
 import {combineReducers} from 'redux'
 import {actionTypes} from './actions'
 
-const UI = (state = {}, action) => {
-    switch (action.type) {
-        case actionTypes.SAVE_UI_STATE:
-            return Object.assign({}, state, {[action.name]: action.data})
-        default:
-            return state
-    }
-}
-
-const weekDaysShort = ['Mo', 'Di', 'Mi', 'Do', 'Fr']
-const weekDaysLong = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag']
+const daysShort = ['Mo', 'Di', 'Mi', 'Do', 'Fr']
+const daysLong = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag']
 
 const weekDayToIndex = (weekDay) => {
-    const indexOfWeekDayShort = weekDaysShort.indexOf(weekDay)
+    const indexOfWeekDayShort = daysShort.indexOf(weekDay)
     if (indexOfWeekDayShort > -1) {
         return indexOfWeekDayShort
     }
 
-    const indexOfWeekDayLong = weekDaysLong.indexOf(weekDay)
+    const indexOfWeekDayLong = daysLong.indexOf(weekDay)
     if(indexOfWeekDayLong > - 1) {
         return indexOfWeekDayLong
     }
 }
 
-
-const defaultDataState = {
+const defaultHeaderState = {
     sprintStartIndex: weekDayToIndex('Do'),
     sprintDuration: 8,
-    weekDaysShort,
-    weekDaysLong,
+    week: {daysShort, daysLong},
 }
 
-const data = (state = defaultDataState, action) => {
+const header = (state = defaultHeaderState, action) => {
     switch (action.type) {
         case actionTypes.CHANGE_SPRINT_DURATION: {
             return Object.assign({}, state, {sprintDuration: Number(action.sprintDuration)})
@@ -47,25 +36,23 @@ const data = (state = defaultDataState, action) => {
 }
 
 const stateNames = {
-    UI: 'UI',
-    data: 'data',
+    header: 'header',
+    body: 'body',
 }
 
 export default combineReducers({
-    [stateNames.UI]: UI,
-    [stateNames.data]: data,
+    [stateNames.header]: header,
 })
 
-const weekLength = weekDaysShort.length
-const getSprintStartIndex = (state) => state[stateNames.data].sprintStartIndex
-const getSprintDuration = (state) => state[stateNames.data].sprintDuration
-const getWeekDayShort = (state, index) => state[stateNames.data].weekDaysShort[index % weekLength]
-const getWeekDayLong = (state, index) => state[stateNames.data].weekDaysLong[index % weekLength]
+const weekLength = daysShort.length
+const getSprintStartIndex = (state) => state[stateNames.header].sprintStartIndex
+const getSprintDuration = (state) => state[stateNames.header].sprintDuration
+const getWeekDayShort = (state, index) => state[stateNames.header].week.daysShort[index % weekLength]
+const getWeekDayLong = (state, index) => state[stateNames.header].week.daysLong[index % weekLength]
 
 export const selectors = {
-    getUiState: (state, name) => state[stateNames.UI][name],
-    getWeekDaysLong: (state) => state[stateNames.data].weekDaysLong,
-    getWeekDaysShort: (state) => state[stateNames.data].weekDaysShort,
+    getWeekDaysLong: (state) => state[stateNames.header].week.daysLong,
+    getWeekDaysShort: (state) => state[stateNames.header].week.daysShort,
     getWeekDayShort,
     getWeekDayLong,
     getSprintDuration,
