@@ -1,36 +1,45 @@
 import {combineReducers} from 'redux'
 import {actionTypes} from './actions'
 
-const UI = (state = {openDropDowns: {}}, action) => {
+const UI = (state = {}, action) => {
     switch (action.type) {
-        case actionTypes.TOGGLE_DROP_DOWN: {
-            const newDropDownElement = {[action.dropDownName]: !Boolean(state.openDropDowns[action.dropDownName])}
-            const newOpenDropDowns = Object.assign({}, state.openDropDowns, newDropDownElement)
-            const newState = {openDropDowns: newOpenDropDowns}
-
-            return Object.assign({}, state, newState)
-        }
+        case actionTypes.SAVE_UI_STATE:
+            return Object.assign({}, state, {[action.name]: action.data})
         default:
             return state
     }
 }
 
+const weekDaysShort = ['Mo', 'Di', 'Mi', 'Do', 'Fr']
+const weekDaysLong = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag']
+
+const weekDayToIndex = (weekDay) => {
+    const indexOfWeekDayShort = weekDaysShort.indexOf(weekDay)
+    if (indexOfWeekDayShort > -1) {
+        return indexOfWeekDayShort
+    }
+
+    const indexOfWeekDayLong = weekDaysLong.indexOf(weekDay)
+    if(indexOfWeekDayLong > - 1) {
+        return indexOfWeekDayLong
+    }
+}
+
+
 const defaultDataState = {
-    sprintDuration: 1,
-    weekDays: ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag'],
+    sprintStartIndex: weekDayToIndex('Do'),
+    sprintDuration: 8,
+    weekDaysShort,
+    weekDaysLong,
 }
 
 const data = (state = defaultDataState, action) => {
     switch (action.type) {
         case actionTypes.CHANGE_SPRINT_DURATION: {
-            const minimumSprintDuration = 1
-            const newSprintDuration = action.sprintDuration < minimumSprintDuration
-                ? minimumSprintDuration
-                : action.sprintDuration
-            return Object.assign({}, state, {sprintDuration: newSprintDuration})
+            return Object.assign({}, state, {sprintDuration: Number(action.sprintDuration)})
         }
         case actionTypes.CHANGE_SPRINT_START: {
-            return Object.assign({}, state, {sprintStart: action.sprintDay})
+            return Object.assign({}, state, {sprintStartIndex: weekDayToIndex(action.sprintDay)})
         }
         default:
             return state
@@ -39,7 +48,7 @@ const data = (state = defaultDataState, action) => {
 
 const stateNames = {
     UI: 'UI',
-    data: 'data'
+    data: 'data',
 }
 
 export default combineReducers({
@@ -47,28 +56,23 @@ export default combineReducers({
     [stateNames.data]: data,
 })
 
-const getSprintStart = (state) => state[stateNames.data].sprintStart
-const getWeekDays = (state) => state[stateNames.data].weekDays
-const getSprintDuration = (state) => Number(state[stateNames.data].sprintDuration)
+const weekLength = weekDaysShort.length
+const getSprintStartIndex = (state) => state[stateNames.data].sprintStartIndex
+const getSprintDuration = (state) => state[stateNames.data].sprintDuration
+const getWeekDayShort = (state, index) => state[stateNames.data].weekDaysShort[index % weekLength]
+const getWeekDayLong = (state, index) => state[stateNames.data].weekDaysLong[index % weekLength]
 
 export const selectors = {
-    getSprintEnd: (state) => {
-        const sprintStart = getSprintStart(state)
-        const sprintDuration = getSprintDuration(state)
-        if(!sprintStart || !sprintDuration) {
-            return ''
-        }
-
-        const weekDays = getWeekDays(state)
-        const indexOfSprintStart = weekDays.indexOf(sprintStart)
-        const indexOfSprintEnd = (indexOfSprintStart + sprintDuration) % 5
-
-        const realIndexOfSprintEnd = indexOfSprintEnd > 0 ? indexOfSprintEnd - 1 : 4
-
-        return weekDays[Math.ceil(realIndexOfSprintEnd)]
-    },
-    isDropDownOpen: (state, boundary) => state[stateNames.UI].openDropDowns[boundary],
+    getUiState: (state, name) => state[stateNames.UI][name],
+    getWeekDaysLong: (state) => state[stateNames.data].weekDaysLong,
+    getWeekDaysShort: (state) => state[stateNames.data].weekDaysShort,
+    getWeekDayShort,
+    getWeekDayLong,
     getSprintDuration,
-    getWeekDays,
-    getSprintStart,
+    getSprintStartIndex,
+    getSprintEndIndex: (state) => {
+        const sprintEnd = (getSprintStartIndex(state) + getSprintDuration(state)) % weekLength
+        const lastWeekDayIndex = weekLength - 1
+        return Math.ceil(sprintEnd > 0 ? sprintEnd - 1 : lastWeekDayIndex)
+    },
 }
