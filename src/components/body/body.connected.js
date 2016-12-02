@@ -1,31 +1,38 @@
 import React from 'react'
 import shortId from 'shortid'
 import {connect} from 'react-redux'
+import useSheet from 'react-jss'
 import {Table, Button, Input, Container} from 'reactstrap'
 import {selectors} from '../../redux/reducer'
 import DayColumn from './dayColumn.connected'
 
-const Body = ({sprintDays, getWeekDay, sprintStartIndex}) => {
-    if (!getWeekDay(sprintStartIndex) || !sprintDays) {
+const style = {
+    headColumnWeekDay: {
+        minWidth: 100,
+    },
+    headColumnWeekEnd: {
+        minWidth: 55,
+    },
+}
+
+const Body = ({sprintDaysShort, weekDaysShort, sheet}) => {
+    if (!sprintDaysShort) {
         return null
     }
 
+    const {headColumnWeekDay, headColumnWeekEnd} = sheet.classes
 
-    const headerColumns = []
-    for (let i = sprintStartIndex; i < (sprintStartIndex + sprintDays); i++) {
-        headerColumns.push(<th style={{minWidth: 100}} key={shortId.generate()}>{getWeekDay(i % 5)}</th>)
-        if ((i % 5) === 4) {
-            headerColumns.push(<th style={{width: 55}} key={shortId.generate()}>Sa{' '}So</th>)
-        }
-    }
+    const headerColumns = sprintDaysShort.map((day) => {
+        const headColumnClass = weekDaysShort.includes(day) ? headColumnWeekDay : headColumnWeekEnd
+        return <th className={headColumnClass} key={shortId.generate()}>{day}</th>
+    })
 
-    const dayColumns = []
-    for (let i = sprintStartIndex; i < (sprintStartIndex + sprintDays); i++) {
-        dayColumns.push(<td key={shortId.generate()}><DayColumn id={i} /></td>)
-        if ((i % 5) === 4) {
-            dayColumns.push(<td key={shortId.generate()}/>)
-        }
-    }
+    const dayColumns = sprintDaysShort.map((day, index) => {
+        return (
+            <td key={shortId.generate()}>
+                <DayColumn isPlaceholder={!weekDaysShort.includes(day)} id={index}/>
+            </td>)
+    })
 
     return (
         <Container fluid>
@@ -42,7 +49,8 @@ const Body = ({sprintDays, getWeekDay, sprintStartIndex}) => {
                     {dayColumns}
                 </tr>
                 <tr>
-                    <td colSpan={headerColumns.length + 1}><Button block>Neuen Benutzer hinzufügen</Button></td>
+                    <td><Input placeholder="Benutzername"/></td>
+                    <td colSpan={headerColumns.length}><Button block>Neuen Benutzer hinzufügen</Button></td>
                 </tr>
                 </tbody>
             </Table>
@@ -50,10 +58,8 @@ const Body = ({sprintDays, getWeekDay, sprintStartIndex}) => {
 }
 
 const mapStateToProps = (state) => ({
-    getWeekDay: (index) => selectors.getWeekDayShort(state, index),
     weekDaysShort: selectors.getWeekDaysShort(state),
-    sprintDays: Math.ceil(selectors.getSprintDuration(state)),
-    sprintStartIndex: selectors.getSprintStartIndex(state),
+    sprintDaysShort: selectors.getSprintDaysShort(state)
 })
 const mapActionsToProps = {}
-export default connect(mapStateToProps, mapActionsToProps)(Body)
+export default connect(mapStateToProps, mapActionsToProps)(useSheet(style)(Body))

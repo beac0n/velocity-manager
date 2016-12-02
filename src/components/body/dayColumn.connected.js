@@ -1,31 +1,52 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Button, Input} from 'reactstrap'
-import shortId from 'shortid'
-import {actions} from '../../redux/actions'
-import {selectors} from '../../redux/reducer'
+import useSheet from 'react-jss'
+import classNames from 'classnames'
 import PositiveNumberInput from '../positiveNumberInput'
 
-const DayColumn = ({id}) => {
+const style = {
+    wrapper: {
+        height: 240,
+        width: '100%',
+        border: '1px solid rgba(0,0,0,.15)',
+        borderRadius: '.25rem',
+    },
+    meeting: {
+        backgroundColor: 'rgba(0,0,0,.45)',
+        position: 'relative',
+    },
+    placeholder: {
+        width: '100%',
+        height: 240,
+    }
+}
+
+const DayColumn = ({id, isPlaceholder, sheet}) => {
+    const {meeting, placeholder, wrapper} = sheet.classes
+    const inlineStyle = isPlaceholder ? null : {height: 20, width: 10, top: 20}
+
     return (
         <div>
-            <div style={{height: 240, width: '100%', border: '1px solid rgba(0,0,0,.15)', borderRadius: '.25rem'}}>
-                <div
-                    style={{backgroundColor: 'rgba(0,0,0,.45)', height: 20, width: 10, position: 'relative', top: 20}}/>
+            <div className={wrapper}>
+                <div style={inlineStyle} className={classNames(meeting, {[placeholder]: isPlaceholder})}/>
             </div>
-            <PositiveNumberInput placeholder="Beginn" minValue="0" maxValue="24" />
-            <PositiveNumberInput placeholder="Ende" minValue="0" maxValue="24" />
-            <Input placeholder="Notiz"/>
-            <Button style={{width: '100%'}}>+</Button>
+            {
+                isPlaceholder
+                    ? null
+                    : (
+                    <div>
+                        <PositiveNumberInput placeholder="Beginn" minValue="0" maxValue="24"/>
+                        <PositiveNumberInput placeholder="Ende" minValue="0" maxValue="24"/>
+                        <Input placeholder="Notiz"/>
+                        <Button style={{width: '100%'}}>+</Button>
+                    </div>)
+            }
         </div>
     )
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state) => ({})
+const mapActionsToProps = {}
 
-})
-const mapActionsToProps = {
-
-}
-
-export default connect(mapStateToProps, mapActionsToProps)(DayColumn)
+export default connect(mapStateToProps, mapActionsToProps)(useSheet(style)(DayColumn))
