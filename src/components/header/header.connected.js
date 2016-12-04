@@ -21,6 +21,6 @@ const Header = ({sprintEnd}) => (
     </Jumbotron>)
 
 const mapStateToProps = (state) => ({
-    sprintEnd: selectors.getWeekDayLong(state, selectors.getSprintEndIndex(state)),
+    sprintEnd: selectors.getSprintEnd(state)
 })
 export default connect(mapStateToProps)(Header)

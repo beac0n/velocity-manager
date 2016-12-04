@@ -20,15 +20,15 @@ class SprintStartDropDown extends Component {
     }
 
     render() {
-        const {sheet, saveWeekDay, sprintStartIndex, getWeekDayLong, weekDaysLong} = this.props
+        const {sheet, saveSprintStart, sprintStart, weekDayNames} = this.props
 
         return (
             <Dropdown isOpen={this.state.dropDownOpen} toggle={this.toggle}>
                 <DropdownToggle caret className={sheet.classes.button}>
-                    {getWeekDayLong(sprintStartIndex) || 'Bitte auswählen'}
+                    {sprintStart || 'Bitte auswählen'}
                 </DropdownToggle>
                 <DropdownMenu>
-                    {weekDaysLong.map((value, index) => <DropdownItem key={index} onClick={() => saveWeekDay(value)}>{value}</DropdownItem>)}
+                    {weekDayNames.map((value, index) => <DropdownItem key={index} onClick={() => saveSprintStart(value)}>{value}</DropdownItem>)}
                 </DropdownMenu>
             </Dropdown>)
     }
@@ -36,11 +36,10 @@ class SprintStartDropDown extends Component {
 
 
 const mapStateToProps = (state) => ({
-    weekDaysLong: selectors.getWeekDaysLong(state),
-    sprintStartIndex: selectors.getSprintStartIndex(state),
-    getWeekDayLong: (index) => selectors.getWeekDayLong(state, index),
+    weekDayNames: selectors.getWorkDayNames(state),
+    sprintStart: selectors.getSprintStart(state),
 })
 const mapActionsToProps = {
-    saveWeekDay: (weekDay) => actions.changeSprintStart(weekDay),
+    saveSprintStart: (weekDay) => actions.changeSprintStart(weekDay),
 }
 export default connect(mapStateToProps, mapActionsToProps)(useSheet(style)(SprintStartDropDown))

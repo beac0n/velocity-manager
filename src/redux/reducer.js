@@ -1,83 +1,81 @@
-import {combineReducers} from 'redux'
+import {combineReducers} from 'redux-immutable'
+import Immutable from 'immutable'
 import {actionTypes} from './actions'
-
-const daysShort = ['Mo', 'Di', 'Mi', 'Do', 'Fr']
-const daysLong = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag']
-const weekLength = daysShort.length
-
-const weekDayToIndex = (weekDay) => {
-    const indexOfWeekDayShort = daysShort.indexOf(weekDay)
-    if (indexOfWeekDayShort > -1) {
-        return indexOfWeekDayShort
-    }
-
-    const indexOfWeekDayLong = daysLong.indexOf(weekDay)
-    if(indexOfWeekDayLong > - 1) {
-        return indexOfWeekDayLong
-    }
-}
-
-const defaultHeaderState = {
-    sprintStartIndex: weekDayToIndex('Do'),
-    sprintDuration: 8,
-    week: {daysShort, daysLong, length: weekLength},
-}
-
-const header = (state = defaultHeaderState, action) => {
-    switch (action.type) {
-        case actionTypes.CHANGE_SPRINT_DURATION: {
-            return Object.assign({}, state, {sprintDuration: Number(action.sprintDuration)})
-        }
-        case actionTypes.CHANGE_SPRINT_START: {
-            return Object.assign({}, state, {sprintStartIndex: weekDayToIndex(action.sprintDay)})
-        }
-        default:
-            return state
-    }
-}
 
 const stateNames = {
     header: 'header',
     body: 'body',
 }
 
-export default combineReducers({
-    [stateNames.header]: header,
-})
+const getCorrectState = (state, stateName) => {
+    return state.get(stateName) || state
+}
+
+const getWeekDays = (state) => getCorrectState(state, stateNames.header).getIn(['week', 'days'])
+const getWeekDayName = (state, index) => getWeekDays(state).filter((_, dayIndex) => index === dayIndex).first().name
+const getSprintStartIndex = (state) => getCorrectState(state, stateNames.header).getIn(['sprint', 'startIndex'])
 
 export const selectors = {
-    getWeekLength: (state) => state[stateNames.header].week.length,
-    getWeekDaysLong: (state) => state[stateNames.header].week.daysLong,
-    getWeekDaysShort: (state) => state[stateNames.header].week.daysShort,
-    getWeekDayShort: (state, index) => state[stateNames.header].week.daysShort[index % weekLength],
-    getWeekDayLong: (state, index) => state[stateNames.header].week.daysLong[index % weekLength],
-    getSprintDuration: (state) => state[stateNames.header].sprintDuration,
-    getSprintStartIndex: (state) => state[stateNames.header].sprintStartIndex,
-    getSprintEndIndex: (state) => {
-        const sprintEnd = (selectors.getSprintStartIndex(state) + selectors.getSprintDuration(state)) % weekLength
-        const lastWeekDayIndex = weekLength - 1
-        return Math.ceil(sprintEnd > 0 ? sprintEnd - 1 : lastWeekDayIndex)
-    },
-    getSprintDaysShort: (state) => {
-        const sprintStartIndex = selectors.getSprintStartIndex(state)
-        const sprintDaysCount = Math.ceil(selectors.getSprintDuration(state))
-        const weekLength = selectors.getWeekLength(state)
+    getSprintStart: (state) => getWeekDayName(state, getSprintStartIndex(state)),
+    getSprintDuration: (state) => getCorrectState(state, stateNames.header).getIn(['sprint', 'duration']),
+    getWorkDayNames: (state) => getWeekDays(state).filter((day) => day.isWorkDay).map((day) => day.name),
+    getWorkDayKeys: (state) => getWeekDays(state).filter((day) => day.isWorkDay).map((day) => day.key),
+    getSprintEnd: (state) => {
+        const workDaysLength = getWeekDays(state).filter((day) => day.isWorkDay).size
 
-        const lastDayIndex = sprintStartIndex + sprintDaysCount
-        const isLastWeekDay = (index) => (index % weekLength) === weekLength - 1
-        const isLastSprintDay = (index) => index === lastDayIndex - 1
+        const sprintStartDayIndex = getSprintStartIndex(state)
+        const sprintDuration = selectors.getSprintDuration(state)
+
+        const afterSprintDayIndex = (sprintStartDayIndex + sprintDuration) % workDaysLength
+        const isDayAfterSprintLastWorkDay = afterSprintDayIndex === 0
+
+        const lastWorkDayIndex = workDaysLength - 1
+        const sprintEndDayIndex = Math.ceil(isDayAfterSprintLastWorkDay ? lastWorkDayIndex : afterSprintDayIndex - 1)
+
+        return getWeekDayName(state, sprintEndDayIndex)
+    },
+    getSprintDayKeys: (state) => {
+        const weekDays = getWeekDays(state)
+        const weekLength = weekDays.size
+
+        const sprintStartIndex = getSprintStartIndex(state)
+        const sprintDuration = Math.ceil(selectors.getSprintDuration(state))
+
+        let lastDayIndex = sprintStartIndex + sprintDuration
 
         const sprintDays = []
 
         for (let i = sprintStartIndex; i < lastDayIndex; i++) {
-            sprintDays.push(selectors.getWeekDayShort(state, i % weekLength))
+            const weekDay = weekDays.get(i % weekLength)
 
-            if (isLastWeekDay(i) && !isLastSprintDay(i)) {
-                sprintDays.push('Sa So')
+            if (!weekDay.isWorkDay) {
+                lastDayIndex++
             }
+
+            sprintDays.push(weekDay.key)
         }
 
         return sprintDays
     }
-
 }
+
+
+const header = (state = Immutable.Map(), action) => {
+    switch (action.type) {
+        case actionTypes.ADD_WEEK_DAY: {
+            return state.updateIn(['week', 'days'], Immutable.List(), (days) => days.push(action.day))
+        }
+        case actionTypes.CHANGE_SPRINT_DURATION: {
+            return state.updateIn(['sprint', 'duration'], () => Number(action.sprintDuration))
+        }
+        case actionTypes.CHANGE_SPRINT_START: {
+            return state.updateIn(['sprint', 'startIndex'], () => selectors.getWorkDayNames(state).indexOf(action.sprintDay))
+        }
+        default:
+            return state
+    }
+}
+
+export default combineReducers({
+    [stateNames.header]: header,
+})

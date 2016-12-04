@@ -12,17 +12,17 @@ const style = {
     headColumnWeekEnd: {minWidth: columnWidth/2},
 }
 
-const Body = ({sprintDaysShort, weekDaysShort, sheet}) => {
+const Body = ({sprintDayKeys, weekDayKeys, sheet}) => {
     const {headColumnWeekDay, headColumnWeekEnd} = sheet.classes
 
-    const headerColumns = sprintDaysShort.map((day) => {
-        const headColumnClass = weekDaysShort.includes(day) ? headColumnWeekDay : headColumnWeekEnd
+    const headerColumns = sprintDayKeys.map((day) => {
+        const headColumnClass = weekDayKeys.includes(day) ? headColumnWeekDay : headColumnWeekEnd
         return <th className={headColumnClass} key={shortId.generate()}>{day}</th>
     })
 
-    const dayColumns = sprintDaysShort.map((day, index) => (
+    const dayColumns = sprintDayKeys.map((day, index) => (
         <td key={shortId.generate()}>
-            <DayColumn isPlaceholder={!weekDaysShort.includes(day)} id={index}/>
+            <DayColumn isPlaceholder={!weekDayKeys.includes(day)} id={index}/>
         </td>))
 
     return (
@@ -49,8 +49,8 @@ const Body = ({sprintDaysShort, weekDaysShort, sheet}) => {
 }
 
 const mapStateToProps = (state) => ({
-    weekDaysShort: selectors.getWeekDaysShort(state),
-    sprintDaysShort: selectors.getSprintDaysShort(state)
+    weekDayKeys: selectors.getWorkDayKeys(state),
+    sprintDayKeys: selectors.getSprintDayKeys(state)
 })
 const mapActionsToProps = {}
 export default connect(mapStateToProps, mapActionsToProps)(useSheet(style)(Body))
