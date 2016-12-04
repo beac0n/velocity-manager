@@ -20,10 +20,18 @@ const style = {
         backgroundColor: 'rgba(0,0,0,.45)',
         position: 'absolute',
         width: '100%',
-        textAlign: 'center',
+        textAlign: 'right',
     },
-    meetingP: {
+    lineHeightOne: {
         lineHeight: 1,
+    },
+    timeLineWrapper: {
+        float: 'left',
+    },
+    timeLine: {
+        margin: 0,
+        padding: '0 0 0 3px',
+        fontSize: 10,
     },
     placeholder: {
         height: allMeetingsHeight,
@@ -62,33 +70,42 @@ class Column extends Component {
 
     render() {
         const {username, id, getEvents, isPlaceholder, sheet} = this.props
-        const {meeting, placeholder, wrapper, meetingP} = sheet.classes
+        const {meeting, placeholder, wrapper, lineHeightOne, timeLine, timeLineWrapper} = sheet.classes
 
         const events = getEvents(username, id)
+
+        const timeLinesCount = allMeetingsHeight / 10
+        const timeLines = []
+        for (let i = 0; i < timeLinesCount; ++i) {
+            timeLines.push(<p className={classNames(timeLine, lineHeightOne)}>{`${i}:00`}</p>)
+        }
 
         const eventsMap = (event, index) => {
             const {begin, end, note} = event
             const height = (end - begin) * 10
-            const inlineStyle = {height, fontSize: height < 12 ? height : 12, top: begin * 10}
             return (
                 <div
                     key={`event-${index}`}
-                    style={inlineStyle}
-                    className={classNames(meeting)}
+                    style={{height, fontSize: height < 12 ? height : 12, top: begin * 10}}
+                    className={meeting}
                 >
-                    <p className={meetingP}>{note}</p>
+                    <p className={lineHeightOne}>{note}</p>
                 </div>)
         }
 
         return (
             <div>
                 <div className={wrapper}>
+                    {!isPlaceholder && (
+                        <div className={timeLineWrapper}>
+                            {timeLines}
+                        </div>)}
+
                     {isPlaceholder
                         ? <div className={classNames(meeting, {[placeholder]: isPlaceholder})}/>
                         : events.map(eventsMap)}
-
-
                 </div>
+
                 {!isPlaceholder && (
                     <div>
                         <PositiveNumberInput value={this.state.begin} onChange={this.onChangeBegin} placeholder="Beginn"

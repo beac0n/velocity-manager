@@ -1,5 +1,4 @@
 import React from 'react'
-import shortId from 'shortid'
 import {connect} from 'react-redux'
 import useSheet from 'react-jss'
 import {Table, Container} from 'reactstrap'
@@ -17,8 +16,8 @@ const style = {
 const Body = ({users = [], sprintDays, sheet}) => {
     const {weekDay, weekEnd} = sheet.classes
 
-    const columns = sprintDays.map((day) => (
-        <th className={day.isWorkDay ? weekDay : weekEnd} key={shortId.generate()}>
+    const columns = sprintDays.map((day, index) => (
+        <th className={day.isWorkDay ? weekDay : weekEnd} key={`headColumns-${index}`}>
             {day.key}
         </th>))
 
