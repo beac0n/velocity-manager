@@ -39,7 +39,7 @@ class SprintStartDropDown extends Component {
 
 const mapStateToProps = (state) => ({
     workDayNames: selectors.getWorkDayNames(state),
-    sprintStart: selectors.getSprintStart(state),
+    sprintStart: selectors.getSprintStart(state).name,
 })
 const mapActionsToProps = {
     saveSprintStart: (weekDay) => actions.changeSprintStart(weekDay),

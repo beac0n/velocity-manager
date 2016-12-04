@@ -69,7 +69,7 @@ const header = (state = Immutable.Map(), action) => {
             return state.updateIn(['sprint', 'duration'], () => Number(action.sprintDuration))
         }
         case actionTypes.CHANGE_SPRINT_START: {
-            return state.updateIn(['sprint', 'start'], () => action.sprintDay)
+            return state.updateIn(['sprint', 'start'], () => getWeekDays(state).filter((day) => day.name === action.sprintDay).first())
         }
         default:
             return state
