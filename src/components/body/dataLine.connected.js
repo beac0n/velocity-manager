@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import Column from './column.connected'
+import Column from './column/index'
 import {selectors} from '../../redux/reducer'
 
 const DataLine = ({username, sprintDays}) => (
