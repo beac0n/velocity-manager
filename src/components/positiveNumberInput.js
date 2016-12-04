@@ -38,5 +38,4 @@ class PositiveNumberInput extends Component {
     }
 }
 
-
 export default PositiveNumberInput

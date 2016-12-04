@@ -66,4 +66,3 @@ export const reducer = (state = Immutable.Map(), action) => {
             return state
     }
 }
-
