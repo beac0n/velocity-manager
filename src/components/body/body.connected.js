@@ -8,22 +8,14 @@ import DayColumn from './dayColumn.connected'
 
 const columnWidth = 110
 const style = {
-    headColumnWeekDay: {minWidth: columnWidth},
-    headColumnWeekEnd: {minWidth: columnWidth/2},
+    weekDay: {minWidth: columnWidth},
+    weekEnd: {minWidth: columnWidth / 2},
 }
 
-const Body = ({sprintDayKeys, weekDayKeys, sheet}) => {
-    const {headColumnWeekDay, headColumnWeekEnd} = sheet.classes
+const Body = ({sprintDays, sheet}) => {
+    const {weekDay, weekEnd} = sheet.classes
 
-    const headerColumns = sprintDayKeys.map((day) => {
-        const headColumnClass = weekDayKeys.includes(day) ? headColumnWeekDay : headColumnWeekEnd
-        return <th className={headColumnClass} key={shortId.generate()}>{day}</th>
-    })
-
-    const dayColumns = sprintDayKeys.map((day, index) => (
-        <td key={shortId.generate()}>
-            <DayColumn isPlaceholder={!weekDayKeys.includes(day)} id={index}/>
-        </td>))
+    const columns = sprintDays.map((day) => <th className={day.isWorkDay ? weekDay : weekEnd} key={shortId.generate()}>{day.key}</th>)
 
     return (
         <Container fluid>
@@ -31,17 +23,19 @@ const Body = ({sprintDayKeys, weekDayKeys, sheet}) => {
                 <thead>
                 <tr>
                     <th>Benutzer</th>
-                    {headerColumns}
+                    {columns}
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
                     <th><Input value="Max"/></th>
-                    {dayColumns}
+                    {sprintDays.map((day, index) => (
+                        <td key={shortId.generate()}><DayColumn isPlaceholder={!day.isWorkDay} id={index}/></td>
+                    ))}
                 </tr>
                 <tr>
                     <td><Input placeholder="Benutzername"/></td>
-                    <td colSpan={headerColumns.length}><Button block>Neuen Benutzer hinzufügen</Button></td>
+                    <td colSpan={columns.length}><Button block>Neuen Benutzer hinzufügen</Button></td>
                 </tr>
                 </tbody>
             </Table>
@@ -49,8 +43,7 @@ const Body = ({sprintDayKeys, weekDayKeys, sheet}) => {
 }
 
 const mapStateToProps = (state) => ({
-    weekDayKeys: selectors.getWorkDayKeys(state),
-    sprintDayKeys: selectors.getSprintDayKeys(state)
+    sprintDays: selectors.getSprintDays(state),
 })
 const mapActionsToProps = {}
 export default connect(mapStateToProps, mapActionsToProps)(useSheet(style)(Body))
