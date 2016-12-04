@@ -17,16 +17,24 @@ const style = {
         position: 'relative',
     },
     meeting: {
-        backgroundColor: 'rgba(0,0,0,.45)',
+        backgroundColor: '#CCC',
         position: 'absolute',
         width: '100%',
         textAlign: 'right',
+        overflow: 'hidden',
+        margin: 0,
+        padding: 0
     },
     lineHeightOne: {
         lineHeight: 1,
+        margin: 0,
+        padding: 0,
     },
     timeLineWrapper: {
         float: 'left',
+        position: 'relative',
+        backgroundColor: 'white',
+        zIndex: 250,
     },
     timeLine: {
         margin: 0,
@@ -83,10 +91,11 @@ class Column extends Component {
         const eventsMap = (event, index) => {
             const {begin, end, note} = event
             const height = (end - begin) * 10
+            const top = begin * 10
             return (
                 <div
                     key={`event-${index}`}
-                    style={{height, fontSize: height < 12 ? height : 12, top: begin * 10}}
+                    style={{height, top, fontSize: height < 12 ? height : 12, zIndex: top}}
                     className={meeting}
                 >
                     <p className={lineHeightOne}>{note}</p>
