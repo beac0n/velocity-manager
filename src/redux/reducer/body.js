@@ -5,7 +5,7 @@ import {stateNames} from './index'
 
 export const selectors = {
     getUsers: (state) => getCorrectState(state, stateNames.body).get('users'),
-    getEvents: (state, username, columnId) => getCorrectState(state, stateNames.body).getIn(['columns', username, columnId])
+    getEvents: (state, username, columnId) => getCorrectState(state, stateNames.body).getIn(['columns', username, columnId], Immutable.List())
 }
 
 export const reducer = (state = Immutable.Map(), action) => {

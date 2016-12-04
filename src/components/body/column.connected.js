@@ -14,13 +14,18 @@ const style = {
         width: '100%',
         border: '1px solid rgba(0,0,0,.15)',
         borderRadius: '.25rem',
+        position: 'relative',
     },
     meeting: {
         backgroundColor: 'rgba(0,0,0,.45)',
-        position: 'relative',
+        position: 'absolute',
+        width: '100%',
+        textAlign: 'center',
+    },
+    meetingP: {
+        lineHeight: 1,
     },
     placeholder: {
-        width: '100%',
         height: allMeetingsHeight,
     },
 }
@@ -57,21 +62,39 @@ class Column extends Component {
 
     render() {
         const {username, id, getEvents, isPlaceholder, sheet} = this.props
+        const {meeting, placeholder, wrapper, meetingP} = sheet.classes
 
         const events = getEvents(username, id)
 
-        const {meeting, placeholder, wrapper} = sheet.classes
-        const inlineStyle = isPlaceholder ? null : {height: 20, width: 10, top: 20}
+        const eventsMap = (event, index) => {
+            const {begin, end, note} = event
+            const height = (end - begin) * 10
+            const inlineStyle = {height, fontSize: height, top: begin * 10}
+            return (
+                <div
+                    key={`event-${index}`}
+                    style={inlineStyle}
+                    className={classNames(meeting)}
+                >
+                    <p className={meetingP}>{note}</p>
+                </div>)
+        }
 
         return (
             <div>
                 <div className={wrapper}>
-                    <div style={inlineStyle} className={classNames(meeting, {[placeholder]: isPlaceholder})}/>
+                    {isPlaceholder
+                        ? <div className={classNames(meeting, {[placeholder]: isPlaceholder})}/>
+                        : events.map(eventsMap)}
+
+
                 </div>
                 {!isPlaceholder && (
                     <div>
-                        <PositiveNumberInput value={this.state.begin} onChange={this.onChangeBegin} placeholder="Beginn" minValue="0" maxValue="24"/>
-                        <PositiveNumberInput value={this.state.end} onChange={this.onChangeEnd} placeholder="Ende" minValue="0" maxValue="24"/>
+                        <PositiveNumberInput value={this.state.begin} onChange={this.onChangeBegin} placeholder="Beginn"
+                                             minValue="0" maxValue="24"/>
+                        <PositiveNumberInput value={this.state.end} onChange={this.onChangeEnd} placeholder="Ende"
+                                             minValue="0" maxValue="24"/>
                         <Input value={this.state.note} onChange={this.onChangeNote} placeholder="Notiz"/>
                         <Button onClick={this.onAddClick} style={{width: '100%'}}>Hinzufügen</Button>
                     </div>)}
