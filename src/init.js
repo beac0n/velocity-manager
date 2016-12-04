@@ -5,7 +5,7 @@ import {actions} from './redux/actions'
 
 export const initStore = () => createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
-export const fillStore = () => {
+export const getFilledStore = () => {
     const store = initStore()
 
     store.dispatch(actions.addWeekDay({key: 'Mo', name: 'Montag'}))
