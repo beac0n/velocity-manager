@@ -69,7 +69,7 @@ class Column extends Component {
         const eventsMap = (event, index) => {
             const {begin, end, note} = event
             const height = (end - begin) * 10
-            const inlineStyle = {height, fontSize: height, top: begin * 10}
+            const inlineStyle = {height, fontSize: height < 12 ? height : 12, top: begin * 10}
             return (
                 <div
                     key={`event-${index}`}
