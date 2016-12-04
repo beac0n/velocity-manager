@@ -32,11 +32,12 @@ class NewUserLine extends Component {
         return (
             <tr>
                 <td>
-                    <Input value={this.state.newUserName} placeholder="Benutzername" onChange={this.onChangeNewUser}/>
-                </td>
-                <td colSpan={this.props.columnsLength}>
                     <Button block onClick={this.onAddUserClick}>Neuen Benutzer hinzufügen</Button>
                 </td>
+                <td colSpan={this.props.columnsCount - 1}>
+                    <Input value={this.state.newUserName} placeholder="Benutzername" onChange={this.onChangeNewUser}/>
+                </td>
+
             </tr>)
     }
 }
