@@ -20,10 +20,10 @@ const style = {
     placeholder: {
         width: '100%',
         height: allMeetingsHeight,
-    }
+    },
 }
 
-const DayColumn = ({id, isPlaceholder, sheet}) => {
+const Column = ({isPlaceholder, sheet}) => {
     const {meeting, placeholder, wrapper} = sheet.classes
     const inlineStyle = isPlaceholder ? null : {height: 20, width: 10, top: 20}
 
@@ -32,22 +32,19 @@ const DayColumn = ({id, isPlaceholder, sheet}) => {
             <div className={wrapper}>
                 <div style={inlineStyle} className={classNames(meeting, {[placeholder]: isPlaceholder})}/>
             </div>
-            {
-                isPlaceholder
-                    ? null
-                    : (
-                    <div>
-                        <PositiveNumberInput placeholder="Beginn" minValue="0" maxValue="24"/>
-                        <PositiveNumberInput placeholder="Ende" minValue="0" maxValue="24"/>
-                        <Input placeholder="Notiz"/>
-                        <Button style={{width: '100%'}}>+</Button>
-                    </div>)
-            }
-        </div>
-    )
+            {isPlaceholder
+                ? null
+                : (
+                <div>
+                    <PositiveNumberInput placeholder="Beginn" minValue="0" maxValue="24"/>
+                    <PositiveNumberInput placeholder="Ende" minValue="0" maxValue="24"/>
+                    <Input placeholder="Notiz"/>
+                    <Button style={{width: '100%'}}>+</Button>
+                </div>)}
+        </div>)
 }
 
 const mapStateToProps = (state) => ({})
 const mapActionsToProps = {}
 
-export default connect(mapStateToProps, mapActionsToProps)(useSheet(style)(DayColumn))
+export default connect(mapStateToProps, mapActionsToProps)(useSheet(style)(Column))
