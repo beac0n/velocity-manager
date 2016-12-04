@@ -6,7 +6,7 @@ class PositiveNumberInput extends Component {
         super(props)
 
         this.saveValue = this.saveValue.bind(this)
-        this.state = {}
+        this.state = {value: ''}
     }
 
     saveValue(value) {
@@ -34,7 +34,7 @@ class PositiveNumberInput extends Component {
             }
         }
 
-        return (<Input {...otherProps} onChange={_onChange} type="number" value={value || this.state.value}/>)
+        return <Input {...otherProps} onChange={_onChange} type="number" value={value == null ? this.state.value : value}/>
     }
 }
 

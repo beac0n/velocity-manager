@@ -32,7 +32,7 @@ const Body = ({users = [], sprintDays, sheet}) => {
                 </tr>
                 </thead>
                 <tbody>
-                {users.map((username, index) => <DataLine username={username} key={'DataLine' + index}/>)}
+                {users.map((username, index) => <DataLine username={username} key={`dataLine-${index}`}/>)}
                 <NewUserLine columnsCount={columns.length + 1}/>
                 </tbody>
             </Table>
