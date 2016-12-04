@@ -19,5 +19,7 @@ export const fillStore = () => {
     store.dispatch(actions.changeSprintStart('Donnerstag'))
     store.dispatch(actions.changeSprintDuration(8))
 
+    store.dispatch(actions.addUser('Maximilian Schempp'))
+
     return store
 }

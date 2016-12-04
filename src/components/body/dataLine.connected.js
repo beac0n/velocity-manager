@@ -7,13 +7,11 @@ import {selectors} from '../../redux/reducer'
 const DataLine = ({username, sprintDays}) => (
     <tr>
         <th>{username}</th>
-        {
-            sprintDays.map((day, index) => (
-                <td key={shortId.generate()}>
-                    <Column isPlaceholder={!day.isWorkDay} id={'Column' + index}/>
-                </td>
-            ))
-        }
+        {sprintDays.map((day, index) => (
+            <td key={shortId.generate()}>
+                <Column isPlaceholder={!day.isWorkDay} id={'Column' + index}/>
+            </td>
+        ))}
     </tr>)
 
 const mapStateToProps = (state) => ({
