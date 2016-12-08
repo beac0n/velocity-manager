@@ -10,7 +10,7 @@ const hoursPerDay = 24
 const lineHeight = 20
 const allMeetingsHeight = lineHeight * hoursPerDay
 
-const timeLineRowWidth = 34
+const timeLineRowWidth = 35
 
 const style = {
     wrapper: {

@@ -3,7 +3,9 @@ import {createStore} from 'redux'
 import rootReducer from './redux/reducer'
 import {actions} from './redux/actions'
 
-export const initStore = () => createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+export const initStore = () => {
+    return createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
+}
 
 export const getFilledStore = () => {
     const store = initStore()

@@ -59,10 +59,11 @@ class TimeLine extends Component {
                     style={{
                         height: lineHeight,
                         margin: 0,
-                        padding: 0,
-                        border: 0,
+                        padding: '3px 3px 3px 3px',
+                        borderWidth: (timeLinesCount - 1 === index) ? 0 : '0 0 1px 0',
+                        borderColor: '#CCC',
+                        borderStyle: 'solid',
                         backgroundColor: this.state.backgroundColor,
-                        borderRadius: '.25rem'
                     }}
                     className={classNames(classes.timeLine, className)}
                     onMouseOver={() => this.setState({backgroundColor: '#CCC'})}

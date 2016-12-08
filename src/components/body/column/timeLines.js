@@ -9,7 +9,6 @@ const style = {
         backgroundColor: 'white',
         cursor: 'row-resize',
         userSelect: 'none',
-        padding: '0 2px 0 2px',
         zIndex: 0,
     },
 }

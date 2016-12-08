@@ -15,5 +15,5 @@ export const actions = {
     addUser: (username) => ({type: actionTypes.ADD_USER, username}),
     addEvent: ({username, columnId, begin, end}) => ({type: actionTypes.ADD_EVENT, event: {username, columnId, begin, end}}),
     updateEvent: ({username, columnId, index, note}) =>  ({type: actionTypes.UPDATE_EVENT, event: {username, columnId, index, note}}),
-    removeEvent: ({username, columnId, index}) => ({type: actionTypes.REMOVE_EVENT, event: {username, columnId, index}})
+    removeEvent: ({username, columnId, index}) => ({type: actionTypes.REMOVE_EVENT, event: {username, columnId, index}}),
 }
