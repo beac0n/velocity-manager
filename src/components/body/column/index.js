@@ -1,18 +1,128 @@
 import React from 'react'
+import useSheet from 'react-jss'
 import {connect} from 'react-redux'
-import TopColumn from './topColumn'
+import {Input, InputGroupButton, InputGroup} from 'reactstrap'
+import TimeLines from './timeLines'
 import {selectors} from '../../../redux/reducer'
-import BottomColumn from './bottomColumn.connected'
+import {actions} from '../../../redux/actions'
 
-const Column = ({username, id, getEvents, isPlaceholder}) => (
-    <div>
-        <TopColumn isPlaceholder={isPlaceholder} events={getEvents(username, id)}/>
-        {!isPlaceholder && <BottomColumn username={username} id={id}/>}
-    </div>)
+const hoursPerDay = 24
+const lineHeight = 20
+const allMeetingsHeight = lineHeight * hoursPerDay
 
+const timeLineRowWidth = 34
+
+const style = {
+    wrapper: {
+        height: allMeetingsHeight + 2,
+        width: '100%',
+        border: '1px solid rgba(0,0,0,.15)',
+        borderRadius: '.25rem',
+        position: 'relative',
+    },
+    meeting: {
+        backgroundColor: '#CCC',
+        position: 'absolute',
+        width: `calc(100% - ${timeLineRowWidth}px)`,
+        margin: 0,
+        padding: 0
+    },
+    lineHeightOne: {
+        lineHeight: 1,
+        margin: 0,
+        padding: 0,
+    },
+    placeholder: {
+        backgroundColor: '#CCC',
+        width: '100%',
+        height: allMeetingsHeight,
+
+    },
+}
+
+const TopColumn = ({username, id, getEvents, updateEvent, removeEvent, isPlaceholder, sheet}) => {
+    const {wrapper, lineHeightOne, meeting, placeholder} = sheet.classes
+
+    const events = getEvents(username, id)
+
+    const eventsMap = (event, index) => {
+        const {begin, end} = event
+
+        const hours = end - begin
+        const height = hours * lineHeight
+        const top = begin * lineHeight
+
+        const fontSize = 12
+
+        const inlineStyle = {
+            height,
+            top,
+            fontSize: height < fontSize ? height : fontSize,
+            zIndex: top,
+            borderRadius: '0.25rem',
+            border: '1px solid #999',
+            marginLeft: timeLineRowWidth,
+        }
+
+        const marginTop = hours > 2 ? (height - lineHeight) / 2 : null
+
+        return (
+            <div
+                key={`event-${index}`}
+                style={inlineStyle}
+                className={meeting}
+            >
+                <InputGroup style={{
+                    borderCollapse: 'initial',
+                    display: 'table-row',
+                }}>
+                    <Input
+                        onChange={(e) => updateEvent({username, columnId: id, note: e.target.value, index})}
+                        className={lineHeightOne}
+                        style={{
+                            marginTop,
+                            fontSize,
+                            height: lineHeight,
+                            borderRadius: '0.25rem',
+                        }}
+                    />
+                    <InputGroupButton
+                        onClick={() => removeEvent({username, columnId: id, index})}
+                        style={{
+                            fontSize,
+                            marginTop,
+                            height: lineHeight,
+                            padding: '0 1px 0 1px',
+                        }}>
+                        X
+                    </InputGroupButton>
+                </InputGroup>
+            </div>)
+    }
+
+    return (
+        <div className={wrapper}>
+            {!isPlaceholder &&
+            <TimeLines
+                columnId={id}
+                username={username}
+                lineHeight={lineHeight}
+                className={lineHeightOne}
+                timeLinesCount={hoursPerDay}
+            />}
+            {isPlaceholder
+                ? <div className={placeholder}/>
+                : events.map(eventsMap)}
+        </div>)
+}
 
 const mapStateToProps = (state) => ({
     getEvents: (username, columnId) => selectors.getEvents(state, username, columnId)
 })
 
-export default connect(mapStateToProps)(Column)
+const mapActionsToProps = {
+    removeEvent: actions.removeEvent,
+    updateEvent: actions.updateEvent,
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(useSheet(style)(TopColumn))

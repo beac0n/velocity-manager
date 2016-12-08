@@ -6,6 +6,7 @@ import {stateNames} from './index'
 export const selectors = {
     getUsers: (state) => getCorrectState(state, stateNames.body).get('users'),
     getEvents: (state, username, columnId) => getCorrectState(state, stateNames.body).getIn(['columns', username, columnId], Immutable.List())
+
 }
 
 export const reducer = (state = Immutable.Map(), action) => {
@@ -14,8 +15,16 @@ export const reducer = (state = Immutable.Map(), action) => {
             return state.updateIn(['users'], Immutable.List(), (users) => users.push(action.username))
         }
         case actionTypes.ADD_EVENT: {
-            const {username, columnId, begin, end, note} = action.event
-            return state.updateIn(['columns', username, columnId], Immutable.List(), (events) => events.push({begin, end, note}))
+            const {username, columnId, begin, end = begin + 1} = action.event
+            return state.updateIn(['columns', username, columnId], Immutable.List(), (events) => events.push({begin, end}))
+        }
+        case actionTypes.UPDATE_EVENT: {
+            const {username, columnId, index, note} = action.event
+            return state.updateIn(['columns', username, columnId, index], (event) => Object.assign({}, event, {note}))
+        }
+        case actionTypes.REMOVE_EVENT: {
+            const {username, columnId, index} = action.event
+            return state.updateIn(['columns', username, columnId], (events) => events.splice(index, 1))
         }
         default:
             return state
