@@ -10,7 +10,14 @@ class NewUserLine extends Component {
         this.changeNewUser = this.changeNewUser.bind(this)
         this.onChangeNewUser = this.onChangeNewUser.bind(this)
         this.onAddUserClick = this.onAddUserClick.bind(this)
+        this.handleKeyPress = this.handleKeyPress.bind(this)
         this.state = {newUserName: ''}
+    }
+
+    handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            this.onAddUserClick()
+        }
     }
 
     changeNewUser(newUserName = '') {
@@ -32,10 +39,15 @@ class NewUserLine extends Component {
         return (
             <tr>
                 <td>
-                    <Button block onClick={this.onAddUserClick}>Neuen Benutzer hinzufügen</Button>
+                    <Button block onClick={this.onAddUserClick}>+</Button>
                 </td>
                 <td colSpan={this.props.columnsCount - 1}>
-                    <Input value={this.state.newUserName} placeholder="Benutzername" onChange={this.onChangeNewUser}/>
+                    <Input
+                        value={this.state.newUserName}
+                        placeholder="Benutzername"
+                        onChange={this.onChangeNewUser}
+                        onKeyPress={this.handleKeyPress}
+                    />
                 </td>
 
             </tr>)

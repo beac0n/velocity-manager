@@ -46,7 +46,7 @@ const TopColumn = ({username, id, getEvents, updateEvent, removeEvent, isPlaceho
     const events = getEvents(username, id)
 
     const eventsMap = (event, index) => {
-        const {begin, end} = event
+        const {begin, end, note} = event
 
         const hours = end - begin
         const height = hours * lineHeight
@@ -64,7 +64,7 @@ const TopColumn = ({username, id, getEvents, updateEvent, removeEvent, isPlaceho
             marginLeft: timeLineRowWidth,
         }
 
-        const marginTop = hours > 2 ? (height - lineHeight) / 2 : null
+        const inputHeight = height - 2
 
         return (
             <div
@@ -77,12 +77,14 @@ const TopColumn = ({username, id, getEvents, updateEvent, removeEvent, isPlaceho
                     display: 'table-row',
                 }}>
                     <Input
+                        value={note}
+                        type="textarea"
                         onChange={(e) => updateEvent({username, columnId: id, note: e.target.value, index})}
                         className={lineHeightOne}
                         style={{
-                            marginTop,
+                            resize: 'none',
                             fontSize,
-                            height: lineHeight,
+                            height: inputHeight,
                             borderRadius: '0.25rem',
                         }}
                     />
@@ -90,8 +92,7 @@ const TopColumn = ({username, id, getEvents, updateEvent, removeEvent, isPlaceho
                         onClick={() => removeEvent({username, columnId: id, index})}
                         style={{
                             fontSize,
-                            marginTop,
-                            height: lineHeight,
+                            height: inputHeight,
                             padding: '0 1px 0 1px',
                         }}>
                         X
