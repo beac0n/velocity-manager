@@ -5,7 +5,6 @@ import rootReducer, {defaultState, stateNames} from './reducer'
 const myLocalStorage = window && window.localStorage && window.localStorage.getItem && window.localStorage.getItem('velocity-manager-state')
 
 export const initStore = () => {
-
     const parsedMyLocalStorage = myLocalStorage && JSON.parse(myLocalStorage)
     const persistedBody = parsedMyLocalStorage && parsedMyLocalStorage.body
 
