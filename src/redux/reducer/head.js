@@ -9,7 +9,7 @@ const getSprintStart = (state) => getCorrectState(state, stateNames.head).getIn(
 const getSprintStartIndex = (state) => getWeekDays(state).indexOf(getSprintStart(state))
 
 export const selectors = {
-    getWorkDayNames: (state) => getWeekDays(state).filter((day) => day.isWorkDay).map((day) => day.name),
+    getWorkDayNames: (state) => getWeekDays(state).filter((day) => day.isWorkDay).map((day) => day.name).toJS(),
     getSprintDuration: (state) => getCorrectState(state, stateNames.head).getIn(['sprint', 'duration']),
     getSprintStart,
     getSprintEnd: (state) => {
@@ -64,7 +64,7 @@ const defaultHeaderState = Immutable.Map({
         )
     }),
     sprint: Immutable.Map({
-        start: Immutable.Map({
+        start: Object.freeze({
             key: 'Do',
             name: 'Donnerstag',
             isWorkDay: true,

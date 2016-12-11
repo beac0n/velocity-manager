@@ -4,12 +4,15 @@ import {actionTypes} from '../actions'
 import {stateNames} from './index'
 
 export const selectors = {
-    getUsers: (state) => getCorrectState(state, stateNames.body).get('users'),
-    getEvents: (state, username, columnId) => getCorrectState(state, stateNames.body).getIn(['columns', username, columnId], Immutable.List())
-
+    getUsers: (state) => getCorrectState(state, stateNames.body).get('users').toJS(),
+    getEvents: (state, username, columnId) => getCorrectState(state, stateNames.body).getIn(['columns', username, columnId], Immutable.List()).toJS()
 }
 
-export const reducer = (state = Immutable.Map(), action) => {
+const defaultState = Immutable.Map({
+    users: Immutable.List()
+})
+
+export const reducer = (state = defaultState, action) => {
     switch (action.type) {
         case actionTypes.ADD_USER: {
             return state.updateIn(['users'], Immutable.List(), (users) => users.push(action.username))
