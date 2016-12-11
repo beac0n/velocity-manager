@@ -76,7 +76,7 @@ const TopColumn = ({username, id, events, updateEvent, removeEvent, isPlaceholde
                     display: 'table-row',
                 }}>
                     <Input
-                        value={note}
+                        value={note || ''}
                         type="textarea"
                         onChange={(e) => updateEvent(index, e.target.value)}
                         className={lineHeightOne}
