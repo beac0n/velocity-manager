@@ -51,26 +51,21 @@ export const selectors = {
     }
 }
 
+const sprintStartDay = Object.freeze({key: 'Do', name: 'Donnerstag', isWorkDay: true})
+
 const defaultHeaderState = Immutable.Map({
     week: Immutable.Map({
         days: Immutable.List.of(
             Object.freeze({key: 'Mo', name: 'Montag', isWorkDay: true}),
             Object.freeze({key: 'Di', name: 'Dienstag', isWorkDay: true}),
             Object.freeze({key: 'Mi', name: 'Mittwoch', isWorkDay: true}),
-            Object.freeze({key: 'Do', name: 'Donnerstag', isWorkDay: true}),
+            sprintStartDay,
             Object.freeze({key: 'Fr', name: 'Freitag', isWorkDay: true}),
             Object.freeze({key: 'Sa', name: 'Samstag', isWorkDay: false}),
             Object.freeze({key: 'So', name: 'Sonntag', isWorkDay: false})
         )
     }),
-    sprint: Immutable.Map({
-        start: Object.freeze({
-            key: 'Do',
-            name: 'Donnerstag',
-            isWorkDay: true,
-        }),
-        duration: 8
-    })
+    sprint: Immutable.Map({start: sprintStartDay, duration: 8})
 })
 
 export const reducer = (state = defaultHeaderState, action) => {
