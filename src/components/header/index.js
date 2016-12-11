@@ -5,7 +5,7 @@ import {Row, Col, Input, InputGroupButton, Jumbotron} from 'reactstrap'
 import WeekDaysDropDownSprintStart from './sprintStartDropDown.connected'
 import SprintDurationInput from './sprintDurationInput.connected'
 
-const Header = ({sprintEnd}) => (
+const Header = ({sprintEnd, save}) => (
     <Jumbotron>
         <h1 className="display-3">Velocity Manager</h1>
         <p className="lead">
@@ -17,11 +17,12 @@ const Header = ({sprintEnd}) => (
             <Col xs="3">Sprintbeginn:<WeekDaysDropDownSprintStart /></Col>
             <Col xs="3">Sprintdauer (Tage):<SprintDurationInput minValue="1" maxValue="14" /></Col>
             <Col xs="3">Sprintende:<Input disabled={true} value={sprintEnd}/></Col>
-            <Col xs="3">&zwnj;<InputGroupButton>Speichern</InputGroupButton></Col>
+            <Col xs="3">&zwnj;<InputGroupButton onClick={save}>Speichern</InputGroupButton></Col>
         </Row>
     </Jumbotron>)
 
 const mapStateToProps = (state) => ({
+    save: () => localStorage && localStorage.setItem && localStorage.setItem('velocity-manager-state', JSON.stringify(state)),
     sprintEnd: selectors.getSprintEnd(state),
 })
 

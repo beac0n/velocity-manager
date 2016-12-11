@@ -1,6 +1,7 @@
 import React from 'react'
 import useSheet from 'react-jss'
 import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
 import {Input, InputGroupButton, InputGroup} from 'reactstrap'
 import TimeLines from './timeLines'
 import {selectors} from '../../../redux/reducer'
@@ -40,10 +41,8 @@ const style = {
     },
 }
 
-const TopColumn = ({username, id, getEvents, updateEvent, removeEvent, isPlaceholder, sheet}) => {
+const TopColumn = ({username, id, events, updateEvent, removeEvent, isPlaceholder, sheet}) => {
     const {wrapper, lineHeightOne, meeting, placeholder} = sheet.classes
-
-    const events = getEvents(username, id)
 
     const eventsMap = (event, index) => {
         const {begin, end, note} = event
@@ -79,7 +78,7 @@ const TopColumn = ({username, id, getEvents, updateEvent, removeEvent, isPlaceho
                     <Input
                         value={note}
                         type="textarea"
-                        onChange={(e) => updateEvent({username, columnId: id, note: e.target.value, index})}
+                        onChange={(e) => updateEvent(index, e.target.value)}
                         className={lineHeightOne}
                         style={{
                             resize: 'none',
@@ -89,7 +88,7 @@ const TopColumn = ({username, id, getEvents, updateEvent, removeEvent, isPlaceho
                         }}
                     />
                     <InputGroupButton
-                        onClick={() => removeEvent({username, columnId: id, index})}
+                        onClick={() => removeEvent(index)}
                         style={{
                             fontSize,
                             height: inputHeight,
@@ -117,13 +116,18 @@ const TopColumn = ({username, id, getEvents, updateEvent, removeEvent, isPlaceho
         </div>)
 }
 
-const mapStateToProps = (state) => ({
-    getEvents: (username, columnId) => selectors.getEvents(state, username, columnId)
+const mapStateToProps = (state, ownProps) => ({
+    events: selectors.getEvents(state, ownProps.username, ownProps.id),
 })
 
-const mapActionsToProps = {
-    removeEvent: actions.removeEvent,
-    updateEvent: actions.updateEvent,
+const mapActionsToProps = (dispatch, ownProps) => {
+    const {username} = ownProps
+    const columnId = ownProps.id
+
+    return bindActionCreators({
+        removeEvent: (index) => actions.removeEvent({username, columnId, index}),
+        updateEvent: (index, note) => actions.updateEvent({username, columnId, index, note}),
+    }, dispatch)
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(useSheet(style)(TopColumn))
