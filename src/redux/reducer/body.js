@@ -8,7 +8,7 @@ export const selectors = {
     getEvents: (state, username, columnId) => getCorrectState(state, stateNames.body).getIn(['columns', username, columnId], Immutable.List()).toJS()
 }
 
-const defaultState = Immutable.Map({
+export const defaultState = Immutable.Map({
     users: Immutable.List()
 })
 

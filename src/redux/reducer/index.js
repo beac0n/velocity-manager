@@ -12,6 +12,11 @@ export const selectors = {
     ...body.selectors,
 }
 
+export const defaultState = {
+    [stateNames.head]: head.defaultState,
+    [stateNames.body]: body.defaultState,
+}
+
 export default combineReducers({
     [stateNames.head]: head.reducer,
     [stateNames.body]: body.reducer,

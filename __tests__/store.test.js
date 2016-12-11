@@ -1,12 +1,12 @@
 import {selectors} from '../src/redux/reducer'
 import {actions} from '../src/redux/actions'
-import {getFilledStore} from '../src/init'
+import {initStore} from '../src/redux/init'
 
 describe('selector', () => {
 
     let store
     beforeEach(() => {
-        store = getFilledStore()
+        store = initStore()
         store.dispatch(actions.changeSprintStart('Donnerstag'))
     })
 

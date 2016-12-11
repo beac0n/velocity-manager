@@ -53,7 +53,7 @@ export const selectors = {
 
 const sprintStartDay = Object.freeze({key: 'Do', name: 'Donnerstag', isWorkDay: true})
 
-const defaultHeaderState = Immutable.Map({
+export const defaultState = Immutable.Map({
     week: Immutable.Map({
         days: Immutable.List.of(
             Object.freeze({key: 'Mo', name: 'Montag', isWorkDay: true}),
@@ -68,7 +68,7 @@ const defaultHeaderState = Immutable.Map({
     sprint: Immutable.Map({start: sprintStartDay, duration: 8})
 })
 
-export const reducer = (state = defaultHeaderState, action) => {
+export const reducer = (state = defaultState, action) => {
     switch (action.type) {
         case actionTypes.ADD_WEEK_DAY: {
             return state.updateIn(['week', 'days'], Immutable.List(), (days) => days.push(action.day))
