@@ -1,13 +1,25 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import useSheet from 'react-jss'
 import {bindActionCreators} from 'redux'
 import {Input, InputGroupButton, InputGroup} from 'reactstrap'
 import {actions} from '../../../redux/actions'
 import * as constants from './constants'
 import classes from './classes'
 
-const Event = ({event, index, updateEvent, removeEvent}) => {
-    const {meeting, lineHeightOne} = classes
+const style = {
+    meeting: {
+        backgroundColor: '#CCC',
+        position: 'absolute',
+        width: `calc(100% - ${constants.timeLineRowWidth}px)`,
+        margin: 0,
+        padding: 0
+    },
+}
+
+const Event = ({event, index, updateEvent, removeEvent, sheet}) => {
+    const {lineHeightOne} = classes
+    const {meeting} = sheet.classes
     const {begin, end, note} = event
 
     const hours = end - begin
@@ -72,4 +84,4 @@ const mapActionsToProps = (dispatch, ownProps) => {
     }, dispatch)
 }
 
-export default connect(null, mapActionsToProps)(Event)
+export default connect(null, mapActionsToProps)(useSheet(style)(Event))

@@ -1,13 +1,29 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import shortId from 'shortid'
+import useSheet from 'react-jss'
 import TimeLines from './timeLines'
 import {selectors} from '../../../redux/reducer'
-import classes from './classes'
 import Event from './event'
+import * as constants from './constants'
 
-const TopColumn = ({username, id, events, isPlaceholder}) => {
-    const {wrapper, lineHeightOne, placeholder} = classes
+const style = {
+    wrapper: {
+        height: constants.allMeetingsHeight + 2,
+        width: '100%',
+        border: '1px solid rgba(0,0,0,.15)',
+        borderRadius: '.25rem',
+        position: 'relative',
+    },
+    placeholder: {
+        backgroundColor: '#CCC',
+        width: '100%',
+        height: constants.allMeetingsHeight,
+    },
+}
+
+const TopColumn = ({username, id, events, isPlaceholder, sheet}) => {
+    const {wrapper, placeholder} = sheet.classes
 
     const mappedEvents = events.map((event, index) => (
         <Event key={shortId.generate()} event={event} username={username} index={index} columnId={id}/>))
@@ -16,7 +32,7 @@ const TopColumn = ({username, id, events, isPlaceholder}) => {
         <div className={wrapper}>
             {isPlaceholder
                 ? <div className={placeholder}/>
-                : <div><TimeLines columnId={id} username={username} className={lineHeightOne}/>{mappedEvents}</div>}
+                : <div><TimeLines columnId={id} username={username}/>{mappedEvents}</div>}
         </div>)
 }
 
@@ -34,4 +50,4 @@ const mapStateToProps = (state, ownProps) => ({
     events: selectors.getEvents(state, ownProps.username, ownProps.id),
 })
 
-export default connect(mapStateToProps)(TopColumn)
+export default connect(mapStateToProps)(useSheet(style)(TopColumn))
