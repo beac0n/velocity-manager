@@ -26,7 +26,7 @@ const TopColumn = ({username, id, events, isPlaceholder, sheet}) => {
     const {wrapper, placeholder} = sheet.classes
 
     const mappedEvents = events.map((event, index) => (
-        <Event key={shortId.generate()} event={event} username={username} index={index} columnId={id}/>))
+        <Event key={`Event-${index}`} event={event} username={username} index={index} columnId={id}/>))
 
     return (
         <div className={wrapper}>
