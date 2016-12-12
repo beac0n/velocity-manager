@@ -7,7 +7,6 @@ describe('selector', () => {
     let store
     beforeEach(() => {
         store = initStore()
-        store.dispatch(actions.changeSprintStart('Donnerstag'))
     })
 
     it('should get sprint end day monday after 1 week', () => {
