@@ -68,7 +68,10 @@ export const selectors = {
 }
 
 export const defaultState = Immutable.fromJS({
-    sprint: {start: {key: 'Do', name: 'Donnerstag', isWorkDay: true}, duration: 8}
+    sprint: {
+        start: {key: 'Do', name: 'Donnerstag', isWorkDay: true},
+        duration: 8,
+    }
 })
 
 export const reducer = (state = defaultState, action) => {
