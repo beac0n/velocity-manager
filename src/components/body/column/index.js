@@ -1,6 +1,5 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import shortId from 'shortid'
 import useSheet from 'react-jss'
 import TimeLines from './timeLines'
 import {selectors} from '../../../redux/reducer'
