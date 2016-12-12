@@ -5,12 +5,10 @@ import {stateNames} from './index'
 
 export const selectors = {
     getUsers: (state) => getCorrectState(state, stateNames.body).get('users').toJS(),
-    getEvents: (state, username, columnId) => getCorrectState(state, stateNames.body).getIn(['columns', username, columnId], Immutable.List()).toJS()
+    getEvents: (state, username, columnId) => getCorrectState(state, stateNames.body).getIn(['columns', username, String(columnId)], Immutable.List()).toJS()
 }
 
-export const defaultState = Immutable.Map({
-    users: Immutable.List()
-})
+export const defaultState = Immutable.fromJS({users: []})
 
 export const reducer = (state = defaultState, action) => {
     switch (action.type) {

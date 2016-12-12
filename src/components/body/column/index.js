@@ -116,6 +116,17 @@ const TopColumn = ({username, id, events, updateEvent, removeEvent, isPlaceholde
         </div>)
 }
 
+TopColumn.propTypes = {
+    username: React.PropTypes.string,
+    id: React.PropTypes.string,
+    event: React.PropTypes.object,
+    updateEvent: React.PropTypes.func,
+    removeEvent: React.PropTypes.func,
+    isPlaceholder: React.PropTypes.bool,
+    sheet: React.PropTypes.object,
+}
+
+
 const mapStateToProps = (state, ownProps) => ({
     events: selectors.getEvents(state, ownProps.username, ownProps.id),
 })
