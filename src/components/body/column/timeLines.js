@@ -1,6 +1,7 @@
 import React from 'react'
 import useSheet from 'react-jss'
 import TimeLine from './timeLine'
+import * as constants from './constants'
 
 const style = {
     timeLineWrapper: {
@@ -14,18 +15,18 @@ const style = {
 }
 
 
-const TimeLines = ({lineHeight, sheet, columnId, username, timeLinesCount, className}) => {
+const TimeLines = ({sheet, columnId, username, className}) => {
     const {timeLineWrapper} = sheet.classes
 
     const timeLines = []
-    for (let i = 0; i < timeLinesCount; ++i) {
+    for (let i = 0; i < constants.hoursPerDay; ++i) {
         timeLines.push(
             <TimeLine
-                timeLinesCount={timeLinesCount}
+                timeLinesCount={constants.hoursPerDay}
                 key={`timeline-${i}`}
                 username={username}
                 columnId={columnId}
-                lineHeight={lineHeight}
+                lineHeight={constants.lineHeight}
                 index={i}
                 className={className}
             />)

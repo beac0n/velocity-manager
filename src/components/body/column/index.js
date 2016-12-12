@@ -1,118 +1,22 @@
 import React from 'react'
-import useSheet from 'react-jss'
 import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
-import {Input, InputGroupButton, InputGroup} from 'reactstrap'
+import shortId from 'shortid'
 import TimeLines from './timeLines'
 import {selectors} from '../../../redux/reducer'
-import {actions} from '../../../redux/actions'
+import classes from './classes'
+import Event from './event'
 
-const hoursPerDay = 24
-const lineHeight = 20
-const allMeetingsHeight = lineHeight * hoursPerDay
+const TopColumn = ({username, id, events, isPlaceholder}) => {
+    const {wrapper, lineHeightOne, placeholder} = classes
 
-const timeLineRowWidth = 35
-
-const style = {
-    wrapper: {
-        height: allMeetingsHeight + 2,
-        width: '100%',
-        border: '1px solid rgba(0,0,0,.15)',
-        borderRadius: '.25rem',
-        position: 'relative',
-    },
-    meeting: {
-        backgroundColor: '#CCC',
-        position: 'absolute',
-        width: `calc(100% - ${timeLineRowWidth}px)`,
-        margin: 0,
-        padding: 0
-    },
-    lineHeightOne: {
-        lineHeight: 1,
-        margin: 0,
-        padding: 0,
-    },
-    placeholder: {
-        backgroundColor: '#CCC',
-        width: '100%',
-        height: allMeetingsHeight,
-
-    },
-}
-
-const TopColumn = ({username, id, events, updateEvent, removeEvent, isPlaceholder, sheet}) => {
-    const {wrapper, lineHeightOne, meeting, placeholder} = sheet.classes
-
-    const eventsMap = (event, index) => {
-        const {begin, end, note} = event
-
-        const hours = end - begin
-        const height = hours * lineHeight
-        const top = begin * lineHeight
-
-        const fontSize = 12
-
-        const inlineStyle = {
-            height,
-            top,
-            fontSize: height < fontSize ? height : fontSize,
-            zIndex: top,
-            borderRadius: '0.25rem',
-            border: '1px solid #999',
-            marginLeft: timeLineRowWidth,
-        }
-
-        const inputHeight = height - 2
-
-        return (
-            <div
-                key={`event-${index}`}
-                style={inlineStyle}
-                className={meeting}
-            >
-                <InputGroup style={{
-                    borderCollapse: 'initial',
-                    display: 'table-row',
-                }}>
-                    <Input
-                        value={note || ''}
-                        type="textarea"
-                        onChange={(e) => updateEvent(index, e.target.value)}
-                        className={lineHeightOne}
-                        style={{
-                            resize: 'none',
-                            fontSize,
-                            height: inputHeight,
-                            borderRadius: '0.25rem',
-                        }}
-                    />
-                    <InputGroupButton
-                        onClick={() => removeEvent(index)}
-                        style={{
-                            fontSize,
-                            height: inputHeight,
-                            padding: '0 1px 0 1px',
-                        }}>
-                        X
-                    </InputGroupButton>
-                </InputGroup>
-            </div>)
-    }
+    const mappedEvents = events.map((event, index) => (
+        <Event key={shortId.generate()} event={event} username={username} index={index} columnId={id}/>))
 
     return (
         <div className={wrapper}>
-            {!isPlaceholder &&
-            <TimeLines
-                columnId={id}
-                username={username}
-                lineHeight={lineHeight}
-                className={lineHeightOne}
-                timeLinesCount={hoursPerDay}
-            />}
             {isPlaceholder
                 ? <div className={placeholder}/>
-                : events.map(eventsMap)}
+                : <div><TimeLines columnId={id} username={username} className={lineHeightOne}/>{mappedEvents}</div>}
         </div>)
 }
 
@@ -126,19 +30,8 @@ TopColumn.propTypes = {
     sheet: React.PropTypes.object,
 }
 
-
 const mapStateToProps = (state, ownProps) => ({
     events: selectors.getEvents(state, ownProps.username, ownProps.id),
 })
 
-const mapActionsToProps = (dispatch, ownProps) => {
-    const {username} = ownProps
-    const columnId = ownProps.id
-
-    return bindActionCreators({
-        removeEvent: (index) => actions.removeEvent({username, columnId, index}),
-        updateEvent: (index, note) => actions.updateEvent({username, columnId, index, note}),
-    }, dispatch)
-}
-
-export default connect(mapStateToProps, mapActionsToProps)(useSheet(style)(TopColumn))
+export default connect(mapStateToProps)(TopColumn)
