@@ -1,6 +1,6 @@
 import React from 'react'
 import useSheet from 'react-jss'
-import TimeLine from './timeLine'
+import TimeLine from './timeLine.connected'
 import * as constants from './constants'
 import classes from './classes'
 

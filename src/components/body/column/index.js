@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import useSheet from 'react-jss'
 import TimeLines from './timeLines'
 import {selectors} from '../../../redux/reducer'
-import Event from './event'
+import Event from './event.connected'
 import * as constants from './constants'
 
 const style = {

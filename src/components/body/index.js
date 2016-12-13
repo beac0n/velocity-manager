@@ -6,7 +6,7 @@ import {Table, Container} from 'reactstrap'
 import {selectors} from '../../redux/reducer'
 import {actions} from '../../redux/actions'
 import DataLine from './dataLine.connected'
-import NewUserLine from './newUserLine'
+import NewUserLine from './newUserLine.connected'
 
 const style = {
     weekDay: {minWidth: 150},
