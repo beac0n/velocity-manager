@@ -9,50 +9,38 @@ describe('head reducer', () => {
         store = initStore()
     })
 
-    describe('sprint end', () => {
-        it('should get sprint end day monday after 1 week', () => {
-            store.dispatch(actions.changeSprintDuration(8))
+
+    it('should have the right work days', () => {
+
+    })
+
+    const sprintStartDays = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag']
+    sprintStartDays.forEach((sprintStartDay) => {
+        it(`the sprint should start on ${sprintStartDay}`, () => {
+            store.dispatch(actions.changeSprintStart(sprintStartDay))
             const state = store.getState()
 
-            expect(selectors.getSprintEnd(state)).toBe('Montag')
-        })
-
-        it('should get sprint end day monday after 1 week with half day', () => {
-            store.dispatch(actions.changeSprintDuration(7.5))
-            const state = store.getState()
-
-            expect(selectors.getSprintEnd(state)).toBe('Montag')
-        })
-
-        it('should get sprint end day wednesday after 1 week', () => {
-            store.dispatch(actions.changeSprintDuration(5))
-            const state = store.getState()
-
-            expect(selectors.getSprintEnd(state)).toBe('Mittwoch')
-        })
-
-        it('should get sprint end day thursday after 1 week', () => {
-            store.dispatch(actions.changeSprintDuration(6))
-            const state = store.getState()
-
-            expect(selectors.getSprintEnd(state)).toBe('Donnerstag')
-        })
-
-        it('should get sprint end day after 1 day', () => {
-            store.dispatch(actions.changeSprintDuration(1))
-            const state = store.getState()
-
-            expect(selectors.getSprintEnd(state)).toBe('Donnerstag')
-        })
-
-        it('should get sprint end day after 2 days', () => {
-            store.dispatch(actions.changeSprintDuration(2))
-            const state = store.getState()
-
-            expect(selectors.getSprintEnd(state)).toBe('Freitag')
+            expect(selectors.getSprintStart(state).name).toBe(sprintStartDay)
         })
     })
 
+    const sprintEndTestData = [
+        {duration: 8, sprintEnd: 'Montag'},
+        {duration: 7.5, sprintEnd: 'Montag'},
+        {duration: 5, sprintEnd: 'Mittwoch'},
+        {duration: 6, sprintEnd: 'Donnerstag'},
+        {duration: 1, sprintEnd: 'Donnerstag'},
+        {duration: 2, sprintEnd: 'Freitag'}
+    ]
+    sprintEndTestData.forEach((data) => {
+        const {duration, sprintEnd} = data
 
+        it(`the sprint should end after ${duration} days on ${sprintEnd}`, () => {
+            store.dispatch(actions.changeSprintDuration(duration))
+            const state = store.getState()
+
+            expect(selectors.getSprintEndDay(state)).toBe(sprintEnd)
+        })
+    })
 
 })

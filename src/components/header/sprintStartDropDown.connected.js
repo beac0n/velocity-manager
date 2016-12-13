@@ -4,6 +4,7 @@ import useSheet from 'react-jss'
 import {Dropdown, DropdownToggle, DropdownMenu, DropdownItem} from 'reactstrap';
 import {actions} from '../../redux/actions'
 import {selectors} from '../../redux/reducer'
+import {workDayNames} from '../../redux/constants'
 
 const style = {button: {width: '100%'}}
 
@@ -20,7 +21,7 @@ class SprintStartDropDown extends Component {
     }
 
     render() {
-        const {sheet, saveSprintStart, sprintStart, workDayNames} = this.props
+        const {sheet, saveSprintStart, sprintStart} = this.props
         const {classes} = sheet
 
         return (
@@ -38,7 +39,6 @@ class SprintStartDropDown extends Component {
 
 
 const mapStateToProps = (state) => ({
-    workDayNames: selectors.getWorkDayNames(state),
     sprintStart: selectors.getSprintStart(state).name,
 })
 const mapActionsToProps = {

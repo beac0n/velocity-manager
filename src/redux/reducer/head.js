@@ -1,34 +1,22 @@
 import Immutable from 'immutable'
 import {getCorrectState, stateNames} from './util'
 import {actionTypes} from '../actions'
-
-const weekDays = Object.freeze([
-    {key: 'Mo', name: 'Montag', isWorkDay: true},
-    {key: 'Di', name: 'Dienstag', isWorkDay: true},
-    {key: 'Mi', name: 'Mittwoch', isWorkDay: true},
-    {key: 'Do', name: 'Donnerstag', isWorkDay: true},
-    {key: 'Fr', name: 'Freitag', isWorkDay: true},
-    {key: 'Sa', name: 'Samstag', isWorkDay: false},
-    {key: 'So', name: 'Sonntag', isWorkDay: false}
-])
+import {weekDays, workDayNames} from '../constants'
 
 const dataRetrievers = {
     getSprintStart: (state) => getCorrectState(state, stateNames.head).getIn(['sprint', 'start']).toJS(),
     getSprintDuration: (state) => getCorrectState(state, stateNames.head).getIn(['sprint', 'duration']),
 }
 
-const getWorkDayNames = (state) => weekDays.filter((day) => day.isWorkDay).map((day) => day.name)
-
 const helper = {
     getWeekDayName: (state, index) => weekDays.filter((_, dayIndex) => index === dayIndex)[0].name,
-    getSprintStartIndex: (state) => getWorkDayNames(state).indexOf(dataRetrievers.getSprintStart(state).name)
+    getSprintStartIndex: (state) => workDayNames.indexOf(dataRetrievers.getSprintStart(state).name)
 }
 
 export const selectors = {
-    getWorkDayNames,
     getSprintDuration: dataRetrievers.getSprintDuration,
     getSprintStart: dataRetrievers.getSprintStart,
-    getSprintEnd: (state) => {
+    getSprintEndDay: (state) => {
         const workDaysLength = weekDays.filter((day) => day.isWorkDay).length
 
         const sprintStartDayIndex = helper.getSprintStartIndex(state)

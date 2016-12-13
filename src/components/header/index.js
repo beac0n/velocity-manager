@@ -23,7 +23,7 @@ const Header = ({sprintEnd, save}) => (
 
 const mapStateToProps = (state) => ({
     save: () => localStorage && localStorage.setItem && localStorage.setItem('velocity-manager-state', JSON.stringify(state)),
-    sprintEnd: selectors.getSprintEnd(state),
+    sprintEnd: selectors.getSprintEndDay(state),
 })
 
 export default connect(mapStateToProps)(Header)
