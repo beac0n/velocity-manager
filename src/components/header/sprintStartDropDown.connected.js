@@ -25,13 +25,11 @@ export class SprintStartDropDown extends Component {
         const {classes} = sheet
 
         return (
-            <Dropdown isOpen={this.state.dropDownOpen} toggle={this.toggle}>
+            <Dropdown testid="test" isOpen={this.state.dropDownOpen} toggle={this.toggle}>
                 <DropdownToggle caret className={classes.button}>{sprintStart || 'Bitte auswählen'}</DropdownToggle>
                 <DropdownMenu>
                     {workDayNames.map((value, index) => (
-                        <DropdownItem key={index} onClick={() => saveSprintStart(value)}>
-                            {value}
-                        </DropdownItem>))}
+                        <DropdownItem key={index} onClick={() => saveSprintStart(value)}>{value}</DropdownItem>))}
                 </DropdownMenu>
             </Dropdown>)
     }
