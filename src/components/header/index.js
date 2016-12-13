@@ -15,7 +15,7 @@ const Header = ({sprintEnd, save}) => (
 
         <Row>
             <Col xs="3">Sprintbeginn:<WeekDaysDropDownSprintStart /></Col>
-            <Col xs="3">Sprintdauer (Tage):<SprintDurationInput minValue="1" maxValue="14" /></Col>
+            <Col xs="3">Sprintdauer (Tage):<SprintDurationInput /></Col>
             <Col xs="3">Sprintende:<Input disabled={true} value={sprintEnd}/></Col>
             <Col xs="3">&zwnj;<InputGroupButton onClick={save}>Speichern</InputGroupButton></Col>
         </Row>

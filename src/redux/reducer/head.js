@@ -64,11 +64,22 @@ export const defaultState = Immutable.fromJS({
 export const reducer = (state = defaultState, action) => {
     switch (action.type) {
         case actionTypes.CHANGE_SPRINT_DURATION: {
-            return state.updateIn(['sprint', 'duration'], () => Number(action.sprintDuration))
+            let newSprintDuration = Number(action.sprintDuration)
+
+            const maxSprintDuration = 14
+            const minSprintDuration = 1
+
+            if (newSprintDuration > maxSprintDuration) {
+                newSprintDuration = maxSprintDuration
+            } else if (newSprintDuration < minSprintDuration) {
+                newSprintDuration = minSprintDuration
+            }
+
+            return state.updateIn(['sprint', 'duration'], () => newSprintDuration)
         }
         case actionTypes.CHANGE_SPRINT_START: {
-            return state.updateIn(['sprint', 'start'], () => (
-                Immutable.fromJS(weekDays.filter((day) => day.name === action.sprintDay)[0])))
+            const newSprintStart = weekDays.find((day) => day.name === action.sprintDay)
+            return newSprintStart ? state.updateIn(['sprint', 'start'], () => Immutable.fromJS(newSprintStart)) : state
         }
         default:
             return state
