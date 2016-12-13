@@ -1,7 +1,6 @@
 import Immutable from 'immutable'
-import {getCorrectState} from './util'
+import {getCorrectState, stateNames} from './util'
 import {actionTypes} from '../actions'
-import {stateNames} from './index'
 
 const weekDays = Object.freeze([
     {key: 'Mo', name: 'Montag', isWorkDay: true},

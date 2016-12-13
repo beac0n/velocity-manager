@@ -1,7 +1,6 @@
 import Immutable from 'immutable'
-import {getCorrectState} from './util'
+import {getCorrectState, stateNames} from './util'
 import {actionTypes} from '../actions'
-import {stateNames} from './index'
 
 export const selectors = {
     getUsers: (state) => getCorrectState(state, stateNames.body).get('users').toJS(),
