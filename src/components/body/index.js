@@ -13,7 +13,7 @@ const style = {
     asSmallAsPossible: {width: 1}
 }
 
-const Body = ({users = [], sprintDays, sheet}) => {
+export const Body = ({users = [], sprintDays, sheet}) => {
     const {asSmallAsPossible, weekDay} = sheet.classes
 
     const columns = sprintDays.map((day, index) => (

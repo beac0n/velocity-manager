@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import Column from './column/index'
 import {selectors} from '../../redux/reducer'
 
-const DataLine = ({username, sprintDays, lastOne}) => (
+export const DataLine = ({username, sprintDays, lastOne}) => (
     <tr style={{borderBottom: lastOne ? undefined : '2px solid black'}}>
         <th>{username}</th>
         {sprintDays.map((day, index) => (

@@ -21,7 +21,7 @@ const style = {
     },
 }
 
-const TopColumn = ({username, id, events, isPlaceholder, sheet}) => {
+export const TopColumn = ({username, id, events, isPlaceholder, sheet}) => {
     const {wrapper, placeholder} = sheet.classes
 
     const mappedEvents = events.map((event, index) => (

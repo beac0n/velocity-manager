@@ -5,7 +5,7 @@ import {Row, Col, Input, InputGroupButton, Jumbotron} from 'reactstrap'
 import WeekDaysDropDownSprintStart from './sprintStartDropDown.connected'
 import SprintDurationInput from './sprintDurationInput.connected'
 
-const Header = ({sprintEnd, save}) => (
+export const Header = ({sprintEnd, save}) => (
     <Jumbotron>
         <h1 className="display-3">Velocity Manager</h1>
         <p className="lead">

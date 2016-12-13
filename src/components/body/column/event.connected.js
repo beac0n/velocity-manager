@@ -17,7 +17,7 @@ const style = {
     },
 }
 
-const Event = ({event, index, updateEvent, removeEvent, sheet}) => {
+export const Event = ({event, index, updateEvent, removeEvent, sheet}) => {
     const {lineHeightOne} = classes
     const {meeting} = sheet.classes
     const {begin, end, note} = event

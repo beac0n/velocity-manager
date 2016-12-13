@@ -16,7 +16,7 @@ const style = {
 }
 
 
-const TimeLines = ({sheet, columnId, username}) => {
+export const TimeLines = ({sheet, columnId, username}) => {
     const {timeLineWrapper} = sheet.classes
     const {lineHeightOne} = classes
 

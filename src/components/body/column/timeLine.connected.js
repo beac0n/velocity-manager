@@ -14,7 +14,7 @@ const style = {
     },
 }
 
-class TimeLine extends Component {
+export class TimeLine extends Component {
 
     constructor(props) {
         super(props)

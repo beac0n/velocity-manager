@@ -8,7 +8,7 @@ import {workDayNames} from '../../redux/constants'
 
 const style = {button: {width: '100%'}}
 
-class SprintStartDropDown extends Component {
+export class SprintStartDropDown extends Component {
     constructor(props) {
         super(props)
 

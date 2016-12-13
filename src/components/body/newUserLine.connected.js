@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {Input, Button} from 'reactstrap'
 import {actions} from '../../redux/actions'
 
-class NewUserLine extends Component {
+export class NewUserLine extends Component {
     constructor(props) {
         super(props)
 
