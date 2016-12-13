@@ -4,7 +4,8 @@ import {actionTypes} from '../actions'
 
 export const selectors = {
     getUsers: (state) => getCorrectState(state, stateNames.body).get('users').toJS(),
-    getEvents: (state, username, columnId) => getCorrectState(state, stateNames.body).getIn(['columns', username, String(columnId)], Immutable.List()).toJS(),
+    getEvents: (state, username, columnId) => (
+        getCorrectState(state, stateNames.body).getIn(['columns', String(username), String(columnId)], Immutable.List()).toJS()),
 }
 
 export const defaultState = Immutable.fromJS({users: []})
@@ -16,15 +17,15 @@ export const reducer = (state = defaultState, action) => {
         }
         case actionTypes.ADD_EVENT: {
             const {username, columnId, begin, end = begin + 1} = action.event
-            return state.updateIn(['columns', username, columnId], Immutable.List(), (events) => events.push({begin, end}))
+            return state.updateIn(['columns', String(username), String(columnId)], Immutable.List(), (events) => events.push({begin, end}))
         }
         case actionTypes.UPDATE_EVENT: {
             const {username, columnId, index, note} = action.event
-            return state.updateIn(['columns', username, columnId, index], (event) => Object.assign({}, event, {note}))
+            return state.updateIn(['columns', String(username), String(columnId), String(index)], (event) => Object.assign({}, event, {note}))
         }
         case actionTypes.REMOVE_EVENT: {
             const {username, columnId, index} = action.event
-            return state.updateIn(['columns', username, columnId], (events) => events.splice(index, 1))
+            return state.updateIn(['columns', String(username), String(columnId)], (events) => events.splice(index, 1))
         }
         default:
             return state
