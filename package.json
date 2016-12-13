@@ -80,6 +80,8 @@
     "test": "node scripts/test.js --env=jsdom"
   },
   "jest": {
+    "collectCoverage": true,
+    "coverageFormats": ["json", "html"],
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}"
     ],
