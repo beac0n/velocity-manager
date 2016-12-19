@@ -4,18 +4,18 @@ import {actionTypes} from '../actions'
 import {weekDays, workDayNames} from '../constants'
 
 const dataRetrievers = {
-    getSprintStart: (state) => getCorrectState(state, stateNames.head).getIn(['sprint', 'start']).toJS(),
+    getSprintStartName: (state) => getCorrectState(state, stateNames.head).getIn(['sprint', 'start']),
     getSprintDuration: (state) => getCorrectState(state, stateNames.head).getIn(['sprint', 'duration']),
 }
 
 const helper = {
     getWeekDayName: (state, index) => weekDays.filter((_, dayIndex) => index === dayIndex)[0].name,
-    getSprintStartIndex: (state) => workDayNames.indexOf(dataRetrievers.getSprintStart(state).name)
+    getSprintStartIndex: (state) => workDayNames.indexOf(dataRetrievers.getSprintStartName(state))
 }
 
 export const selectors = {
     getSprintDuration: dataRetrievers.getSprintDuration,
-    getSprintStart: dataRetrievers.getSprintStart,
+    getSprintStartName: dataRetrievers.getSprintStartName,
     getSprintEndDay: (state) => {
         const workDaysLength = weekDays.filter((day) => day.isWorkDay).length
 
@@ -55,10 +55,7 @@ export const selectors = {
 }
 
 export const defaultState = Immutable.fromJS({
-    sprint: {
-        start: {key: 'Do', name: 'Donnerstag'},
-        duration: 8,
-    }
+    sprint: {start: 'Donnerstag', duration: 8}
 })
 
 export const reducer = (state = defaultState, action) => {
@@ -78,8 +75,8 @@ export const reducer = (state = defaultState, action) => {
             return state.updateIn(['sprint', 'duration'], () => newSprintDuration)
         }
         case actionTypes.CHANGE_SPRINT_START: {
-            const newSprintStart = weekDays.find((day) => day.name === action.sprintDay)
-            return newSprintStart ? state.updateIn(['sprint', 'start'], () => Immutable.fromJS(newSprintStart).delete('isWorkDay')) : state
+            const {name} = weekDays.find((day) => day.name === action.sprintDay) || {}
+            return name ? state.updateIn(['sprint', 'start'], () => name) : state
         }
         default:
             return state
