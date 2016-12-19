@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import useSheet from 'react-jss'
 import {bindActionCreators} from 'redux'
 import {Input, InputGroupButton, InputGroup} from 'reactstrap'
+import octicons from 'octicons'
 import {actions} from '../../../redux/actions'
 import * as constants from './constants'
 import classes from './classes'
@@ -64,13 +65,12 @@ export const Event = ({event, index, updateEvent, removeEvent, sheet}) => {
                 />
                 <InputGroupButton
                     onClick={removeEvent}
+                    dangerouslySetInnerHTML={{__html: octicons.trashcan.toSVG()}}
                     style={{
                         fontSize,
                         height: inputHeight,
                         padding: '0 1px 0 1px',
-                    }}>
-                    X
-                </InputGroupButton>
+                    }} />
             </InputGroup>
         </div>)
 }
