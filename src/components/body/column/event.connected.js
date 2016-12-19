@@ -4,73 +4,68 @@ import useSheet from 'react-jss'
 import {bindActionCreators} from 'redux'
 import {Input, InputGroupButton, InputGroup} from 'reactstrap'
 import octicons from 'octicons'
+import classNames from 'classnames'
 import {actions} from '../../../redux/actions'
 import * as constants from './constants'
 import classes from './classes'
 
 const style = {
-    meeting: {
+    meetingClass: {
         backgroundColor: '#CCC',
         position: 'absolute',
         width: `calc(100% - ${constants.timeLineRowWidth}px)`,
         margin: 0,
-        padding: 0
+        padding: 0,
+        borderRadius: '0.25rem',
+        border: '1px solid #999',
+        marginLeft: constants.timeLineRowWidth,
+    },
+    inputGroupClass: {
+        borderCollapse: 'initial',
+        display: 'table-row',
+    },
+    inputClass: {
+        resize: 'none',
+        borderRadius: '0.25rem',
+        fontSize: constants.fontSize,
+    },
+    inputGroupButton: {
+        fontSize: constants.fontSize,
+        padding: '0 1px 0 1px',
     },
 }
 
 export const Event = ({event, index, updateEvent, removeEvent, sheet}) => {
     const {lineHeightOne} = classes
-    const {meeting} = sheet.classes
+    const {meetingClass, inputGroupClass, inputClass, inputGroupButton} = sheet.classes
     const {begin, end, note} = event
+    const {lineHeight, fontSize} = constants
 
     const hours = end - begin
-    const height = hours * constants.lineHeight
-    const top = begin * constants.lineHeight
+    const height = hours * lineHeight
+    const top = begin * lineHeight
 
-    const fontSize = 12
-
-    const inlineStyle = {
-        height,
-        top,
-        fontSize: height < fontSize ? height : fontSize,
-        zIndex: top,
-        borderRadius: '0.25rem',
-        border: '1px solid #999',
-        marginLeft: constants.timeLineRowWidth,
-    }
+    const realFontSize = height < fontSize ? height : fontSize
+    const inlineStyle = {height, top, fontSize: realFontSize, zIndex: top}
 
     const inputHeight = height - 2
 
     return (
-        <div
-            key={`event-${index}`}
-            style={inlineStyle}
-            className={meeting}
-        >
-            <InputGroup style={{
-                borderCollapse: 'initial',
-                display: 'table-row',
-            }}>
+        <div key={`event-${index}`} style={inlineStyle} className={meetingClass}>
+            <InputGroup className={inputGroupClass}>
                 <Input
                     value={note || ''}
                     type="textarea"
                     onChange={(e) => updateEvent(e.target.value)}
-                    className={lineHeightOne}
-                    style={{
-                        resize: 'none',
-                        fontSize,
-                        height: inputHeight,
-                        borderRadius: '0.25rem',
-                    }}
+                    className={classNames(lineHeightOne, inputClass)}
+                    style={{height: inputHeight}}
                 />
                 <InputGroupButton
                     onClick={removeEvent}
                     dangerouslySetInnerHTML={{__html: octicons.trashcan.toSVG()}}
-                    style={{
-                        fontSize,
-                        height: inputHeight,
-                        padding: '0 1px 0 1px',
-                    }} />
+                    className={inputGroupButton}
+                    style={{height: inputHeight}} 
+                />
             </InputGroup>
         </div>)
 }

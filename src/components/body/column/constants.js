@@ -3,3 +3,4 @@ export const lineHeight = 20
 export const allMeetingsHeight = lineHeight * hoursPerDay
 
 export const timeLineRowWidth = 35
+export const fontSize = 12
