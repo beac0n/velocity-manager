@@ -45,8 +45,6 @@ TopColumn.propTypes = {
     sheet: React.PropTypes.object,
 }
 
-const mapStateToProps = (state, ownProps) => ({
-    events: selectors.getEvents(state, ownProps.username, ownProps.id),
-})
+const mapStateToProps = (state, ownProps) => ({events: selectors.getEvents(state, ownProps.username, ownProps.id)})
 
 export default connect(mapStateToProps)(useSheet(style)(TopColumn))

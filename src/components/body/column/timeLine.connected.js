@@ -75,8 +75,5 @@ export class TimeLine extends Component {
     }
 }
 
-const mapActionsToProps = {
-    addEvent: actions.addEvent,
-}
-
+const mapActionsToProps = {addEvent: actions.addEvent}
 export default connect(null, mapActionsToProps)(useSheet(style)(TimeLine))

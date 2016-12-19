@@ -5,6 +5,8 @@ import {Row, Col, Input, InputGroupButton, Jumbotron} from 'reactstrap'
 import WeekDaysDropDownSprintStart from './sprintStartDropDown.connected'
 import SprintDurationInput from './sprintDurationInput.connected'
 
+const xs = 3
+
 export const Header = ({sprintEnd, save}) => (
     <Jumbotron>
         <h1 className="display-3">Velocity Manager</h1>
@@ -14,10 +16,10 @@ export const Header = ({sprintEnd, save}) => (
         </p>
 
         <Row>
-            <Col xs="3">Sprintbeginn:<WeekDaysDropDownSprintStart /></Col>
-            <Col xs="3">Sprintdauer (Tage):<SprintDurationInput /></Col>
-            <Col xs="3">Sprintende:<Input disabled={true} value={sprintEnd}/></Col>
-            <Col xs="3">&zwnj;<InputGroupButton onClick={save}>Speichern</InputGroupButton></Col>
+            <Col xs={xs}>Sprintbeginn:<WeekDaysDropDownSprintStart /></Col>
+            <Col xs={xs}>Sprintdauer (Tage):<SprintDurationInput /></Col>
+            <Col xs={xs}>Sprintende:<Input disabled={true} value={sprintEnd}/></Col>
+            <Col xs={xs}>&zwnj;<InputGroupButton onClick={save}>Speichern</InputGroupButton></Col>
         </Row>
     </Jumbotron>)
 

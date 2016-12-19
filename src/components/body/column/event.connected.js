@@ -33,7 +33,7 @@ const style = {
     },
     inputGroupButton: {
         fontSize,
-        padding: '0 1px 0 1px',
+        padding: '0 1px',
     },
 }
 
@@ -79,5 +79,4 @@ const mapActionsToProps = (dispatch, ownProps) => {
         updateEvent: (note) => actions.updateEvent({username, columnId, index, note}),
     }, dispatch)
 }
-
 export default connect(null, mapActionsToProps)(useSheet(style)(Event))

@@ -49,13 +49,9 @@ export class NewUserLine extends Component {
                         onKeyPress={this.handleKeyPress}
                     />
                 </td>
-
             </tr>)
     }
 }
 
-const mapActionsToProps = {
-    addUser: actions.addUser,
-}
-
+const mapActionsToProps = {addUser: actions.addUser}
 export default connect(null, mapActionsToProps)(NewUserLine)

@@ -35,11 +35,6 @@ export class SprintStartDropDown extends Component {
     }
 }
 
-
-const mapStateToProps = (state) => ({
-    sprintStart: selectors.getSprintStart(state).name,
-})
-const mapActionsToProps = {
-    saveSprintStart: (weekDay) => actions.changeSprintStart(weekDay),
-}
+const mapStateToProps = (state) => ({sprintStart: selectors.getSprintStart(state).name})
+const mapActionsToProps = {saveSprintStart: (weekDay) => actions.changeSprintStart(weekDay)}
 export default connect(mapStateToProps, mapActionsToProps)(useSheet(style)(SprintStartDropDown))
