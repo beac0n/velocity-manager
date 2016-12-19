@@ -13,7 +13,11 @@ export const defaultState = Immutable.fromJS({users: []})
 export const reducer = (state = defaultState, action) => {
     switch (action.type) {
         case actionTypes.ADD_USER: {
-            return state.updateIn(['users'], Immutable.List(), (users) => users.push(action.username))
+            return state.update('users', (users) => users.push(action.username))
+        }
+        case actionTypes.REMOVE_USER: {
+            const {username} = action
+            return state.update('users', (users) => users.filter((user) => user !== username)).removeIn(['columns', String(username)])
         }
         case actionTypes.ADD_EVENT: {
             const {username, columnId, begin, end = begin + 1} = action.event
