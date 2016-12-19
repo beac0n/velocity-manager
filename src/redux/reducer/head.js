@@ -56,7 +56,7 @@ export const selectors = {
 
 export const defaultState = Immutable.fromJS({
     sprint: {
-        start: {key: 'Do', name: 'Donnerstag', isWorkDay: true},
+        start: {key: 'Do', name: 'Donnerstag'},
         duration: 8,
     }
 })
@@ -79,7 +79,7 @@ export const reducer = (state = defaultState, action) => {
         }
         case actionTypes.CHANGE_SPRINT_START: {
             const newSprintStart = weekDays.find((day) => day.name === action.sprintDay)
-            return newSprintStart ? state.updateIn(['sprint', 'start'], () => Immutable.fromJS(newSprintStart)) : state
+            return newSprintStart ? state.updateIn(['sprint', 'start'], () => Immutable.fromJS(newSprintStart).delete('isWorkDay')) : state
         }
         default:
             return state
