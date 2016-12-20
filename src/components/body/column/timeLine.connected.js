@@ -4,13 +4,17 @@ import useSheet from 'react-jss'
 import classNames from 'classnames'
 import {connect} from 'react-redux'
 import {actions} from '../../../redux/actions'
-
+import {lineHeight, hoursPerDay} from './constants'
+import globalClasses from './classes'
 
 const style = {
     timeLine: {
         margin: 0,
-        padding: '0 0 0 3px',
         fontSize: 12,
+        padding: 3,
+        borderColor: '#CCC',
+        borderStyle: 'solid',
+        height: lineHeight,
     },
 }
 
@@ -28,13 +32,13 @@ export class TimeLine extends Component {
         this.setState({position: null})
     }
 
-    handleStop(e, data) {
-        const {username, columnId, addEvent, lineHeight, index} = this.props
+    handleStop(_, data) {
+        const {username, columnId, addEvent, index} = this.props
 
         const begin = index
         const end = 1 + index + Math.floor((data.lastY) / lineHeight)
 
-        if(begin !== end) {
+        if (begin !== end) {
             addEvent({username, columnId, begin, end})
         }
 
@@ -42,14 +46,18 @@ export class TimeLine extends Component {
     }
 
     render() {
-        const {sheet, className, lineHeight, timeLinesCount, index} = this.props
+        const {sheet, index} = this.props
         const {classes} = sheet
+
+        const lastDay = hoursPerDay - 1
+        const wholeHeight = lastDay * lineHeight
+        const heightTilStart = index * lineHeight
 
         return (
             <Draggable
                 axis="none"
                 grid={[lineHeight, lineHeight]}
-                bounds={{top: 0, bottom: (timeLinesCount - 1) * lineHeight}}
+                bounds={{top: 0, bottom: wholeHeight - heightTilStart}}
                 defaultPosition={{x: 0, y: 0}}
                 position={this.state.position}
                 onStart={this.handleStart}
@@ -57,15 +65,10 @@ export class TimeLine extends Component {
             >
                 <p
                     style={{
-                        height: lineHeight,
-                        margin: 0,
-                        padding: '3px 3px 3px 3px',
-                        borderWidth: (timeLinesCount - 1 === index) ? 0 : '0 0 1px 0',
-                        borderColor: '#CCC',
-                        borderStyle: 'solid',
+                        borderWidth: lastDay === index ? 0 : '0 0 1px 0',
                         backgroundColor: this.state.backgroundColor,
                     }}
-                    className={classNames(classes.timeLine, className)}
+                    className={classNames(classes.timeLine, globalClasses.lineHeightOne)}
                     onMouseOver={() => this.setState({backgroundColor: '#CCC'})}
                     onMouseOut={() => this.setState({backgroundColor: undefined})}
                 >

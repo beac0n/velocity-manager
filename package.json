@@ -81,7 +81,7 @@
     "start": "yarn check && OPEN_BROWSER=false node scripts/start.js",
     "build": "yarn check && node scripts/build.js",
     "test": "yarn check && node scripts/test.js --env=jsdom",
-    "deploy": "yarn check && yarn run build && gh-pages -d build"
+    "deploy": "yarn run build && gh-pages -d build"
   },
   "jest": {
     "collectCoverage": true,
