@@ -3,8 +3,8 @@ import Draggable from 'react-draggable'
 import useSheet from 'react-jss'
 import classNames from 'classnames'
 import {connect} from 'react-redux'
-import {addEvent} from '../../../redux/controllers'
-import {lineHeight, hoursPerDay} from './constants'
+import * as controllers from '../../../redux/controllers'
+import * as constants from './constants'
 import globalClasses from './classes'
 
 const style = {
@@ -14,7 +14,7 @@ const style = {
         padding: 3,
         borderColor: '#CCC',
         borderStyle: 'solid',
-        height: lineHeight,
+        height: constants.lineHeight,
     },
 }
 
@@ -36,7 +36,7 @@ export class TimeLine extends Component {
         const {username, columnId, addEvent, index} = this.props
 
         const begin = index
-        const end = 1 + index + Math.floor((data.lastY) / lineHeight)
+        const end = 1 + index + Math.floor((data.lastY) / constants.lineHeight)
 
         if (begin !== end) {
             addEvent({username, columnId, begin, end})
@@ -49,14 +49,14 @@ export class TimeLine extends Component {
         const {sheet, index} = this.props
         const {classes} = sheet
 
-        const lastDay = hoursPerDay - 1
-        const wholeHeight = lastDay * lineHeight
-        const heightTilStart = index * lineHeight
+        const lastDay = constants.dayEndHour - 1
+        const wholeHeight = lastDay * constants.lineHeight
+        const heightTilStart = index * constants.lineHeight
 
         return (
             <Draggable
                 axis="none"
-                grid={[lineHeight, lineHeight]}
+                grid={[constants.lineHeight, constants.lineHeight]}
                 bounds={{top: 0, bottom: wholeHeight - heightTilStart}}
                 defaultPosition={{x: 0, y: 0}}
                 position={this.state.position}
@@ -79,5 +79,5 @@ export class TimeLine extends Component {
 }
 
 
-const mapActionsToProps = {addEvent: addEvent}
+const mapActionsToProps = {addEvent: controllers.addEvent}
 export default connect(null, mapActionsToProps)(useSheet(style)(TimeLine))

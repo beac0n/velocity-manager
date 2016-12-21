@@ -20,7 +20,7 @@ export const TimeLines = ({sheet, columnId, username}) => {
     const {timeLineWrapper} = sheet.classes
 
     const timeLines = []
-    for (let i = 0; i < constants.hoursPerDay; ++i) {
+    for (let i = constants.dayStartHour; i < constants.dayEndHour; ++i) {
         timeLines.push(
             <TimeLine
                 key={`timeline-${i}`}

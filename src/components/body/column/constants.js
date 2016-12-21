@@ -1,4 +1,7 @@
-export const hoursPerDay = 24
+export const dayStartHour = 9
+export const hoursPerDay = 10
+export const dayEndHour = dayStartHour + hoursPerDay
+
 export const lineHeight = 20
 export const allMeetingsHeight = lineHeight * hoursPerDay
 

@@ -53,6 +53,7 @@ TopColumn.propTypes = {
     updateEvent: React.PropTypes.func,
     removeEvent: React.PropTypes.func,
     isPlaceholder: React.PropTypes.bool,
+    hasError: React.PropTypes.bool,
     sheet: React.PropTypes.object,
 }
 
