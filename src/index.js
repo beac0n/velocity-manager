@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux'
-import App from './components/App';
+import AppRouter from './components/appRouter';
 import {initStore} from './redux/init'
 
-ReactDOM.render(<Provider store={initStore()}><App/></Provider>, document.getElementById('root'))
+ReactDOM.render(<Provider store={initStore()}><AppRouter/></Provider>, document.getElementById('root'))

@@ -7,12 +7,12 @@ import SprintDurationInput from './sprintDurationInput.connected'
 
 const xs = 3
 
-export const Header = ({sprintEnd, save}) => (
+export const Header = ({sprintEnd, save, teamName}) => (
     <Jumbotron>
         <h1 className="display-3">Velocity Manager</h1>
         <p className="lead">
-            Bitte tragen Sie in die unten stehende Tabelle ein ob die Teammitglieder in Tagen des Sprints verfügbar sind
-            oder nicht
+            Bitte tragen Sie in die unten stehende Tabelle ein ob die Teammitglieder
+            des Teams "{teamName}" in Tagen des Sprints verfügbar sind oder nicht.
         </p>
 
         <Row>
