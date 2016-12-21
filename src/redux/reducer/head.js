@@ -1,11 +1,13 @@
 import Immutable from 'immutable'
-import {getCorrectState, stateNames} from './util'
+import * as util from './util'
 import {actionTypes} from '../actions'
 import {weekDays, workDayNames} from '../constants'
 
+const getCorrectState = (state) => util.getCorrectState(state, util.stateNames.head)
+
 const dataRetrievers = {
-    getSprintStartName: (state) => getCorrectState(state, stateNames.head).getIn(['sprint', 'start']),
-    getSprintDuration: (state) => getCorrectState(state, stateNames.head).getIn(['sprint', 'duration']),
+    getSprintStartName: (state) => getCorrectState(state).getIn(['sprint', 'start']),
+    getSprintDuration: (state) => getCorrectState(state).getIn(['sprint', 'duration']),
 }
 
 const helper = {

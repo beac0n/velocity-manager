@@ -1,4 +1,5 @@
-import {createStore} from 'redux'
+import {createStore, applyMiddleware, compose} from 'redux'
+import thunk from 'redux-thunk'
 import Immutable from 'immutable'
 import rootReducer, {defaultState} from './reducer'
 
@@ -9,7 +10,9 @@ export const initStore = () => {
 
     const localState = Immutable.fromJS(parsedMyLocalStorage) || defaultState
 
-    const reduxDevTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    const reduxDevTools = (window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 
-    return createStore(rootReducer, localState, reduxDevTools)
+    const middlewares = reduxDevTools ? compose(applyMiddleware(thunk), reduxDevTools) : applyMiddleware(thunk)
+
+    return createStore(rootReducer, localState, middlewares)
 }

@@ -1,6 +1,4 @@
-export const getCorrectState = (state, stateName) => {
-    return state.get(stateName) || state
-}
+export const getCorrectState = (state, stateName) => state.get(stateName)
 
 export const stateNames = {
     head: 'head',

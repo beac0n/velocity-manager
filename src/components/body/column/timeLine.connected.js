@@ -3,7 +3,7 @@ import Draggable from 'react-draggable'
 import useSheet from 'react-jss'
 import classNames from 'classnames'
 import {connect} from 'react-redux'
-import {actions} from '../../../redux/actions'
+import {addEvent} from '../../../redux/controllers'
 import {lineHeight, hoursPerDay} from './constants'
 import globalClasses from './classes'
 
@@ -78,5 +78,6 @@ export class TimeLine extends Component {
     }
 }
 
-const mapActionsToProps = {addEvent: actions.addEvent}
+
+const mapActionsToProps = {addEvent: addEvent}
 export default connect(null, mapActionsToProps)(useSheet(style)(TimeLine))

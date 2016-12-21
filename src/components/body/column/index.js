@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import useSheet from 'react-jss'
+import {Tag} from 'reactstrap'
 import TimeLines from './timeLines'
 import {selectors} from '../../../redux/reducer'
 import Event from './event.connected'
@@ -21,17 +22,27 @@ const style = {
     },
 }
 
-export const TopColumn = ({username, id, events, isPlaceholder, sheet}) => {
+export const TopColumn = ({username, id, events, isPlaceholder, hasError, sheet}) => {
     const {wrapper, placeholder} = sheet.classes
 
     const mappedEvents = events.map((event, index) => (
         <Event key={`Event-${index}`} event={event} username={username} index={index} columnId={id}/>))
 
     return (
-        <div className={wrapper}>
-            {isPlaceholder
-                ? <div className={placeholder}/>
-                : <div><TimeLines columnId={id} username={username}/>{mappedEvents}</div>}
+        <div>
+            <div className={wrapper}>
+                {isPlaceholder
+                    ? <div className={placeholder}/>
+                    : (
+                        <div>
+                            <TimeLines columnId={id} username={username}/>
+                            {mappedEvents}
+                        </div>)}
+            </div>
+            {!isPlaceholder && hasError && (
+                <div style={{textAlign: 'center', marginTop: 5}}>
+                    <Tag color="danger">Zeit ist schon belegt</Tag>
+                </div>)}
         </div>)
 }
 
@@ -45,6 +56,9 @@ TopColumn.propTypes = {
     sheet: React.PropTypes.object,
 }
 
-const mapStateToProps = (state, ownProps) => ({events: selectors.getEvents(state, ownProps.username, ownProps.id)})
+const mapStateToProps = (state, ownProps) => ({
+    events: selectors.getEvents(state, ownProps.username, ownProps.id),
+    hasError: selectors.hasInvalidEventAdd(state, ownProps.username, ownProps.id),
+})
 
 export default connect(mapStateToProps)(useSheet(style)(TopColumn))
