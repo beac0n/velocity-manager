@@ -2,7 +2,7 @@ import {combineReducers} from 'redux-immutable'
 import Immutable from 'immutable'
 import * as head from './head'
 import * as body from './body'
-import stateNames from './stateNames'
+import stateNames from './stateUtil'
 
 export const selectors = {
     ...head.selectors,

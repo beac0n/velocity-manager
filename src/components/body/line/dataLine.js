@@ -7,10 +7,11 @@ import Column from './column/index'
 import {selectors} from '../../../redux/reducer'
 import {actions} from '../../../redux/actions'
 
-export const DataLine = ({username, sprintDays, lastOne, removeUser}) => (
+export const DataLine = ({username, sprintDays, lastOne, velocity, removeUser}) => (
     <tr style={{borderBottom: lastOne ? undefined : '2px solid black'}}>
         <th>
             <p>{username}</p>
+            <p>Velocity (PT): {velocity}</p>
             <p>
                 <Button 
                     dangerouslySetInnerHTML={{__html: octicons.trashcan.toSVG()}}
@@ -25,11 +26,14 @@ export const DataLine = ({username, sprintDays, lastOne, removeUser}) => (
         ))}
     </tr>)
 
-const mapStateToProps = (state) => ({sprintDays: selectors.getSprintDays(state)})
-const mapActionsToProps = (dispatch, ownProps) => {
-    const {username} = ownProps
-    return bindActionCreators({
-        removeUser: () => actions.removeUser(username),
-    }, dispatch)
-}
+const mapStateToProps = (state, ownProps) => ({
+    sprintDays: selectors.getSprintDays(state),
+    velocity: selectors.getUserVelocity(state, ownProps.username)
+})
+
+const mapActionsToProps = (dispatch, ownProps) => (
+    bindActionCreators({
+        removeUser: () => actions.removeUser(ownProps.username),
+    }, dispatch))
+
 export default connect(mapStateToProps, mapActionsToProps)(DataLine)

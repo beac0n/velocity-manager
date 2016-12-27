@@ -1,9 +1,7 @@
 import Immutable from 'immutable'
-import stateNames from './stateNames'
+import {getHead} from './stateUtil'
 import {actionTypes} from '../actions'
 import {weekDays, workDayNames} from '../constants'
-
-const getHead = (state) => state.get(stateNames.head)
 
 const dataRetrievers = {
     getSprintStartName: (state) => getHead(state).getIn(['sprint', 'start']),
