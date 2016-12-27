@@ -13,7 +13,8 @@ export const DataLine = ({username, sprintDays, lastOne, velocity, removeUser}) 
             <p>{username}</p>
             <p>Velocity (PT): {velocity}</p>
             <p>
-                <Button 
+                <Button
+                    style={{width: '100%'}}
                     dangerouslySetInnerHTML={{__html: octicons.trashcan.toSVG()}}
                     onClick={removeUser}
                 />
