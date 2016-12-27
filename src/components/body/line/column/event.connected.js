@@ -5,7 +5,7 @@ import {bindActionCreators} from 'redux'
 import {Input, InputGroupButton, InputGroup} from 'reactstrap'
 import octicons from 'octicons'
 import classNames from 'classnames'
-import {actions} from '../../../redux/actions'
+import {actions} from '../../../../redux/actions'
 import * as constants from './constants'
 import classes from './classes'
 

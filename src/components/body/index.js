@@ -5,8 +5,8 @@ import classNames from 'classnames'
 import {Table, Container} from 'reactstrap'
 import {selectors} from '../../redux/reducer'
 import {actions} from '../../redux/actions'
-import DataLine from './dataLine.connected'
-import NewUserLine from './newUserLine.connected'
+import Line from './line/'
+import NewUserLine from './line/newUserLine.connected'
 
 const style = {
     weekDay: {minWidth: 150},
@@ -21,7 +21,7 @@ export const Body = ({users = [], sprintDays, sheet}) => {
 
     return (
         <Container fluid>
-            <Table size="sm" style={{borderCollapse: 'collapsebord'}}>
+            <Table size="sm">
                 <thead>
                 <tr>
                     <th className={asSmallAsPossible}>Benutzer</th>
@@ -29,7 +29,7 @@ export const Body = ({users = [], sprintDays, sheet}) => {
                 </tr>
                 </thead>
                 <tbody>
-                {users.map((username, index) => <DataLine lastOne={index === users.length - 1} username={username} key={`dataLine-${index}`}/>)}
+                {users.map((username, index) => <Line lastOne={index === users.length - 1} username={username} key={`dataLine-${index}`}/>)}
                 <NewUserLine columnsCount={columns.length + 1}/>
                 </tbody>
             </Table>

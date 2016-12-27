@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Input, Button} from 'reactstrap'
-import {actions} from '../../redux/actions'
+import {actions} from '../../../redux/actions'
 
 export class NewUserLine extends Component {
     constructor(props) {

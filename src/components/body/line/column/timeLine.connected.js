@@ -3,7 +3,7 @@ import Draggable from 'react-draggable'
 import useSheet from 'react-jss'
 import classNames from 'classnames'
 import {connect} from 'react-redux'
-import * as controllers from '../../../redux/controllers'
+import * as controllers from '../../../../redux/controllers'
 import * as constants from './constants'
 import globalClasses from './classes'
 

@@ -4,10 +4,10 @@ import {connect} from 'react-redux'
 import {Button} from 'reactstrap'
 import octicons from 'octicons'
 import Column from './column/index'
-import {selectors} from '../../redux/reducer'
-import {actions} from '../../redux/actions'
+import {selectors} from '../../../redux/reducer'
+import {actions} from '../../../redux/actions'
 
-export const DataLine = ({username, sprintDays, lastOne, removeUser}) => (
+export const Line = ({username, sprintDays, lastOne, removeUser}) => (
     <tr style={{borderBottom: lastOne ? undefined : '2px solid black'}}>
         <th>
             <p>{username}</p>
@@ -32,4 +32,4 @@ const mapActionsToProps = (dispatch, ownProps) => {
         removeUser: () => actions.removeUser(username),
     }, dispatch)
 }
-export default connect(mapStateToProps, mapActionsToProps)(DataLine)
+export default connect(mapStateToProps, mapActionsToProps)(Line)
