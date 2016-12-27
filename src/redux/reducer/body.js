@@ -1,8 +1,8 @@
 import Immutable from 'immutable'
-import * as util from './util'
+import stateNames from './stateNames'
 import {actionTypes} from '../actions'
 
-const getCorrectState = (state) => util.getCorrectState(state, util.stateNames.body)
+const getCorrectState = (state) => state.get(stateNames.body)
 
 const getColumnsKeyPath = (username) => ['columns', String(username)]
 const getColumnKeyPath = (username, columnId) => getColumnsKeyPath(username).concat(String(columnId))

@@ -5,7 +5,7 @@ import classNames from 'classnames'
 import {Table, Container} from 'reactstrap'
 import {selectors} from '../../redux/reducer'
 import {actions} from '../../redux/actions'
-import Line from './line/'
+import DataLine from './line/dataLine'
 import NewUserLine from './line/newUserLine.connected'
 
 const style = {
@@ -29,7 +29,7 @@ export const Body = ({users = [], sprintDays, sheet}) => {
                 </tr>
                 </thead>
                 <tbody>
-                {users.map((username, index) => <Line lastOne={index === users.length - 1} username={username} key={`dataLine-${index}`}/>)}
+                {users.map((username, index) => <DataLine lastOne={index === users.length - 1} username={username} key={`dataLine-${index}`}/>)}
                 <NewUserLine columnsCount={columns.length + 1}/>
                 </tbody>
             </Table>
