@@ -9,18 +9,16 @@ import {actions} from '../../../../redux/actions'
 import * as constants from './constants'
 import classes from './classes'
 
-const {lineHeight, fontSize, timeLineRowWidth} = constants
-
 const style = {
     meetingClass: {
         backgroundColor: '#CCC',
         position: 'absolute',
-        width: `calc(100% - ${timeLineRowWidth}px)`,
+        width: `calc(100% - ${constants.timeLineRowWidth}px)`,
         margin: 0,
         padding: 0,
         borderRadius: '0.25rem',
         border: '1px solid #999',
-        marginLeft: timeLineRowWidth,
+        marginLeft: constants.timeLineRowWidth,
     },
     inputGroupClass: {
         borderCollapse: 'initial',
@@ -29,10 +27,10 @@ const style = {
     inputClass: {
         resize: 'none',
         borderRadius: '0.25rem',
-        fontSize,
+        fontSize: constants.fontSize,
     },
     inputGroupButton: {
-        fontSize,
+        fontSize: constants.fontSize,
         padding: '0 1px',
     },
 }
@@ -43,10 +41,10 @@ export const Event = ({event, index, updateEvent, removeEvent, sheet}) => {
     const {begin, end, note} = event
 
     const hours = end - begin
-    const height = hours * lineHeight
-    const top = begin * lineHeight
+    const height = hours * constants.lineHeight
+    const top = (begin - constants.dayStartHour) * constants.lineHeight
 
-    const realFontSize = height < fontSize ? height : fontSize
+    const realFontSize = height < constants.fontSize ? height : constants.fontSize
     const inlineStyle = {height, top, fontSize: realFontSize, zIndex: top}
 
     const inputHeight = height - 2
