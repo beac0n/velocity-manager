@@ -19,7 +19,7 @@ export const Header = ({sprintEnd, save, teamName}) => (
             <Col xs={xs}>Sprintbeginn:<WeekDaysDropDownSprintStart /></Col>
             <Col xs={xs}>Sprintdauer (Tage):<SprintDurationInput /></Col>
             <Col xs={xs}>Sprintende:<Input disabled={true} value={sprintEnd}/></Col>
-            <Col xs={xs}>&zwnj;<InputGroupButton onClick={save}>Speichern</InputGroupButton></Col>
+            <Col xs={xs}>&zwnj;<InputGroupButton onClick={save}>Lokal speichern</InputGroupButton></Col>
         </Row>
     </Jumbotron>)
 
