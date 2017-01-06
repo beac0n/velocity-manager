@@ -21,11 +21,10 @@ export const Body = ({users = [], sprintDays, sheet}) => {
             key={`headColumns-${index}`}>{day.key}</th>))
 
     return (
-        <Container fluid>
-
+        <Container fluid style={{paddingBottom: 10}}>
             {
                 users.map((username, index) => (
-                    <Table size="sm" style={{float: 'left', width: '50%'}}>
+                    <Table size="sm" className={asSmallAsPossible} style={{float: 'left'}}>
                         <thead>
                         <tr>
                             <th className={asSmallAsPossible}>Benutzer</th>
@@ -33,13 +32,12 @@ export const Body = ({users = [], sprintDays, sheet}) => {
                         </tr>
                         </thead>
                         <tbody>
-                        <DataLine lastOne={index === users.length - 1} username={username} key={`dataLine-${index}`}/>
+                        <DataLine username={username} key={`dataLine-${index}`}/>
                         </tbody>
                     </Table>))
             }
             <div style={{clear: 'both'}} />
             <NewUserLine columnsCount={columns.length + 1}/>
-
         </Container>)
 }
 
