@@ -22,7 +22,7 @@ const style = {
     },
 }
 
-export const TopColumn = ({username, id, events, isPlaceholder, hasError, sheet}) => {
+export const Column = ({username, id, events, isPlaceholder, hasError, sheet}) => {
     const {wrapper, placeholder} = sheet.classes
 
     const mappedEvents = events.map((event, index) => (
@@ -46,7 +46,7 @@ export const TopColumn = ({username, id, events, isPlaceholder, hasError, sheet}
         </div>)
 }
 
-TopColumn.propTypes = {
+Column.propTypes = {
     username: React.PropTypes.string,
     id: React.PropTypes.string,
     event: React.PropTypes.object,
@@ -62,4 +62,4 @@ const mapStateToProps = (state, ownProps) => ({
     hasError: selectors.hasInvalidEventAdd(state, ownProps.username, ownProps.id),
 })
 
-export default connect(mapStateToProps)(useSheet(style)(TopColumn))
+export default connect(mapStateToProps)(useSheet(style)(Column))

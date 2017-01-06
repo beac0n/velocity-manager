@@ -9,7 +9,7 @@ import DataLine from './line/dataLine'
 import NewUserLine from './line/newUserLine.connected'
 
 const style = {
-    weekDay: {minWidth: 150},
+    weekDay: {minWidth: 63},
     asSmallAsPossible: {width: 1}
 }
 
@@ -17,22 +17,29 @@ export const Body = ({users = [], sprintDays, sheet}) => {
     const {asSmallAsPossible, weekDay} = sheet.classes
 
     const columns = sprintDays.map((day, index) => (
-        <th className={classNames(day.isWorkDay ? weekDay : asSmallAsPossible)} key={`headColumns-${index}`}>{day.key}</th>))
+        <th className={classNames(day.isWorkDay ? weekDay : asSmallAsPossible)}
+            key={`headColumns-${index}`}>{day.key}</th>))
 
     return (
         <Container fluid>
-            <Table size="sm">
-                <thead>
-                <tr>
-                    <th className={asSmallAsPossible}>Benutzer</th>
-                    {columns}
-                </tr>
-                </thead>
-                <tbody>
-                {users.map((username, index) => <DataLine lastOne={index === users.length - 1} username={username} key={`dataLine-${index}`}/>)}
-                <NewUserLine columnsCount={columns.length + 1}/>
-                </tbody>
-            </Table>
+
+            {
+                users.map((username, index) => (
+                    <Table size="sm" style={{float: 'left', width: '50%'}}>
+                        <thead>
+                        <tr>
+                            <th className={asSmallAsPossible}>Benutzer</th>
+                            {columns}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <DataLine lastOne={index === users.length - 1} username={username} key={`dataLine-${index}`}/>
+                        </tbody>
+                    </Table>))
+            }
+            <div style={{clear: 'both'}} />
+            <NewUserLine columnsCount={columns.length + 1}/>
+
         </Container>)
 }
 

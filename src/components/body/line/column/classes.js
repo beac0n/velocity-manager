@@ -7,7 +7,6 @@ jss.use(defaultUnit())
 
 const styles = {
     lineHeightOne: {
-        lineHeight: 1,
         margin: 0,
         padding: 0,
     },
