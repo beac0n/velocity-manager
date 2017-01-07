@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import useSheet from 'react-jss'
 import classNames from 'classnames'
-import {Table, Container} from 'reactstrap'
+import {Table, Container, Alert, Popover, PopoverTitle, PopoverContent} from 'reactstrap'
 import {selectors} from '../../redux/reducer'
 import {actions} from '../../redux/actions'
 import DataLine from './line/dataLine'
@@ -13,7 +13,7 @@ const style = {
     asSmallAsPossible: {width: 1}
 }
 
-export const Body = ({users = [], sprintDays, sheet}) => {
+export const Body = ({users = [], sprintDays, hasError, sheet}) => {
     const {asSmallAsPossible, weekDay} = sheet.classes
 
     const columns = sprintDays.map((day, index) => (
@@ -24,26 +24,39 @@ export const Body = ({users = [], sprintDays, sheet}) => {
         <Container fluid style={{paddingBottom: 10}}>
             {
                 users.map((username, index) => (
-                    <Table size="sm" className={asSmallAsPossible} style={{float: 'left'}}>
-                        <thead>
-                        <tr>
-                            <th className={asSmallAsPossible}>Benutzer</th>
-                            {columns}
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <DataLine username={username} key={`dataLine-${index}`}/>
-                        </tbody>
-                    </Table>))
+                    <div style={{float: 'left'}}>
+                        <Popover
+                            placement="top"
+                            isOpen={hasError(username)}
+                            target={`PopoverTarget-${username}-${index}`}
+                        >
+                            <Alert color="danger" style={{margin: 0}}>
+                                Diese Zeit ist bereits belegt.
+                            </Alert>
+                        </Popover>
+
+                        <Table size="sm" className={asSmallAsPossible} id={`PopoverTarget-${username}-${index}`}>
+                            <thead>
+                            <tr>
+                                <th className={asSmallAsPossible}>Benutzer</th>
+                                {columns}
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <DataLine username={username} key={`dataLine-${index}`}/>
+                            </tbody>
+                        </Table>
+                    </div>))
             }
-            <div style={{clear: 'both'}} />
+            <div style={{clear: 'both'}}/>
             <NewUserLine columnsCount={columns.length + 1}/>
         </Container>)
 }
 
 const mapStateToProps = (state) => ({
     sprintDays: selectors.getSprintDays(state),
-    users: selectors.getUsers(state)
+    users: selectors.getUsers(state),
+    hasError: (username) => selectors.hasInvalidEventAdd(state, username),
 })
 const mapActionsToProps = {
     addUser: actions.addUser,

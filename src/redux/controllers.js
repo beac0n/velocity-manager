@@ -20,9 +20,9 @@ export const addEvent = (({username, columnId, begin, end}) => (
 
         if (conflictingEvents.length === 0) {
             dispatch(actions.addEvent({username, columnId, begin, end}))
-            dispatch(actions.removeInvalidEventError({username, columnId}))
+            dispatch(actions.removeInvalidEventError(username))
         } else {
-            dispatch(actions.addInvalidEventError({username, columnId}))
+            dispatch(actions.addInvalidEventError(username))
         }
     }
 ))

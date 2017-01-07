@@ -16,8 +16,8 @@ export const actions = {
     addUser: (username) => ({type: actionTypes.ADD_USER, username}),
     removeUser: (username) => ({type: actionTypes.REMOVE_USER, username}),
     addEvent: ({username, columnId, begin, end}) => ({type: actionTypes.ADD_EVENT, event: {username, columnId, begin, end}}),
-    addInvalidEventError: ({username, columnId}) => ({type: actionTypes.ADD_INVALID_EVENT_ERROR, event: {username, columnId}}),
-    removeInvalidEventError: ({username, columnId}) => ({type: actionTypes.REMOVE_INVALID_EVENT_ERROR, event: {username, columnId}}),
+    addInvalidEventError: (username) => ({type: actionTypes.ADD_INVALID_EVENT_ERROR, event: {username}}),
+    removeInvalidEventError: (username) => ({type: actionTypes.REMOVE_INVALID_EVENT_ERROR, event: {username}}),
     updateEvent: ({username, columnId, index, note}) =>  ({type: actionTypes.UPDATE_EVENT, event: {username, columnId, index, note}}),
     removeEvent: ({username, columnId, index}) => ({type: actionTypes.REMOVE_EVENT, event: {username, columnId, index}}),
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
-import {Button} from 'reactstrap'
+import {Button, Tag} from 'reactstrap'
 import octicons from 'octicons'
 import Column from './column/index'
 import {selectors} from '../../../redux/reducer'
@@ -29,7 +29,8 @@ export const DataLine = ({username, sprintDays, velocity, removeUser}) => (
 
 const mapStateToProps = (state, ownProps) => ({
     sprintDays: selectors.getSprintDays(state),
-    velocity: selectors.getUserVelocity(state, ownProps.username)
+    velocity: selectors.getUserVelocity(state, ownProps.username),
+
 })
 
 const mapActionsToProps = (dispatch, ownProps) => (

@@ -22,7 +22,7 @@ const style = {
     },
 }
 
-export const Column = ({username, id, events, isPlaceholder, hasError, sheet}) => {
+export const Column = ({username, id, events, isPlaceholder, sheet}) => {
     const {wrapper, placeholder} = sheet.classes
 
     const mappedEvents = events.map((event, index) => (
@@ -39,10 +39,6 @@ export const Column = ({username, id, events, isPlaceholder, hasError, sheet}) =
                             {mappedEvents}
                         </div>)}
             </div>
-            {!isPlaceholder && hasError && (
-                <div style={{textAlign: 'center', marginTop: 5}}>
-                    <Tag color="danger">Zeit ist schon belegt</Tag>
-                </div>)}
         </div>)
 }
 
@@ -59,7 +55,6 @@ Column.propTypes = {
 
 const mapStateToProps = (state, ownProps) => ({
     events: selectors.getEvents(state, ownProps.username, ownProps.id),
-    hasError: selectors.hasInvalidEventAdd(state, ownProps.username, ownProps.id),
 })
 
 export default connect(mapStateToProps)(useSheet(style)(Column))

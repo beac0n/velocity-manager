@@ -5,25 +5,27 @@ import * as headReducer from './head'
 
 const headSelectors = headReducer.selectors
 
+const users = 'users'
+
 const getColumnsKeyPath = (username) => ['columns', String(username)]
 const getColumnKeyPath = (username, columnId) => getColumnsKeyPath(username).concat(String(columnId))
 const getEventsListKeyPath = (username, columnId) => getColumnKeyPath(username, columnId).concat('events')
-const getInvalidEventAddKeyPath = (username, columnId) => getColumnKeyPath(username, columnId).concat('invalidEventAdd')
-
-const users = 'users'
 
 export const selectors = {
-    hasInvalidEventAdd: (state, username, columnId) => getBody(state).getIn(getInvalidEventAddKeyPath(username, columnId)),
-    getUsers: (state) => getBody(state).get(users).toJS(),
+    hasInvalidEventAdd: (state, username) => getBody(state).get(users).toJS().find((user) => user.name === username).hasError,
+    getUsers: (state) => getBody(state).get(users).toJS().map((user) => user.name),
     getEvents: (state, username, columnId) => getBody(state)
         .getIn(getEventsListKeyPath(username, columnId), Immutable.List())
         .toJS(),
     getUserVelocity: (state, username) => {
         const workHoursPerDay = 8
         const sprintVelocity = headSelectors.getSprintDuration(state)
-        const unflattenedEvents = getBody(state)
+
+        const events = getBody(state)
             .getIn(getColumnsKeyPath(username))
             .toJS()
+
+        const unflattenedEvents = Object.keys(events).map((key) => events[key])
             .filter((column) => Boolean(column))
             .map((column) => column.events)
             .filter((event) => event.length > 0)
@@ -39,13 +41,17 @@ export const selectors = {
     }
 }
 
+const updateHasError = ({state, username, hasError}) => (
+    state.update(users, (users) => users.map((user) => user.get('name') === username ? user.set('hasError', hasError) : user))
+)
+
 export const defaultState = Immutable.fromJS({users: [], columns: {}})
 export const reducer = (state = defaultState, action) => {
     switch (action.type) {
         case actionTypes.ADD_USER: {
             return state
-                .update(users, (users) => users.push(action.username))
-                .setIn(getColumnsKeyPath(action.username), Immutable.List())
+                .update(users, (users) => users.push(Immutable.fromJS({name: action.username, hasError: false})))
+                .setIn(getColumnsKeyPath(action.username), Immutable.Map())
         }
         case actionTypes.REMOVE_USER: {
             const {username} = action
@@ -56,17 +62,16 @@ export const reducer = (state = defaultState, action) => {
         case actionTypes.ADD_EVENT: {
             const {username, columnId, begin, end = begin + 1} = action.event
             return state
-                .updateIn(getEventsListKeyPath(username, columnId), Immutable.List(), (events) => events.push(Immutable.fromJS({begin, end})))
+                .updateIn(getEventsListKeyPath(username, columnId), Immutable.List(),
+                    (events) => events.push(Immutable.fromJS({begin, end})))
         }
         case actionTypes.ADD_INVALID_EVENT_ERROR: {
-            const {username, columnId} = action.event
-            return state
-                .setIn(getInvalidEventAddKeyPath(username, columnId), true)
+            const {username} = action.event
+            return updateHasError({state, username, hasError: true})
         }
         case actionTypes.REMOVE_INVALID_EVENT_ERROR: {
-            const {username, columnId} = action.event
-            return state
-                .setIn(getInvalidEventAddKeyPath(username, columnId), false)
+            const {username} = action.event
+            return updateHasError({state, username, hasError: false})
         }
         case actionTypes.UPDATE_EVENT: {
             const {username, columnId, index, note} = action.event
