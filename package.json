@@ -66,6 +66,7 @@
     "jss-camel-case": "^3.0.0",
     "jss-default-unit": "^5.0.2",
     "octicons": "^5.0.1",
+    "pouchdb": "^6.1.1",
     "react": "^15.4.2",
     "react-addons-css-transition-group": "^15.4.2",
     "react-addons-transition-group": "^15.4.2",
@@ -106,8 +107,8 @@
     "setupFiles": [
       "<rootDir>/config/polyfills.js"
     ],
-    "testPathIgnorePatterns": [
-      "<rootDir>/(build|docs|node_modules)/"
+    "testPathDirs": [
+      "<rootDir>/src"
     ],
     "testEnvironment": "node"
   },

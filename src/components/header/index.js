@@ -1,13 +1,12 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {selectors} from '../../redux/reducer'
-import {Row, Col, Input, InputGroupButton, Jumbotron} from 'reactstrap'
+import {Row, Col, Input, Jumbotron} from 'reactstrap'
 import WeekDaysDropDownSprintStart from './sprintStartDropDown.connected'
 import SprintDurationInput from './sprintDurationInput.connected'
 
 const xs = 12
-const sm = 6
-const md = 3
+const sm = 4
 
 
 export const Header = ({sprintEnd, save, teamName}) => (
@@ -19,16 +18,13 @@ export const Header = ({sprintEnd, save, teamName}) => (
         </p>
 
         <Row>
-            <Col xs={xs} sm={sm} md={md}>Sprintbeginn:<WeekDaysDropDownSprintStart /></Col>
-            <Col xs={xs} sm={sm} md={md}>Sprintdauer (Tage):<SprintDurationInput /></Col>
-            <Col xs={xs} sm={sm} md={md}>Sprintende:<Input disabled={true} value={sprintEnd}/></Col>
-            <Col xs={xs} sm={sm} md={md}>&zwnj;<InputGroupButton onClick={save} style={{width: '100%'}}>Lokal speichern</InputGroupButton></Col>
-
+            <Col xs={xs} sm={sm}>Sprintbeginn:<WeekDaysDropDownSprintStart /></Col>
+            <Col xs={xs} sm={sm}>Sprintdauer (Tage):<SprintDurationInput /></Col>
+            <Col xs={xs} sm={sm}>Sprintende:<Input disabled={true} value={sprintEnd}/></Col>
         </Row>
     </Jumbotron>)
 
 const mapStateToProps = (state) => ({
-    save: () => localStorage && localStorage.setItem && localStorage.setItem('velocity-manager-state', JSON.stringify(state)),
     sprintEnd: selectors.getSprintEndDay(state),
 })
 
