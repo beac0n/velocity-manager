@@ -21,9 +21,7 @@ export const selectors = {
         const workHoursPerDay = 8
         const sprintVelocity = headSelectors.getSprintDuration(state)
 
-        const events = getBody(state)
-            .getIn(getColumnsKeyPath(username))
-            .toJS()
+        const events = getBody(state).getIn(getColumnsKeyPath(username)).toJS()
 
         const unflattenedEvents = Object.keys(events).map((key) => events[key])
             .filter((column) => Boolean(column))
@@ -56,7 +54,7 @@ export const reducer = (state = defaultState, action) => {
         case actionTypes.REMOVE_USER: {
             const {username} = action
             return state
-                .update(users, (users) => users.filter((user) => user !== username))
+                .update(users, (users) => users.filter((user) => user.get('name') !== username))
                 .removeIn(getColumnsKeyPath(username))
         }
         case actionTypes.ADD_EVENT: {
