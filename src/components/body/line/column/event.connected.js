@@ -1,8 +1,8 @@
-import React from 'react'
+import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import useSheet from 'react-jss'
 import {bindActionCreators} from 'redux'
-import {Input, InputGroupButton, InputGroup} from 'reactstrap'
+import {Input, InputGroupButton, InputGroup, Popover} from 'reactstrap'
 import octicons from 'octicons'
 import classNames from 'classnames'
 import {actions} from '../../../../redux/actions'
@@ -35,38 +35,69 @@ const style = {
     },
 }
 
-export const Event = ({event, index, updateEvent, removeEvent, sheet}) => {
-    const {lineHeightOne} = classes
-    const {meetingClass, inputGroupClass, inputClass, inputGroupButton} = sheet.classes
-    const {begin, end, note} = event
+export class Event extends Component {
 
-    const hours = end - begin
-    const height = hours * constants.lineHeight
-    const top = (begin - constants.dayStartHour) * constants.lineHeight
+    constructor(props) {
+        super(props)
 
-    const realFontSize = height < constants.fontSize ? height : constants.fontSize
-    const inlineStyle = {height, top, fontSize: realFontSize, zIndex: top}
+        this.toggle = this.toggle.bind(this)
+        this.state = {
+            popoverOpen: false
+        }
+    }
 
-    const inputHeight = height - 2
+    toggle() {
+        this.setState({
+            popoverOpen: !this.state.popoverOpen
+        })
+    }
 
-    return (
-        <div key={`event-${index}`} style={inlineStyle} className={meetingClass}>
-            <InputGroup className={inputGroupClass}>
-                <Input
-                    value={note || ''}
-                    type="textarea"
-                    onChange={(e) => updateEvent(e.target.value)}
-                    className={classNames(lineHeightOne, inputClass)}
-                    style={{height: inputHeight}}
-                />
-                <InputGroupButton
-                    onClick={removeEvent}
-                    dangerouslySetInnerHTML={{__html: octicons.trashcan.toSVG()}}
-                    className={inputGroupButton}
-                    style={{height: inputHeight}} 
-                />
-            </InputGroup>
-        </div>)
+    render() {
+        const {event, index, username, columnId, updateEvent, removeEvent, sheet} = this.props
+
+        const {lineHeightOne} = classes
+        const {meetingClass, inputGroupClass, inputClass, inputGroupButton} = sheet.classes
+        const {begin, end, note} = event
+
+        const hours = end - begin
+        const height = hours * constants.lineHeight
+        const top = (begin - constants.dayStartHour) * constants.lineHeight
+
+        const realFontSize = height < constants.fontSize ? height : constants.fontSize
+        const inlineStyle = {height, top, fontSize: realFontSize, zIndex: top}
+
+        return (
+            <div key={`event-${index}`} style={inlineStyle} className={meetingClass}>
+                <InputGroup className={inputGroupClass}>
+
+                    <InputGroupButton
+                        onClick={removeEvent}
+                        dangerouslySetInnerHTML={{__html: octicons.trashcan.toSVG()}}
+                        className={inputGroupButton}
+                    />
+                    <InputGroupButton
+                        id={`event-${username}-${columnId}-${index}`}
+                        onClick={this.toggle}
+                        dangerouslySetInnerHTML={{__html: octicons['chevron-right'].toSVG()}}
+                        className={inputGroupButton}
+                    />
+                    <Popover
+                        placement="right"
+                        isOpen={this.state.popoverOpen}
+                        toggle={this.toggle}
+                        target={`event-${username}-${columnId}-${index}`}
+                    >
+                        <Input
+                            value={note || ''}
+                            type="textarea"
+                            onChange={(e) => updateEvent(e.target.value)}
+                            className={classNames(lineHeightOne, inputClass)}
+                            style={{height: 60}}
+                        />
+                    </Popover>
+                </InputGroup>
+            </div>)
+    }
 }
 
 const mapActionsToProps = (dispatch, ownProps) => {

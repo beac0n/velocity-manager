@@ -72,7 +72,7 @@ export class TimeLine extends Component {
                     onMouseOver={() => this.setState({backgroundColor: '#CCC'})}
                     onMouseOut={() => this.setState({backgroundColor: undefined})}
                 >
-                    {`${index}:00`}
+                    {index}
                 </p>
             </Draggable>)
     }

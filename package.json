@@ -75,7 +75,7 @@
     "react-jss": "^5.1.1",
     "react-redux": "^5.0.1",
     "react-router": "^3.0.0",
-    "reactstrap": "^3.9.0",
+    "reactstrap": "^4.0.0-alpha.8",
     "redux": "^3.6.0",
     "redux-immutable": "^3.0.9",
     "redux-thunk": "^2.1.0"

@@ -9,7 +9,7 @@ import DataLine from './line/dataLine'
 import NewUserLine from './line/newUserLine.connected'
 
 const style = {
-    weekDay: {minWidth: 63},
+    weekDay: {minWidth: 60},
     asSmallAsPossible: {width: 1}
 }
 

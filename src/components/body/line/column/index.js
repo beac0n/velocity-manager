@@ -1,7 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import useSheet from 'react-jss'
-import {Tag} from 'reactstrap'
 import TimeLines from './timeLines'
 import {selectors} from '../../../../redux/reducer'
 import Event from './event.connected'
