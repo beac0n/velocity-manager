@@ -12,7 +12,7 @@ const Wrapper = ({children}) => <div>{children}</div>
 const AppRouter = () => {
     return (
         <Router history={browserHistory}>
-            <Route path="/" component={Wrapper}>
+            <Route path="/velocity-manager" component={Wrapper}>
                 <IndexRoute component={TeamSelector}/>
                 <Route path="teams/:teamName" component={App}/>
             </Route>
