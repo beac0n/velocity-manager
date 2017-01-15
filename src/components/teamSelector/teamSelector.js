@@ -17,7 +17,7 @@ const TeamSelector = ({teams, addTeam, router}) => (
             {teams.map((team, index) => (
                 <Row key={`${team}-${index}`} style={{marginBottom: 10}}>
                     <Col sm="12">
-                        <Button size="lg" block onClick={() => router.push(`/teams/${team.name}`)}>
+                        <Button size="lg" block onClick={() => router.push(`/velocity-manager/teams/${team.name}`)}>
                             {team.name}
                         </Button>
                     </Col>
