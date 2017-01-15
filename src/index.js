@@ -1,7 +1,8 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react'
+import ReactDOM from 'react-dom'
 import {Provider} from 'react-redux'
-import AppRouter from './components/appRouter';
+import 'bootstrap/dist/css/bootstrap.css'
+import AppRouter from './components/appRouter'
 import {initStore, localStateName} from './redux/init'
 
 window.addEventListener('error', (error) => {
