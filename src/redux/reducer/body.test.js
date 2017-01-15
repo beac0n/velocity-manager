@@ -7,6 +7,19 @@ describe('body reducer', () => {
     let defaultStore
     beforeEach(() => defaultStore = initStore())
 
+    const teamName = 'teamName'
+
+    describe('team', () => {
+        it('should add a team', () => {
+            defaultStore.dispatch(actions.addTeam(teamName))
+
+            expect(selectors.getTeams(defaultStore.getState()).map((team) => team.name)).toContain(teamName)
+
+            expect(selectors.getTeams(defaultStore.getState()).length).toBe(1)
+        })
+    })
+
+
     const testUser = 'TestUser'
     const otherTestUser = 'otherTestUser'
 
@@ -14,32 +27,32 @@ describe('body reducer', () => {
         it('should add one user', () => {
             defaultStore.dispatch(actions.addUser(testUser))
 
-            expect(selectors.getUsers(defaultStore.getState())).toContain(testUser)
+            expect(selectors.getUserNames(defaultStore.getState())).toContain(testUser)
 
-            expect(selectors.getUsers(defaultStore.getState()).length).toBe(1)
+            expect(selectors.getUserNames(defaultStore.getState()).length).toBe(1)
         })
 
         it('should add 2 user', () => {
             defaultStore.dispatch(actions.addUser(testUser))
             defaultStore.dispatch(actions.addUser(otherTestUser))
 
-            expect(selectors.getUsers(defaultStore.getState())).toContain(testUser)
-            expect(selectors.getUsers(defaultStore.getState())).toContain(otherTestUser)
+            expect(selectors.getUserNames(defaultStore.getState())).toContain(testUser)
+            expect(selectors.getUserNames(defaultStore.getState())).toContain(otherTestUser)
 
-            expect(selectors.getUsers(defaultStore.getState()).length).toBe(2)
+            expect(selectors.getUserNames(defaultStore.getState()).length).toBe(2)
         })
 
         it('should add 2 users and remove one user', () => {
             defaultStore.dispatch(actions.addUser(testUser))
             defaultStore.dispatch(actions.addUser(otherTestUser))
 
-            expect(selectors.getUsers(defaultStore.getState())).toContain(testUser)
-            expect(selectors.getUsers(defaultStore.getState())).toContain(otherTestUser)
+            expect(selectors.getUserNames(defaultStore.getState())).toContain(testUser)
+            expect(selectors.getUserNames(defaultStore.getState())).toContain(otherTestUser)
 
             defaultStore.dispatch(actions.removeUser(otherTestUser))
 
-            expect(selectors.getUsers(defaultStore.getState()).length).toBe(1)
-            expect(selectors.getUsers(defaultStore.getState())[0]).toBe(testUser)
+            expect(selectors.getUserNames(defaultStore.getState()).length).toBe(1)
+            expect(selectors.getUserNames(defaultStore.getState())[0]).toBe(testUser)
         })
     })
 

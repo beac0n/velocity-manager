@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Input, Button, Row, Col} from 'reactstrap'
+import {Input, InputGroup, InputGroupButton, Button, Row, Col} from 'reactstrap'
 import {actions} from '../../../redux/actions'
 
 export class NewUserLine extends Component {
@@ -38,16 +38,20 @@ export class NewUserLine extends Component {
     render() {
         return (
             <Row>
-                <Col xs="12">
-                    <Input
-                        value={this.state.newUserName}
-                        placeholder="Neuer Benutzer (Enter zum hinzufügen)"
-                        onChange={this.onChangeNewUser}
-                        onKeyPress={this.handleKeyPress}
-                    />
+                <Col sm="12">
+                    <InputGroup>
+                        <InputGroupButton>
+                            <Button onClick={this.onAddUserClick}>+</Button>
+                        </InputGroupButton>
+                        <Input
+                            value={this.state.newUserName}
+                            onKeyPress={this.handleKeyPress}
+                            onChange={this.onChangeNewUser}
+                            placeholder="Neuer Benutzer"
+                        />
+                    </InputGroup>
                 </Col>
-            </Row>
-        )
+            </Row>)
     }
 }
 

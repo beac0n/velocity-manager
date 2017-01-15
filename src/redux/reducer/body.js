@@ -6,6 +6,7 @@ import * as headReducer from './head'
 const headSelectors = headReducer.selectors
 
 const users = 'users'
+const teams = 'teams'
 
 const getColumnsKeyPath = (username) => ['columns', String(username)]
 const getColumnKeyPath = (username, columnId) => getColumnsKeyPath(username).concat(String(columnId))
@@ -13,7 +14,8 @@ const getEventsListKeyPath = (username, columnId) => getColumnKeyPath(username, 
 
 export const selectors = {
     hasInvalidEventAdd: (state, username) => getBody(state).get(users).toJS().find((user) => user.name === username).hasError,
-    getUsers: (state) => getBody(state).get(users).toJS().map((user) => user.name),
+    getUserNames: (state) => getBody(state).get(users).toJS().map((user) => user.name),
+    getTeams: (state) => getBody(state).get(teams).toJS(),
     getEvents: (state, username, columnId) => getBody(state)
         .getIn(getEventsListKeyPath(username, columnId), Immutable.List())
         .toJS(),
@@ -43,9 +45,13 @@ const updateHasError = ({state, username, hasError}) => (
     state.update(users, (users) => users.map((user) => user.get('name') === username ? user.set('hasError', hasError) : user))
 )
 
-export const defaultState = Immutable.fromJS({users: [], columns: {}})
+export const defaultState = Immutable.fromJS({users: [], columns: {}, teams: []})
 export const reducer = (state = defaultState, action) => {
     switch (action.type) {
+        case actionTypes.ADD_TEAM: {
+            return state
+                .update(teams, (teams) => teams.push(Immutable.fromJS({name: action.teamname})))
+        }
         case actionTypes.ADD_USER: {
             return state
                 .update(users, (users) => users.push(Immutable.fromJS({name: action.username, hasError: false})))

@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import useSheet from 'react-jss'
 import classNames from 'classnames'
-import {Table, Container, Alert, Popover, PopoverTitle, PopoverContent} from 'reactstrap'
+import {Table, Container, Alert, Popover} from 'reactstrap'
 import {selectors} from '../../redux/reducer'
 import {actions} from '../../redux/actions'
 import DataLine from './line/dataLine'
@@ -24,7 +24,7 @@ export const Body = ({users = [], sprintDays, hasError, sheet}) => {
         <Container fluid style={{paddingBottom: 10}}>
             {
                 users.map((username, index) => (
-                    <div style={{float: 'left'}}>
+                    <div key={`${username}-${index}`} style={{float: 'left'}}>
                         <Popover
                             placement="top"
                             isOpen={hasError(username)}
@@ -55,7 +55,7 @@ export const Body = ({users = [], sprintDays, hasError, sheet}) => {
 
 const mapStateToProps = (state) => ({
     sprintDays: selectors.getSprintDays(state),
-    users: selectors.getUsers(state),
+    users: selectors.getUserNames(state),
     hasError: (username) => selectors.hasInvalidEventAdd(state, username),
 })
 const mapActionsToProps = {

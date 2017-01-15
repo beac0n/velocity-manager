@@ -1,7 +1,7 @@
 import React from 'react'
 import { Router, Route, browserHistory } from 'react-router'
 import App from './app'
-import TeamSelector from './teamSelector'
+import TeamSelector from './teamSelector/teamSelector'
 
 const AppRouter = () => (
     <Router history={browserHistory}>

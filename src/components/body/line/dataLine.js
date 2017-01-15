@@ -1,7 +1,7 @@
 import React from 'react'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
-import {Button, Tag} from 'reactstrap'
+import {Button} from 'reactstrap'
 import octicons from 'octicons'
 import Column from './column/index'
 import {selectors} from '../../../redux/reducer'
