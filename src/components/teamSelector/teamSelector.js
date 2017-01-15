@@ -14,8 +14,8 @@ const TeamSelector = ({teams, addTeam}) => (
         </Jumbotron>
         <Container fluid>
 
-            {teams.map((team) => (
-                <Row style={{marginBottom: 10}}>
+            {teams.map((team, index) => (
+                <Row key={`${team}-${index}`} style={{marginBottom: 10}}>
                     <Col sm="12">
                         <Button size="lg" block onClick={() => browserHistory.push(`/app/${team.name}`)}>
                             {team.name}

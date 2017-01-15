@@ -9,7 +9,13 @@ const getLocalState = () => {
     if (!window.localStorage || !window.localStorage.getItem(localStateName)) return null
 
     const localState = window.localStorage.getItem(localStateName)
-    return Immutable.fromJS(JSON.parse(localState))
+    try {
+        return Immutable.fromJS(JSON.parse(localState))
+    }
+    catch (error) {
+        console.warn('could not parse existing local state - creating new one')
+        return null
+    }
 }
 
 const getReduxDevTools = () => {
