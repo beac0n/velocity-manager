@@ -1,12 +1,12 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Row, Col, Container, Button, Jumbotron} from 'reactstrap'
-import {browserHistory} from 'react-router'
+import {withRouter} from 'react-router'
 import {selectors} from '../../redux/reducer'
 import {actions} from '../../redux/actions'
 import NewTeamInput from './newTeamInput'
 
-const TeamSelector = ({teams, addTeam}) => (
+const TeamSelector = ({teams, addTeam, router}) => (
     <div>
         <Jumbotron>
             <h1 className="display-3">Velocity Manager</h1>
@@ -17,7 +17,7 @@ const TeamSelector = ({teams, addTeam}) => (
             {teams.map((team, index) => (
                 <Row key={`${team}-${index}`} style={{marginBottom: 10}}>
                     <Col sm="12">
-                        <Button size="lg" block onClick={() => browserHistory.push(`/app/${team.name}`)}>
+                        <Button size="lg" block onClick={() => router.push(`/app/${team.name}`)}>
                             {team.name}
                         </Button>
                     </Col>
@@ -41,4 +41,4 @@ const mapActionsToProps = {
     addTeam: actions.addTeam
 }
 
-export default connect(mapStateToProps, mapActionsToProps)(TeamSelector)
+export default withRouter(connect(mapStateToProps, mapActionsToProps)(TeamSelector))
