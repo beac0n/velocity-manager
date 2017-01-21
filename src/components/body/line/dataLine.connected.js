@@ -27,10 +27,16 @@ export const DataLine = ({username, sprintDays = [], velocity, removeUser}) => (
         ))}
     </tr>)
 
+DataLine.propTypes = {
+    username: React.PropTypes.string,
+    sprintDays: React.PropTypes.array,
+    velocity: React.PropTypes.number,
+    removeUser: React.PropTypes.func,
+}
+
 const mapStateToProps = (state, ownProps) => ({
     sprintDays: selectors.getSprintDays(state),
     velocity: selectors.getUserVelocity(state, ownProps.username),
-
 })
 
 const mapActionsToProps = (dispatch, ownProps) => (

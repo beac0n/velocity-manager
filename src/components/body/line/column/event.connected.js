@@ -100,6 +100,16 @@ export class Event extends Component {
     }
 }
 
+Event.propTypes = {
+    sheet: React.PropTypes.object,
+    event: React.PropTypes.object,
+    index: React.PropTypes.number,
+    username: React.PropTypes.string,
+    columnId: React.PropTypes.string,
+    updateEvent: React.PropTypes.func,
+    removeEvent: React.PropTypes.func,
+}
+
 const mapActionsToProps = (dispatch, ownProps) => {
     const {username, index, columnId} = ownProps
 

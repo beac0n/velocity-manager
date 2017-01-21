@@ -24,8 +24,14 @@ export const Header = ({sprintEnd, save, teamName}) => (
         </Row>
     </Jumbotron>)
 
+Header.propTypes = {
+    sprintEnd: React.PropTypes.number,
+    save: React.PropTypes.func,
+    teamName: React.PropTypes.string,
+}
+
 const mapStateToProps = (state) => ({
-    sprintEnd: selectors.getSprintEndDay(state),
+    sprintEnd: Number(selectors.getSprintEndDay(state)),
 })
 
 export default connect(mapStateToProps)(Header)

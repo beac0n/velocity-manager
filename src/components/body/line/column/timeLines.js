@@ -33,5 +33,11 @@ const TimeLines = ({sheet, columnId, username}) => {
     return <div className={timeLineWrapper}>{timeLines}</div>
 }
 
+TimeLines.propTypes = {
+    sheet: React.PropTypes.object,
+    username: React.PropTypes.string,
+    columnId: React.PropTypes.string,
+}
+
 export default useSheet(style)(TimeLines)
 

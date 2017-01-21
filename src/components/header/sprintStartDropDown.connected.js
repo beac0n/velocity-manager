@@ -35,6 +35,12 @@ export class SprintStartDropDown extends Component {
     }
 }
 
+SprintStartDropDown.propTypes = {
+    sheet: React.PropTypes.object,
+    saveSprintStart: React.PropTypes.func,
+    sprintStart: React.PropTypes.string,
+}
+
 const mapStateToProps = (state) => ({sprintStart: selectors.getSprintStartName(state)})
 const mapActionsToProps = {saveSprintStart: (weekDay) => actions.changeSprintStart(weekDay)}
 export default connect(mapStateToProps, mapActionsToProps)(useSheet(style)(SprintStartDropDown))

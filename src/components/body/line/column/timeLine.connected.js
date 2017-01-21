@@ -78,6 +78,13 @@ export class TimeLine extends Component {
     }
 }
 
+TimeLine.propTypes = {
+    sheet: React.PropTypes.object,
+    index: React.PropTypes.number,
+    username: React.PropTypes.string,
+    columnId: React.PropTypes.string,
+    addEvent: React.PropTypes.func,
+}
 
 const mapActionsToProps = {addEvent: controllers.addEvent}
 export default connect(null, mapActionsToProps)(useSheet(style)(TimeLine))

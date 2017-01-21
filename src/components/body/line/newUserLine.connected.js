@@ -55,5 +55,9 @@ export class NewUserLine extends Component {
     }
 }
 
+NewUserLine.propTypes = {
+    addUser: React.PropTypes.func,
+}
+
 const mapActionsToProps = {addUser: actions.addUser}
 export default connect(null, mapActionsToProps)(NewUserLine)

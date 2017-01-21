@@ -53,6 +53,14 @@ export const Body = ({users = [], sprintDays = [], hasError, sheet = {}, teamNam
         </Container>)
 }
 
+Body.propTypes = {
+    users: React.PropTypes.array,
+    sprintDays: React.PropTypes.array,
+    hasError: React.PropTypes.func,
+    sheet: React.PropTypes.object,
+    teamName: React.PropTypes.string,
+}
+
 const mapStateToProps = (state) => ({
     sprintDays: selectors.getSprintDays(state),
     users: selectors.getUserNames(state),
