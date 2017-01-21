@@ -13,7 +13,7 @@ const style = {
     asSmallAsPossible: {width: 1}
 }
 
-export const Body = ({users = [], sprintDays, hasError, sheet}) => {
+export const Body = ({users = [], sprintDays, hasError, sheet, teamName}) => {
     const {asSmallAsPossible, weekDay} = sheet.classes
 
     const columns = sprintDays.map((day, index) => (

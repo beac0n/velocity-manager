@@ -4,7 +4,7 @@ import {Row, Col, Container, Button, Jumbotron} from 'reactstrap'
 import {withRouter} from 'react-router'
 import {selectors} from '../../redux/reducer'
 import {actions} from '../../redux/actions'
-import NewTeamInput from './newTeamInput'
+import NewTeamInput from './newTeamInput.connected'
 
 const TeamSelector = ({teams, addTeam, router}) => (
     <div>
