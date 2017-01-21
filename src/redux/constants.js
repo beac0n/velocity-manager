@@ -1,4 +1,4 @@
-export const weekDays = Object.freeze([
+export const weekDays = [
     {key: 'Mo', name: 'Montag', isWorkDay: true},
     {key: 'Di', name: 'Dienstag', isWorkDay: true},
     {key: 'Mi', name: 'Mittwoch', isWorkDay: true},
@@ -6,6 +6,6 @@ export const weekDays = Object.freeze([
     {key: 'Fr', name: 'Freitag', isWorkDay: true},
     {key: 'Sa', name: 'Samstag', isWorkDay: false},
     {key: 'So', name: 'Sonntag', isWorkDay: false}
-])
+]
 
-export const workDayNames = Object.freeze(weekDays.filter((day) => day.isWorkDay).map((day) => day.name))
+export const workDayNames = weekDays.filter((day) => day.isWorkDay).map((day) => day.name)

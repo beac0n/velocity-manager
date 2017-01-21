@@ -1,5 +1,5 @@
 import React from 'react'
-import {shouldRender} from '../../../../../test/utils'
+import {shouldRender} from '../../../../../test/util'
 
 import {Event} from './event.connected'
 import {Column} from './index'

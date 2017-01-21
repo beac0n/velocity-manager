@@ -1,5 +1,5 @@
 import React from 'react'
-import {shouldRender} from '../../test/utils'
+import {shouldRender} from '../../test/util'
 
 import AppRouter from './appRouter'
 import App from './app'

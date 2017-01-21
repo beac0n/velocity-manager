@@ -21,8 +21,7 @@ const style = {
         marginLeft: constants.timeLineRowWidth,
     },
     inputGroupClass: {
-        borderCollapse: 'initial',
-        display: 'table-row',
+       height: '100%',
     },
     inputClass: {
         resize: 'none',
@@ -32,6 +31,7 @@ const style = {
     inputGroupButton: {
         fontSize: constants.fontSize,
         padding: '0 1px',
+        width: '50%',
     },
 }
 
@@ -69,7 +69,6 @@ export class Event extends Component {
         return (
             <div key={`event-${index}`} style={inlineStyle} className={meetingClass}>
                 <InputGroup className={inputGroupClass}>
-
                     <InputGroupButton
                         onClick={removeEvent}
                         dangerouslySetInnerHTML={{__html: octicons.trashcan.toSVG()}}

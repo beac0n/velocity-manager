@@ -1,5 +1,5 @@
 import React from 'react'
-import {shouldRender} from '../../../test/utils'
+import {shouldRender} from '../../../test/util'
 
 import {NewTeamInput} from './newTeamInput.connected'
 import {TeamSelector} from './teamSelector.connected'

@@ -11,6 +11,7 @@
     "bootstrap": "^4.0.0-alpha.6",
     "classnames": "^2.2.5",
     "enzyme": "^2.7.0",
+    "font-awesome": "^4.7.0",
     "immutable": "^3.8.1",
     "jss": "^6.2.0",
     "jss-camel-case": "^3.0.0",
