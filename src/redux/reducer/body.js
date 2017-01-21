@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 import {getBody} from './stateUtil'
 import {actionTypes} from '../actions'
-import * as headReducer from './head'
+import * as headReducer from './sprint'
 
 const headSelectors = headReducer.selectors
 

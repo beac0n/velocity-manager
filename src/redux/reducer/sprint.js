@@ -1,22 +1,23 @@
 import Immutable from 'immutable'
-import {getHead} from './stateUtil'
+import {getSprint} from './stateUtil'
 import {actionTypes} from '../actions'
 import {weekDays, workDayNames} from '../constants'
 
 const dataRetrievers = {
-    getSprintStartName: (state) => getHead(state).getIn(['sprint', 'start']),
-    getSprintDuration: (state) => getHead(state).getIn(['sprint', 'duration']),
+    getSprintStartDay: (state) => getSprint(state).getIn(['start']),
+    getSprintDuration: (state) => getSprint(state).getIn(['duration']),
 }
 
 const helper = {
-    getWeekDayName: (state, index) => weekDays.filter((_, dayIndex) => index === dayIndex)[0].name,
-    getSprintStartIndex: (state) => workDayNames.indexOf(dataRetrievers.getSprintStartName(state))
+    getWeekDayName: (index) => weekDays.filter((_, dayIndex) => index === dayIndex)[0].name,
+    getSprintStartIndex: (state) => workDayNames.indexOf(dataRetrievers.getSprintStartDay(state))
 }
 
 export const selectors = {
     getSprintDuration: dataRetrievers.getSprintDuration,
-    getSprintStartName: dataRetrievers.getSprintStartName,
+    getSprintStartDay: dataRetrievers.getSprintStartDay,
     getSprintEndDay: (state) => {
+
         const workDaysLength = weekDays.filter((day) => day.isWorkDay).length
 
         const sprintStartDayIndex = helper.getSprintStartIndex(state)
@@ -28,7 +29,7 @@ export const selectors = {
         const lastWorkDayIndex = workDaysLength - 1
         const sprintEndDayIndex = Math.ceil(isDayAfterSprintLastWorkDay ? lastWorkDayIndex : afterSprintDayIndex - 1)
 
-        return helper.getWeekDayName(state, sprintEndDayIndex)
+        return helper.getWeekDayName(sprintEndDayIndex)
     },
     getSprintDays: (state) => {
         const weekLength = weekDays.length
@@ -54,9 +55,7 @@ export const selectors = {
     }
 }
 
-export const defaultState = Immutable.fromJS({
-    sprint: {start: 'Donnerstag', duration: 8}
-})
+export const defaultState = Immutable.fromJS({start: 'Donnerstag', duration: 8})
 
 export const reducer = (state = defaultState, action) => {
     switch (action.type) {
@@ -72,11 +71,11 @@ export const reducer = (state = defaultState, action) => {
                 newSprintDuration = minSprintDuration
             }
 
-            return state.updateIn(['sprint', 'duration'], () => newSprintDuration)
+            return state.updateIn(['duration'], () => newSprintDuration)
         }
         case actionTypes.CHANGE_SPRINT_START: {
             const {name} = weekDays.find((day) => day.name === action.sprintDay) || {}
-            return name ? state.updateIn(['sprint', 'start'], () => name) : state
+            return name ? state.updateIn(['start'], () => name) : state
         }
         default:
             return state

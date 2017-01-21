@@ -8,7 +8,6 @@ import SprintDurationInput from './sprintDurationInput.connected'
 const xs = 12
 const sm = 4
 
-
 export const Header = ({sprintEnd, save, teamName}) => (
     <Jumbotron>
         <h1 className="display-3">Velocity Manager</h1>
@@ -25,13 +24,13 @@ export const Header = ({sprintEnd, save, teamName}) => (
     </Jumbotron>)
 
 Header.propTypes = {
-    sprintEnd: React.PropTypes.number,
+    sprintEnd: React.PropTypes.string,
     save: React.PropTypes.func,
     teamName: React.PropTypes.string,
 }
 
 const mapStateToProps = (state) => ({
-    sprintEnd: Number(selectors.getSprintEndDay(state)),
+    sprintEnd: selectors.getSprintEndDay(state),
 })
 
 export default connect(mapStateToProps)(Header)

@@ -41,6 +41,6 @@ SprintStartDropDown.propTypes = {
     sprintStart: React.PropTypes.string,
 }
 
-const mapStateToProps = (state) => ({sprintStart: selectors.getSprintStartName(state)})
+const mapStateToProps = (state) => ({sprintStart: selectors.getSprintStartDay(state)})
 const mapActionsToProps = {saveSprintStart: (weekDay) => actions.changeSprintStart(weekDay)}
 export default connect(mapStateToProps, mapActionsToProps)(useSheet(style)(SprintStartDropDown))

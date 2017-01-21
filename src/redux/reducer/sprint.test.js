@@ -1,14 +1,14 @@
 import {initStore} from '../init'
-import {selectors} from './head'
+import {selectors} from './sprint'
 import {actions} from '../actions'
 
-describe('head reducer', () => {
+describe('sprint reducer', () => {
 
     let defaultStore
     beforeEach(() => defaultStore = initStore())
 
     it('should have the default values after first init', () => {
-        expect(selectors.getSprintStartName(defaultStore.getState())).toBe('Donnerstag')
+        expect(selectors.getSprintStartDay(defaultStore.getState())).toBe('Donnerstag')
         expect(selectors.getSprintDuration(defaultStore.getState())).toBe(8)
     })
 
@@ -19,15 +19,15 @@ describe('head reducer', () => {
             it(`should start on ${sprintStartDay}`, () => {
                 defaultStore.dispatch(actions.changeSprintStart(sprintStartDay))
 
-                expect(selectors.getSprintStartName(defaultStore.getState())).toBe(sprintStartDay)
+                expect(selectors.getSprintStartDay(defaultStore.getState())).toBe(sprintStartDay)
             })
         })
 
         it(`should not change start`, () => {
-            const oldSprintStartDay = selectors.getSprintStartName(defaultStore.getState())
+            const oldSprintStartDay = selectors.getSprintStartDay(defaultStore.getState())
             defaultStore.dispatch(actions.changeSprintStart('DEFINITELY NOT A SPRINT START DAY'))
 
-            expect(selectors.getSprintStartName(defaultStore.getState())).toBe(oldSprintStartDay)
+            expect(selectors.getSprintStartDay(defaultStore.getState())).toBe(oldSprintStartDay)
         })
 
     })

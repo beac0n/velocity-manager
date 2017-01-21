@@ -1,9 +1,9 @@
 const stateNames = {
-    head: 'head',
+    sprint: 'sprint',
     body: 'body',
 }
 
 export default stateNames
 
 export const getBody = (state) => state.get(stateNames.body)
-export const getHead = (state) => state.get(stateNames.head)
+export const getSprint = (state) => state.get(stateNames.sprint)
