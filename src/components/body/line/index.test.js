@@ -1,17 +1,8 @@
 import React from 'react'
-import {shallow} from 'enzyme'
+import {shouldRender} from '../../../../test/utils'
 
 import {DataLine} from './dataLine.connected'
 import {NewUserLine} from './newUserLine.connected'
 
-describe('<DataLine />', () => {
-    it('should render', () => {
-        shallow(<DataLine />);
-    })
-})
-
-describe('<NewUserLine />', () => {
-    it('should render', () => {
-        shallow(<NewUserLine />);
-    })
-})
+describe('<DataLine />', shouldRender(DataLine))
+describe('<NewUserLine />', shouldRender(NewUserLine))

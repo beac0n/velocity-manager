@@ -1,17 +1,8 @@
 import React from 'react'
-import {shallow} from 'enzyme'
+import {shouldRender} from '../../../test/utils'
 
 import {NewTeamInput} from './newTeamInput.connected'
 import {TeamSelector} from './teamSelector.connected'
 
-describe('teamSelector <NewTeamInput />', () => {
-    it('should render', () => {
-        shallow(<NewTeamInput />);
-    })
-})
-
-describe('teamSelector <TeamSelector />', () => {
-    it('should render', () => {
-        shallow(<TeamSelector />);
-    })
-})
+describe('<NewTeamInput />', shouldRender(NewTeamInput))
+describe('<TeamSelector />', shouldRender(TeamSelector))
