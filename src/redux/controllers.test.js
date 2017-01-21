@@ -1,7 +1,7 @@
 import * as controllers from './controllers'
 import {actions} from './actions'
 import {initStore} from './init'
-import {selectors} from './reducer/body'
+import {selectors} from './reducer'
 
 describe('controllers', () => {
     let defaultStore
