@@ -21,17 +21,17 @@ const style = {
     },
 }
 
-export const Column = ({username, id, events, isPlaceholder, sheet}) => {
-    const {wrapper, placeholder} = sheet.classes
+export const Column = ({username, id, events = [], isPlaceholder, sheet = {}}) => {
+    const {classes = {}} = sheet
 
     const mappedEvents = events.map((event, index) => (
         <Event key={`Event-${index}`} event={event} username={username} index={index} columnId={id}/>))
 
     return (
         <div>
-            <div className={wrapper}>
+            <div className={classes.wrapper}>
                 {isPlaceholder
-                    ? <div className={placeholder}/>
+                    ? <div className={classes.placeholder}/>
                     : (
                         <div>
                             <TimeLines columnId={id} username={username}/>

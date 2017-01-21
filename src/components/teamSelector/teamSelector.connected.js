@@ -6,7 +6,7 @@ import {selectors} from '../../redux/reducer'
 import {actions} from '../../redux/actions'
 import NewTeamInput from './newTeamInput.connected'
 
-const TeamSelector = ({teams, addTeam, router}) => (
+export const TeamSelector = ({teams = [], addTeam, router}) => (
     <div>
         <Jumbotron>
             <h1 className="display-3">Velocity Manager</h1>

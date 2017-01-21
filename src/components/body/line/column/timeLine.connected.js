@@ -46,8 +46,8 @@ export class TimeLine extends Component {
     }
 
     render() {
-        const {sheet, index} = this.props
-        const {classes} = sheet
+        const {sheet = {}, index} = this.props
+        const {classes = {}} = sheet
 
         const lastDay = constants.dayEndHour - 1
         const wholeHeight = lastDay * constants.lineHeight

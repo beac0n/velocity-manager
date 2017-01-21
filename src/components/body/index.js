@@ -5,7 +5,7 @@ import classNames from 'classnames'
 import {Table, Container, Alert, Popover} from 'reactstrap'
 import {selectors} from '../../redux/reducer'
 import {actions} from '../../redux/actions'
-import DataLine from './line/dataLine'
+import DataLine from './line/dataLine.connected'
 import NewUserLine from './line/newUserLine.connected'
 
 const style = {
@@ -13,11 +13,11 @@ const style = {
     asSmallAsPossible: {width: 1}
 }
 
-export const Body = ({users = [], sprintDays, hasError, sheet, teamName}) => {
-    const {asSmallAsPossible, weekDay} = sheet.classes
+export const Body = ({users = [], sprintDays = [], hasError, sheet = {}, teamName}) => {
+    const {classes = {}} = sheet;
 
     const columns = sprintDays.map((day, index) => (
-        <th className={classNames(day.isWorkDay ? weekDay : asSmallAsPossible)}
+        <th className={classNames(day.isWorkDay ? classes.weekDay : classes.asSmallAsPossible)}
             key={`headColumns-${index}`}>{day.key}</th>))
 
     return (
@@ -35,10 +35,10 @@ export const Body = ({users = [], sprintDays, hasError, sheet, teamName}) => {
                             </Alert>
                         </Popover>
 
-                        <Table size="sm" className={asSmallAsPossible} id={`PopoverTarget-${username}-${index}`}>
+                        <Table size="sm" className={classes.asSmallAsPossible} id={`PopoverTarget-${username}-${index}`}>
                             <thead>
                             <tr>
-                                <th className={asSmallAsPossible}>Benutzer</th>
+                                <th className={classes.asSmallAsPossible}>Benutzer</th>
                                 {columns}
                             </tr>
                             </thead>

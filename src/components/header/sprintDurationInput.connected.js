@@ -4,7 +4,7 @@ import {actions} from '../../redux/actions'
 import {selectors} from '../../redux/reducer'
 import {Input} from 'reactstrap'
 
-const InputWrapper = ({value, onChange}) => <Input type="number" value={value} onChange={(e) => onChange(e.target.value)}/>
+export const InputWrapper = ({value, onChange}) => <Input type="number" value={value} onChange={(e) => onChange(e.target.value)}/>
 
 const mapStateToProps = (state) => ({value: selectors.getSprintDuration(state)})
 const mapActionsToProps = {onChange: actions.changeSprintDuration}

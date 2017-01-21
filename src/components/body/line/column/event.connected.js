@@ -53,7 +53,7 @@ export class Event extends Component {
     }
 
     render() {
-        const {event, index, username, columnId, updateEvent, removeEvent, sheet} = this.props
+        const {event = {}, index, username, columnId, updateEvent, removeEvent, sheet = {classes: {}}} = this.props
 
         const {lineHeightOne} = classes
         const {meetingClass, inputGroupClass, inputClass, inputGroupButton} = sheet.classes

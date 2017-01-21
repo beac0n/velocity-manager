@@ -7,7 +7,7 @@ import Column from './column/index'
 import {selectors} from '../../../redux/reducer'
 import {actions} from '../../../redux/actions'
 
-export const DataLine = ({username, sprintDays, velocity, removeUser}) => (
+export const DataLine = ({username, sprintDays = [], velocity, removeUser}) => (
     <tr>
         <th>
             <p>{username}</p>

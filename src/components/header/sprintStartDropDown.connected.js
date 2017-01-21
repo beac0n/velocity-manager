@@ -21,8 +21,8 @@ export class SprintStartDropDown extends Component {
     }
 
     render() {
-        const {sheet, saveSprintStart, sprintStart} = this.props
-        const {classes} = sheet
+        const {sheet = {}, saveSprintStart, sprintStart} = this.props
+        const {classes = {}} = sheet
 
         return (
             <Dropdown isOpen={this.state.dropDownOpen} toggle={this.toggle}>
