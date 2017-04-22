@@ -14,7 +14,7 @@ export const defaultState = Immutable.fromJS({})
 export const reducer = (state = defaultState, action) => {
     switch (action.type) {
         case actionTypes.ADD_USER: {
-            return state.setIn([action.username], Immutable.Map())
+            return state.setIn([action.id], Immutable.Map())
         }
         case actionTypes.REMOVE_USER: {
             const {username} = action

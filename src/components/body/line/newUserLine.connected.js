@@ -59,5 +59,8 @@ NewUserLine.propTypes = {
     addUser: React.PropTypes.func,
 }
 
-const mapActionsToProps = {addUser: actions.addUser}
+const mapActionsToProps = (dispatch, ownProps) => ({
+    addUser: (username) => dispatch(actions.addUser(username, ownProps.teamName))
+})
+
 export default connect(null, mapActionsToProps)(NewUserLine)

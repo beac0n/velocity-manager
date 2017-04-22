@@ -15,7 +15,7 @@ window.addEventListener('error', (error) => {
     localStorage.setItem(backupLocalStateName, localStorage.getItem(localStateName))
     localStorage.removeItem(localStateName)
 
-    location.reload()
+  //  location.reload()
 })
 
 const store = initStore()

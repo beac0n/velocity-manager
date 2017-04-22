@@ -5,6 +5,7 @@ import {withRouter} from 'react-router'
 import {selectors} from '../../redux/reducer'
 import {actions} from '../../redux/actions'
 import NewTeamInput from './newTeamInput.connected'
+import {history} from '../appRouter'
 
 export const TeamSelector = ({teams = [], addTeam, router}) => (
     <div>
@@ -17,7 +18,7 @@ export const TeamSelector = ({teams = [], addTeam, router}) => (
             {teams.map((team, index) => (
                 <Row key={`${team}-${index}`} style={{marginBottom: 10}}>
                     <Col sm="12">
-                        <Button size="lg" block onClick={() => router.push(`/velocity-manager/teams/${team.name}`)}>
+                        <Button size="lg" block onClick={() => history.push(`/velocity-manager/teams/${team.name}`)}>
                             {team.name}
                         </Button>
                     </Col>

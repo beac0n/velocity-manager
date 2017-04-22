@@ -1,3 +1,5 @@
+import shortid from 'shortid'
+
 export const actionTypes = {
     CHANGE_SPRINT_DURATION: 'CHANGE_SPRINT_DURATION',
     CHANGE_SPRINT_START: 'CHANGE_SPRINT_START',
@@ -15,7 +17,7 @@ export const actions = {
     changeSprintDuration: (sprintDuration) => ({type: actionTypes.CHANGE_SPRINT_DURATION, sprintDuration}),
     changeSprintStart: (sprintDay) => ({type: actionTypes.CHANGE_SPRINT_START, sprintDay}),
     addTeam: (teamname) => ({type: actionTypes.ADD_TEAM, teamname}),
-    addUser: (username) => ({type: actionTypes.ADD_USER, username}),
+    addUser: (username, teamname) => ({type: actionTypes.ADD_USER, username, teamname, id: shortid.generate()}),
     removeUser: (username) => ({type: actionTypes.REMOVE_USER, username}),
     addEvent: ({username, columnId, begin, end}) => ({type: actionTypes.ADD_EVENT, event: {username, columnId, begin, end}}),
     addInvalidEventError: (username) => ({type: actionTypes.ADD_INVALID_EVENT_ERROR, event: {username}}),

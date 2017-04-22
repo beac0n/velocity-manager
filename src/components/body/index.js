@@ -4,7 +4,6 @@ import useSheet from 'react-jss'
 import classNames from 'classnames'
 import {Table, Container, Alert, Popover} from 'reactstrap'
 import {selectors} from '../../redux/reducer'
-import {actions} from '../../redux/actions'
 import DataLine from './line/dataLine.connected'
 import NewUserLine from './line/newUserLine.connected'
 
@@ -14,7 +13,7 @@ const style = {
 }
 
 export const Body = ({users = [], sprintDays = [], hasError, sheet = {}, teamName}) => {
-    const {classes = {}} = sheet;
+    const {classes = {}} = sheet
 
     const columns = sprintDays.map((day, index) => (
         <th className={classNames(day.isWorkDay ? classes.weekDay : classes.asSmallAsPossible)}
@@ -23,19 +22,20 @@ export const Body = ({users = [], sprintDays = [], hasError, sheet = {}, teamNam
     return (
         <Container fluid style={{paddingBottom: 10}}>
             {
-                users.map((username, index) => (
-                    <div key={`${username}-${index}`} style={{float: 'left'}}>
+                users.map((user, index) => (
+                    <div key={`${user.id}-${index}`} style={{float: 'left'}}>
                         <Popover
                             placement="top"
-                            isOpen={hasError(username)}
-                            target={`PopoverTarget-${username}-${index}`}
+                            isOpen={hasError(user.name)}
+                            target={`PopoverTarget-${user.id}-${index}`}
                         >
                             <Alert color="danger" style={{margin: 0}}>
                                 Diese Zeit ist bereits belegt.
                             </Alert>
                         </Popover>
 
-                        <Table size="sm" className={classes.asSmallAsPossible} id={`PopoverTarget-${username}-${index}`}>
+                        <Table size="sm" className={classes.asSmallAsPossible}
+                               id={`PopoverTarget-${user.id}-${index}`}>
                             <thead>
                             <tr>
                                 <th className={classes.asSmallAsPossible}>Benutzer</th>
@@ -43,13 +43,13 @@ export const Body = ({users = [], sprintDays = [], hasError, sheet = {}, teamNam
                             </tr>
                             </thead>
                             <tbody>
-                            <DataLine username={username} key={`dataLine-${index}`}/>
+                            <DataLine user={user} key={`dataLine-${index}`}/>
                             </tbody>
                         </Table>
                     </div>))
             }
             <div style={{clear: 'both'}}/>
-            <NewUserLine columnsCount={columns.length + 1}/>
+            <NewUserLine teamName={teamName} columnsCount={columns.length + 1}/>
         </Container>)
 }
 
@@ -63,10 +63,8 @@ Body.propTypes = {
 
 const mapStateToProps = (state) => ({
     sprintDays: selectors.getSprintDays(state),
-    users: selectors.getUserNames(state),
+    users: selectors.getUsers(state),
     hasError: (username) => selectors.hasInvalidEventAdd(state, username),
 })
-const mapActionsToProps = {
-    addUser: actions.addUser,
-}
-export default connect(mapStateToProps, mapActionsToProps)(useSheet(style)(Body))
+
+export default connect(mapStateToProps)(useSheet(style)(Body))

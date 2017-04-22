@@ -8,11 +8,11 @@ import stateNames, {getColumns}  from './stateUtil'
 
 
 const additionalSelectors = {
-    getUserVelocity: (state, username) => {
+    getUserVelocity: (state, userId) => {
         const workHoursPerDay = 8
         const sprintVelocity = sprint.selectors.getSprintDuration(state)
 
-        const events = getColumns(state).getIn([username]).toJS()
+        const events = getColumns(state).getIn([userId]).toJS()
 
         const unflattenedEvents = Object.keys(events).map((key) => events[key])
             .filter((column) => Boolean(column))

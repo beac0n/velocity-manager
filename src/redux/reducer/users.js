@@ -4,7 +4,7 @@ import {actionTypes} from '../actions'
 
 export const selectors = {
     hasInvalidEventAdd: (state, username) => getUsers(state).toJS().find((user) => user.name === username).hasError,
-    getUserNames: (state) => getUsers(state).toJS().map((user) => user.name),
+    getUsers: (state) => getUsers(state).toJS(),
 }
 
 const updateHasError = ({state, username, hasError}) => (
@@ -15,7 +15,7 @@ export const defaultState = Immutable.fromJS([])
 export const reducer = (state = defaultState, action) => {
     switch (action.type) {
         case actionTypes.ADD_USER: {
-            return state.update((users) => users.push(Immutable.fromJS({name: action.username, hasError: false})))
+            return state.update((users) => users.push(Immutable.fromJS({id: action.id, name: action.username, team: action.teamname, hasError: false})))
         }
         case actionTypes.REMOVE_USER: {
             const {username} = action
