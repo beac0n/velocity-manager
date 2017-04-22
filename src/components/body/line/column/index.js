@@ -21,11 +21,11 @@ const style = {
     },
 }
 
-export const Column = ({username, id, events = [], isPlaceholder, sheet = {}}) => {
+export const Column = ({userId, id, events = [], isPlaceholder, sheet = {}}) => {
     const {classes = {}} = sheet
 
     const mappedEvents = events.map((event, index) => (
-        <Event key={`Event-${index}`} event={event} username={username} index={index} columnId={id}/>))
+        <Event key={`Event-${index}`} event={event} userId={userId} index={index} columnId={id}/>))
 
     return (
         <div>
@@ -34,7 +34,7 @@ export const Column = ({username, id, events = [], isPlaceholder, sheet = {}}) =
                     ? <div className={classes.placeholder}/>
                     : (
                         <div>
-                            <TimeLines columnId={id} username={username}/>
+                            <TimeLines columnId={id} userId={userId}/>
                             {mappedEvents}
                         </div>)}
             </div>
@@ -42,7 +42,7 @@ export const Column = ({username, id, events = [], isPlaceholder, sheet = {}}) =
 }
 
 Column.propTypes = {
-    username: React.PropTypes.string,
+    userId: React.PropTypes.string,
     id: React.PropTypes.string,
     event: React.PropTypes.object,
     updateEvent: React.PropTypes.func,
@@ -53,7 +53,7 @@ Column.propTypes = {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-    events: selectors.getEvents(state, ownProps.username, ownProps.id),
+    events: selectors.getEvents(state, ownProps.userId, ownProps.id),
 })
 
 export default connect(mapStateToProps)(useSheet(style)(Column))

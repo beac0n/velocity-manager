@@ -7,7 +7,7 @@ import Column from './column/index'
 import {selectors} from '../../../redux/reducer'
 import {actions} from '../../../redux/actions'
 
-export const DataLine = ({user, sprintDays = [], velocity, removeUser}) => (
+export const DataLine = ({user = {}, sprintDays = [], velocity, removeUser}) => (
     <tr>
         <th>
             <p>{user.name}</p>
@@ -22,7 +22,7 @@ export const DataLine = ({user, sprintDays = [], velocity, removeUser}) => (
         </th>
         {sprintDays.map((day, index) => (
             <td key={`column-td-${index}`}>
-                <Column isPlaceholder={!day.isWorkDay} username={user.name} id={String(index)}/>
+                <Column isPlaceholder={!day.isWorkDay} userId={user.id} id={String(index)}/>
             </td>
         ))}
     </tr>)
@@ -41,7 +41,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapActionsToProps = (dispatch, ownProps) => (
     bindActionCreators({
-        removeUser: () => actions.removeUser(ownProps.username),
+        removeUser: () => actions.removeUser(ownProps.user.id),
     }, dispatch))
 
 export default connect(mapStateToProps, mapActionsToProps)(DataLine)

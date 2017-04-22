@@ -33,13 +33,13 @@ export class TimeLine extends Component {
     }
 
     handleStop(_, data) {
-        const {username, columnId, addEvent, index} = this.props
+        const {userId, columnId, addEvent, index} = this.props
 
         const begin = index
         const end = 1 + index + Math.floor((data.lastY) / constants.lineHeight)
 
         if (begin !== end) {
-            addEvent({username, columnId, begin, end})
+            addEvent({userId, columnId, begin, end})
         }
 
         this.setState({position: {x: 0, y: 0}})
@@ -81,7 +81,7 @@ export class TimeLine extends Component {
 TimeLine.propTypes = {
     sheet: React.PropTypes.object,
     index: React.PropTypes.number,
-    username: React.PropTypes.string,
+    userId: React.PropTypes.string,
     columnId: React.PropTypes.string,
     addEvent: React.PropTypes.func,
 }

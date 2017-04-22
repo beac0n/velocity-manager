@@ -1,9 +1,9 @@
 import {actions} from './actions'
 import {selectors} from './reducer'
 
-export const addEvent = (({username, columnId, begin, end}) => (
+export const addEvent = (({userId, columnId, begin, end}) => (
     (dispatch, getState) => {
-        const existingEvents = selectors.getEvents(getState(), username, columnId)
+        const existingEvents = selectors.getEvents(getState(), userId, columnId)
 
         const conflictingEvents = existingEvents.filter((oldEvent) => {
             const eventsStartOnSameHour = begin === oldEvent.begin
@@ -19,10 +19,10 @@ export const addEvent = (({username, columnId, begin, end}) => (
         })
 
         if (conflictingEvents.length === 0) {
-            dispatch(actions.addEvent({username, columnId, begin, end}))
-            dispatch(actions.removeInvalidEventError(username))
+            dispatch(actions.addEvent({userId, columnId, begin, end}))
+            dispatch(actions.removeInvalidEventError(userId))
         } else {
-            dispatch(actions.addInvalidEventError(username))
+            dispatch(actions.addInvalidEventError(userId))
         }
     }
 ))

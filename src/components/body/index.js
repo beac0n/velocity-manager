@@ -22,11 +22,11 @@ export const Body = ({users = [], sprintDays = [], hasError, sheet = {}, teamNam
     return (
         <Container fluid style={{paddingBottom: 10}}>
             {
-                users.map((user, index) => (
+                users.filter((user) => user.team === teamName).map((user, index) => (
                     <div key={`${user.id}-${index}`} style={{float: 'left'}}>
                         <Popover
                             placement="top"
-                            isOpen={hasError(user.name)}
+                            isOpen={hasError(user.id)}
                             target={`PopoverTarget-${user.id}-${index}`}
                         >
                             <Alert color="danger" style={{margin: 0}}>
@@ -43,7 +43,7 @@ export const Body = ({users = [], sprintDays = [], hasError, sheet = {}, teamNam
                             </tr>
                             </thead>
                             <tbody>
-                            <DataLine user={user} key={`dataLine-${index}`}/>
+                                <DataLine user={user} key={`dataLine-${index}`}/>
                             </tbody>
                         </Table>
                     </div>))
@@ -64,7 +64,7 @@ Body.propTypes = {
 const mapStateToProps = (state) => ({
     sprintDays: selectors.getSprintDays(state),
     users: selectors.getUsers(state),
-    hasError: (username) => selectors.hasInvalidEventAdd(state, username),
+    hasError: (userId) => selectors.hasInvalidEventAdd(state, userId),
 })
 
 export default connect(mapStateToProps)(useSheet(style)(Body))

@@ -53,7 +53,7 @@ export class Event extends Component {
     }
 
     render() {
-        const {event = {}, index, username, columnId, updateEvent, removeEvent, sheet = {classes: {}}} = this.props
+        const {event = {}, index, userId, columnId, updateEvent, removeEvent, sheet = {classes: {}}} = this.props
 
         const {lineHeightOne} = classes
         const {meetingClass, inputGroupClass, inputClass, inputGroupButton} = sheet.classes
@@ -75,7 +75,7 @@ export class Event extends Component {
                         className={inputGroupButton}
                     />
                     <InputGroupButton
-                        id={`event-${username}-${columnId}-${index}`}
+                        id={`event-${userId}-${columnId}-${index}`}
                         onClick={this.toggle}
                         dangerouslySetInnerHTML={{__html: octicons['chevron-right'].toSVG()}}
                         className={inputGroupButton}
@@ -84,7 +84,7 @@ export class Event extends Component {
                         placement="right"
                         isOpen={this.state.popoverOpen}
                         toggle={this.toggle}
-                        target={`event-${username}-${columnId}-${index}`}
+                        target={`event-${userId}-${columnId}-${index}`}
                     >
                         <Input
                             value={note || ''}
@@ -103,18 +103,18 @@ Event.propTypes = {
     sheet: React.PropTypes.object,
     event: React.PropTypes.object,
     index: React.PropTypes.number,
-    username: React.PropTypes.string,
+    userId: React.PropTypes.string,
     columnId: React.PropTypes.string,
     updateEvent: React.PropTypes.func,
     removeEvent: React.PropTypes.func,
 }
 
 const mapActionsToProps = (dispatch, ownProps) => {
-    const {username, index, columnId} = ownProps
+    const {userId, index, columnId} = ownProps
 
     return bindActionCreators({
-        removeEvent: () => actions.removeEvent({username, columnId, index}),
-        updateEvent: (note) => actions.updateEvent({username, columnId, index, note}),
+        removeEvent: () => actions.removeEvent({userId, columnId, index}),
+        updateEvent: (note) => actions.updateEvent({userId, columnId, index, note}),
     }, dispatch)
 }
 export default connect(null, mapActionsToProps)(useSheet(style)(Event))

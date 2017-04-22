@@ -15,7 +15,8 @@ describe('users reducer', () => {
         it('should add one user', () => {
             defaultStore.dispatch(actions.addUser(testUser))
 
-            expect(selectors.getUsers(defaultStore.getState())).toContain(testUser)
+
+            expect(selectors.getUsers(defaultStore.getState()).map((user) => user.name)).toContain(testUser)
 
             expect(selectors.getUsers(defaultStore.getState()).length).toBe(1)
         })
@@ -24,8 +25,8 @@ describe('users reducer', () => {
             defaultStore.dispatch(actions.addUser(testUser))
             defaultStore.dispatch(actions.addUser(otherTestUser))
 
-            expect(selectors.getUsers(defaultStore.getState())).toContain(testUser)
-            expect(selectors.getUsers(defaultStore.getState())).toContain(otherTestUser)
+            expect(selectors.getUsers(defaultStore.getState()).map((user) => user.name)).toContain(testUser)
+            expect(selectors.getUsers(defaultStore.getState()).map((user) => user.name)).toContain(otherTestUser)
 
             expect(selectors.getUsers(defaultStore.getState()).length).toBe(2)
         })
@@ -34,13 +35,16 @@ describe('users reducer', () => {
             defaultStore.dispatch(actions.addUser(testUser))
             defaultStore.dispatch(actions.addUser(otherTestUser))
 
-            expect(selectors.getUsers(defaultStore.getState())).toContain(testUser)
-            expect(selectors.getUsers(defaultStore.getState())).toContain(otherTestUser)
+            expect(selectors.getUsers(defaultStore.getState()).map((user) => user.name)).toContain(testUser)
+            expect(selectors.getUsers(defaultStore.getState()).map((user) => user.name)).toContain(otherTestUser)
 
-            defaultStore.dispatch(actions.removeUser(otherTestUser))
+            const otherTestUserId = selectors.getUsers(defaultStore.getState())
+                .filter((user) => user.name === otherTestUser)[0].id
+
+            defaultStore.dispatch(actions.removeUser(otherTestUserId))
 
             expect(selectors.getUsers(defaultStore.getState()).length).toBe(1)
-            expect(selectors.getUsers(defaultStore.getState())[0]).toBe(testUser)
+            expect(selectors.getUsers(defaultStore.getState()).map((user) => user.name)[0]).toBe(testUser)
         })
     })
 })

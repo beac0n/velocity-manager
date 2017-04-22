@@ -1,5 +1,7 @@
 import {initStore} from '../init'
 import {selectors} from './columns'
+import {selectors as userSelectors} from './users'
+
 import {actions} from '../actions'
 
 describe('columns reducer', () => {
@@ -19,24 +21,33 @@ describe('columns reducer', () => {
 
         it('should add an event', () => {
             defaultStore.dispatch(actions.addUser(testUser))
-            defaultStore.dispatch(actions.addEvent({username: testUser, columnId: 0, begin: 0, end: 1}))
 
-            expect(selectors.getEvents(defaultStore.getState(), testUser, 0)).toContainEqual({begin: 0, end: 1})
+            const testUserId = userSelectors.getUsers(defaultStore.getState())[0].id
+
+            defaultStore.dispatch(actions.addEvent({userId: testUserId, columnId: 0, begin: 0, end: 1}))
+
+            expect(selectors.getEvents(defaultStore.getState(), testUserId, 0)).toContainEqual({begin: 0, end: 1})
         })
 
         it('should add an event which is only one hour long', () => {
             defaultStore.dispatch(actions.addUser(testUser))
-            defaultStore.dispatch(actions.addEvent({username: testUser, columnId: 0, begin: 0}))
 
-            expect(selectors.getEvents(defaultStore.getState(), testUser, 0)).toContainEqual({begin: 0, end: 1})
+            const testUserId = userSelectors.getUsers(defaultStore.getState())[0].id
+
+            defaultStore.dispatch(actions.addEvent({userId: testUserId, columnId: 0, begin: 0}))
+
+            expect(selectors.getEvents(defaultStore.getState(), testUserId, 0)).toContainEqual({begin: 0, end: 1})
         })
 
         it('should update an event with a note', () => {
             defaultStore.dispatch(actions.addUser(testUser))
-            defaultStore.dispatch(actions.addEvent({username: testUser, columnId: 0, begin: 0, end: 1}))
-            defaultStore.dispatch(actions.updateEvent({username: testUser, columnId: 0, index: 0, note: 'testNote'}))
 
-            expect(selectors.getEvents(defaultStore.getState(), testUser, 0)).toContainEqual({begin: 0, end: 1, note: 'testNote'})
+            const testUserId = userSelectors.getUsers(defaultStore.getState())[0].id
+
+            defaultStore.dispatch(actions.addEvent({userId: testUserId, columnId: 0, begin: 0, end: 1}))
+            defaultStore.dispatch(actions.updateEvent({userId: testUserId, columnId: 0, index: 0, note: 'testNote'}))
+
+            expect(selectors.getEvents(defaultStore.getState(), testUserId, 0)).toContainEqual({begin: 0, end: 1, note: 'testNote'})
         })
 
         it('should remove an event', () => {

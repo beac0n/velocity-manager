@@ -16,7 +16,7 @@ const style = {
 }
 
 
-const TimeLines = ({sheet, columnId, username}) => {
+const TimeLines = ({sheet, columnId, userId}) => {
     const {timeLineWrapper} = sheet.classes
 
     const timeLines = []
@@ -24,7 +24,7 @@ const TimeLines = ({sheet, columnId, username}) => {
         timeLines.push(
             <TimeLine
                 key={`timeline-${i}`}
-                username={username}
+                userId={userId}
                 columnId={columnId}
                 index={i}
             />)
@@ -35,7 +35,7 @@ const TimeLines = ({sheet, columnId, username}) => {
 
 TimeLines.propTypes = {
     sheet: React.PropTypes.object,
-    username: React.PropTypes.string,
+    userId: React.PropTypes.string,
     columnId: React.PropTypes.string,
 }
 

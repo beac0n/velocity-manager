@@ -2,11 +2,11 @@ import Immutable from 'immutable'
 import {getColumns} from './stateUtil'
 import {actionTypes} from '../actions'
 
-const getEventsListKeyPath = (username, columnId) => [String(username), String(columnId), 'events']
+const getEventsListKeyPath = (userId, columnId) => [String(userId), String(columnId), 'events']
 
 export const selectors = {
-    getEvents: (state, username, columnId) => getColumns(state)
-        .getIn(getEventsListKeyPath(username, columnId), Immutable.List())
+    getEvents: (state, userId, columnId) => getColumns(state)
+        .getIn(getEventsListKeyPath(userId, columnId), Immutable.List())
         .toJS(),
 }
 
@@ -17,24 +17,24 @@ export const reducer = (state = defaultState, action) => {
             return state.setIn([action.id], Immutable.Map())
         }
         case actionTypes.REMOVE_USER: {
-            const {username} = action
-            return state.removeIn([username])
+            const {userId} = action
+            return state.removeIn([userId])
         }
         case actionTypes.ADD_EVENT: {
-            const {username, columnId, begin, end = begin + 1} = action.event
+            const {userId, columnId, begin, end = begin + 1} = action.event
             return state
-                .updateIn(getEventsListKeyPath(username, columnId), Immutable.List(),
+                .updateIn(getEventsListKeyPath(userId, columnId), Immutable.List(),
                     (events) => events.push(Immutable.fromJS({begin, end})))
         }
         case actionTypes.UPDATE_EVENT: {
-            const {username, columnId, index, note} = action.event
+            const {userId, columnId, index, note} = action.event
             return state
-                .updateIn(getEventsListKeyPath(username, columnId).concat(String(index)), (event) => event.set('note', note))
+                .updateIn(getEventsListKeyPath(userId, columnId).concat(String(index)), (event) => event.set('note', note))
         }
         case actionTypes.REMOVE_EVENT: {
-            const {username, columnId, index} = action.event
+            const {userId, columnId, index} = action.event
             return state
-                .updateIn(getEventsListKeyPath(username, columnId), (events) => events.splice(index, 1))
+                .updateIn(getEventsListKeyPath(userId, columnId), (events) => events.splice(index, 1))
         }
         default:
             return state

@@ -5,4 +5,4 @@ import AppRouter from './appRouter'
 import App from './app'
 
 describe('<AppRouter />', shouldRender(AppRouter))
-describe('<App />', shouldRender(App))
+describe('<App />', shouldRender(App, {params: {}}))
