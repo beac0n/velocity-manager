@@ -1,4 +1,4 @@
-const prerenderer = require('../../simple-react-prerender/')
+const prerenderer = require('simple-react-prerender')
 
 require('babel-register')({
     plugins: [
