@@ -1,8 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {Provider} from 'react-redux'
 import 'bootstrap/dist/css/bootstrap.css'
-import AppRouter from './components/appRouter'
+import ProviderApp from './providerApp'
 import {initStore, localStateName} from './redux/init'
 
 window.addEventListener('error', (error) => {
@@ -24,4 +23,5 @@ store.subscribe(() => {
     localStorage.setItem(localStateName, JSON.stringify(store.getState()))
 })
 
-ReactDOM.render(<Provider store={store}><AppRouter/></Provider>, document.getElementById('root'))
+ReactDOM.render(<ProviderApp store={store} />, document.getElementById('root'))
+

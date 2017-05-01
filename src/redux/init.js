@@ -6,7 +6,7 @@ import rootReducer from './reducer'
 export const localStateName = 'velocity-manager-state'
 
 const getLocalState = () => {
-    if (!window.localStorage || !window.localStorage.getItem(localStateName)) return null
+    if (!window || !window.localStorage || !window.localStorage.getItem(localStateName)) return null
 
     const localState = window.localStorage.getItem(localStateName)
     try {
@@ -19,7 +19,7 @@ const getLocalState = () => {
 }
 
 const getReduxDevTools = () => {
-    if (!window.__REDUX_DEVTOOLS_EXTENSION__) return null
+    if (!window || !window.__REDUX_DEVTOOLS_EXTENSION__) return null
 
     return window.__REDUX_DEVTOOLS_EXTENSION__()
 }
